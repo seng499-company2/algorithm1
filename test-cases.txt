@@ -6,3 +6,11 @@ Test When there is no Solution:
   
 Test Algorithm 1 returns 1 solution:
   - Return 1 schedule
+
+Given a courses's schedule:
+- Test it contains a date and time for the delivered course
+- Test a professor is assigned to the course
+- Test the course has a capacity, and if over 100 people split into 2 sections (verify further)
+
+Given a course is required a PEng prof and no Peng prof is available 
+- Return an error
