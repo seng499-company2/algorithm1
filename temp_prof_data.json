@@ -1,0 +1,307 @@
+[
+    {
+        "professor": "Adams",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Agathoklis",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "AlTawny",
+        "isPeng": "In Process",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Baniasadi",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Bhat",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Albu",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Cai",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Capson",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Darcie",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Dimopoulus",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Dong",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Driessen",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Gebali",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Gordon",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Gulliver",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Ilamparithi",
+        "isPeng": "In Process",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Li",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "T. Lu",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "W. Lu",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "McGuire",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Neville",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Papadopoulos",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Popli",
+        "isPeng": "In Process",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Rakhmatoc",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Saidaminov",
+        "isPeng": "False",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Shuja",
+        "isPeng": "False",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Sima",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Smith",
+        "isPeng": "In Process",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Traore",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Yang",
+        "isPeng": "True",
+        "Faculty": "ECE"
+    },
+    {
+        "professor": "Berg",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Bird",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Chester",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Coady",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Cordless",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Damian",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Ernst",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Estey",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Ganti",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "German",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Jackson",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Kapron",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "King",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Koroth",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Mehta",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Muller",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Nacenta",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Numanagic",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Pan",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Perin",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Schneider",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Somanath",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Srinivasan",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Stege",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Storey",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Summers",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Thomo",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Tzanetakis",
+        "isPeng": "False",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Weber",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Wu",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    },
+    {
+        "professor": "Zastre",
+        "isPeng": "True",
+        "Faculty": "CSC"
+    }
+]
