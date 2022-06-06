@@ -1,4 +1,8 @@
-Test Case 1:
-
-Description:
-  Test to ensure the data received backend 
+Test given data:
+  - Fromat the data given from backend and test all information is included
+  
+Test When there is no Solution:
+  - Give no solution return an error
+  
+Test Algorithm 1 returns 1 solution:
+  - Return 1 schedule
