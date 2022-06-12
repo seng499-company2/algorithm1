@@ -1,16 +1,119 @@
-Test given data:
-  - Fromat the data given from backend and test all information is included
-  
-Test When there is no Solution:
-  - Give no solution return an error
-  
-Test Algorithm 1 returns 1 solution:
-  - Return 1 schedule
+Test Case: Given the input data from Back-End.
+  Scenario: Given the data from back-end. 
+  Given: The historical data and professor data from back-end
+  When: the data is given to algorithm 1
+  And: the data is in a python dictionary 
+  Then: test to ensure all the data is included (historical and professor data)
 
-Given a courses's schedule:
-- Test it contains a date and time for the delivered course
-- Test a professor is assigned to the course
-- Test the course has a capacity, and if over 100 people split into 2 sections (verify further)
+  Input:
+    - historical and professor data given from backend (Most likely Python Dictionary or JSON)
+  Pass/Fail:
+    - Whether the data is in a proper format
+    - If we format the data, ensure it's properly formatted 
+    
+Test Case: When there is no Schedule Solution:
+  Scenario: The scheduler couldn't find a feasible schedule
+  Given: The professor input and historical data
+  When: Algorithm 1 is called to create a schedule
+  And: A feasible schedule satisfying the hard constraint is not found
+  Then: Return an error that a schedule could not be found
+  
+Test Case: Algorithm 1 returns 1 solution:
+  Scenario: The scheduler returns 1 schedule
+  Given: Algorithm 1 is called
+  When: Algorithm 1 searches for a schedule 
+  And: And algorithm 1 finds multiple solutions
+  Then: test to ensure only 1 schedule has been returned
 
-Given a course is required a PEng prof and no Peng prof is available 
-- Return an error
+Test Case: Test to ensure the returned schedule contains all the required info:
+  Scenario: The schedule returned is tested to be in proper format 
+  Given: One feasible schedule is determined
+  When: The schedule is produced
+  Then: test the schedule has 3 terms that is populated (fall, spring, summer)
+  And: test the course format in the terms
+  Then: test the course: 
+    - Professor assigned
+    - Capacity
+    - Time slot
+
+Test Case: Test to ensure if a course is required a PEng prof and no Peng prof is available 
+  Scenario: Given a list of professor but no PEng prof is available for a course
+  Given: A course has been given a professor with PEng
+  When: The course is being assigned a timeslot
+  And: the professor is not available at those times
+  Then: test to ensure it returns an error that the professor is not possible for that course or schedule 
+
+
+
+CSP 1 Test Cases:
+Once the Prof's are assigned to a course: 
+
+Test Case: Test to ensure the prof is qualified for the course
+  Scenario: Check if a prof is qualified for a course. 
+  Given: A course has been assigned a prof.
+  When: The course requires a qualified prof.
+  And: the professor is not qualified
+  Then: throw an error that the given prof to the course is invalid
+ 
+Test Case: Test to ensure the prof has a PEng for a course
+  Scenario: Check if a prof has a peng for a course. 
+  Given: A course has been assigned a prof.
+  When: The course requires a peng prof.
+  And: the professor doesn’t have a peng 
+  Then: throw an error that the given prof to the course is invalid
+
+Test Case: Test to ensure the prof has the same or less amount of assigned courses required
+  Scenario: Check if a prof has the proper amount of assigned courses to their teaching load. 
+  Given: Several courses have been assigned to a prof.
+  When: The prof has a given max. Teaching load
+  And: check to ensure the teaching load is below the number of assigned courses 
+  Then: throw an error if the prof has more courses than their teaching load
+
+Test Case: Test that all courses are assigned a professor
+  Scenario: Check if all courses are assigned to a professor 
+  Given: the CSP 1 has returned 
+  When: All courses are assigned to a professor
+  Then: Check all courses have one professor to one course
+  And: throw an error if a course is missing a professor 
+
+Test Case: Test that the courses with a predefined set of profs are not changed. 
+  Scenario: Check if a given course already has a professor assigned. 
+  Given: A course with a set professor
+  Then: set this course as completed 
+  And: don’t change the professor assignment to course
+
+
+CSP 2 Test Cases:
+Once the course’s are assigned to a timeslot: 
+
+Test Case: Test to ensure a prof is not teaching in 2+ blocks simultaneously
+  Scenario: Check a prof and their assigned courses for overlapping time slots.  
+  Given: A professor has assigned courses. 
+  When: The course is given a timeslot
+  And: the other course from the professor overlaps the time slot
+  Then: throw an error that the given time slot is invalid
+
+Test Case: Test to ensure a course in the same academic year and same semester are not scheduled in overlapping time slots.
+  Scenario: Check a course in 1st, 2nd, 3rd, 4th  year that doesn't overlap. 
+  Given: A list of courses for one academic year. 
+  When: The course with that academic year has a timeslot
+  And: the other course from the same academic year have a time slot
+  Then: throw an error if the courses overlap 
+
+Test Case: Test to ensure all courses are assigned to a valid timeslot configuration scheduled in overlapping time slots.
+  Scenario: Check if the courses properly follow TWF, MR, Any day of week 1 time a week 
+  Given: A course has a given day of the week (TWF, MR, Any day). 
+  When: The course is scheduled for 3, 2 or 1 time a week
+  Then: check the course is properly assigned 3, 2 o1 time a week
+
+Test Case: Test to ensure all courses are within 830-2000
+  Scenario: Check a course if the time is within 830-2000 each day.  
+  Given: A course has been scheduled. 
+  When: The course is given a time slot
+  Then: check to ensure the start time is within or on 830-2000
+
+Test Case: Test to ensure courses with predefined time slots are not altered.
+  Scenario: Check if a given course already has a time slot assigned. 
+  Given: A course with a set time slot
+  Then: set this course as completed 
+  And: don’t change the time slot assignment to course
