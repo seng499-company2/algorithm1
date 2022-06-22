@@ -61,23 +61,34 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def backtracking_search(self, assignment: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
-        # Assignment is complete if every variable is assigned (our base case)
-        if len(assignment) == len(self.variables):
-            return assignment
+    def backtracking_search(self, config=None) -> Optional[Dict[V, D]]:
 
-        # Get all variables in the CSP but not in the assignment
-        unassigned: List[V] = [v for v in self.variables if v not in assignment]
+        # If using MRV heuristic, sort variables in increasing order of domain size.
+        if config is not None and config.get('mrv'):
+            def get_domain_size(var):
+                return len(self.domains[var])
+            self.variables.sort(key=get_domain_size)
 
-        # Get the every possible domain value of the first unassigned variable
-        first: V = unassigned[0]
-        for value in self.domains[first]:
-            local_assignment = assignment.copy()
-            local_assignment[first] = value
-            # If we're still consistent, we recurse (continue)
-            if self.consistent(first, local_assignment):
-                result: Optional[Dict[V, D]] = self.backtracking_search(local_assignment)
-                # If we didn't find the result, we will end up backtracking
-                if result is not None:
-                    return result
-        return None
+        def backtracking_search_recursive(assignment_: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
+            # Assignment is complete if every variable is assigned (our base case)
+            if len(assignment_) == len(self.variables):
+                return assignment_
+
+            # Get all variables in the CSP but not in the assignment
+            unassigned: List[V] = [v for v in self.variables if v not in assignment_]
+
+            # Get the every possible domain value of the first unassigned variable
+            first: V = unassigned[0]
+            for value in self.domains[first]:
+                local_assignment = assignment_.copy()
+                local_assignment[first] = value
+                # If we're still consistent, we recurse (continue)
+                if self.consistent(first, local_assignment):
+                    result_: Optional[Dict[V, D]] = backtracking_search_recursive(local_assignment)
+                    # If we didn't find the result, we will end up backtracking
+                    if result_ is not None:
+                        return result_
+            return None
+
+        result = backtracking_search_recursive()
+        return result
