@@ -62,12 +62,29 @@ class CSP(Generic[V, D]):
         return True
 
     def backtracking_search(self, config=None) -> Optional[Dict[V, D]]:
+        if config is not None and config.get('mrv') is True and config.get('degree') is True:
+            print("Cannot use MRV and Degree variable heuristics simultaneously. Please modify config.")
+            exit()
 
         # If using MRV heuristic, sort variables in increasing order of domain size.
         if config is not None and config.get('mrv'):
             def get_domain_size(var):
                 return len(self.domains[var])
             self.variables.sort(key=get_domain_size)
+
+        # If using degree heuristic, sort variables in decreasing order of degree.
+        if config is not None and config.get('degree'):
+            constraints_degrees = []
+            for var in self.variables:
+                curr_constraints = self.constraints[var]
+                curr_degree = 0
+                for constraint in curr_constraints:
+                    curr_degree += len(constraint.variables) -1
+                constraints_degrees.append(curr_degree)
+
+            zipped_degrees_constraints = list(zip(constraints_degrees, self.variables))
+            zipped_sorted = sorted(zipped_degrees_constraints, key=lambda x: x[0])
+            self.variables = list(zip(*zipped_sorted))[1]
 
         def backtracking_search_recursive(assignment_: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
             # Assignment is complete if every variable is assigned (our base case)
