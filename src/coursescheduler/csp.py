@@ -1,4 +1,4 @@
-from models import *
+from .models import *
 # Experimental implementation of simple csp scheduling algorithm
 
 # From / based on: https://freecontent.manning.com/constraint-satisfaction-problems-in-python/
