@@ -1,7 +1,7 @@
 from typing import List, TypeVar
 
-from models import *
-from csp import Constraint
+from .models import *
+from .csp import Constraint
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
@@ -56,6 +56,7 @@ profs = {
         "isPeng": False,
         "qualifiedCourses": ["csc110", "csc111", "seng265"],
         "teachingObligations": 1
+
     },
     "Tzanatakis": {
         "Name": "Tzanatakis",
@@ -98,7 +99,7 @@ class Requires_PENG(Constraint):
 
     def satisfied(self) -> bool:
         if self.course["pengRequired"]:
-            if self.prof["isPeng"]:
+            if self.professor["isPeng"]:
                 return True
             else:
                 return False
