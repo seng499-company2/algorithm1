@@ -79,13 +79,24 @@ class CSP(Generic[V, D]):
                 curr_constraints = self.constraints[var]
                 curr_degree = 0
                 for constraint in curr_constraints:
-                    curr_degree += len(constraint.variables) -1
+                    curr_degree += len(constraint.variables) - 1
                 constraints_degrees.append(curr_degree)
 
             zipped_degrees_constraints = list(zip(constraints_degrees, self.variables))
             zipped_sorted = sorted(zipped_degrees_constraints, key=lambda x: x[0])
             self.variables = list(zip(*zipped_sorted))[1]
 
+        variable_conflict_set = {}
+        if config["forward_checking"]:
+            for variable in self.variables:
+                curr_conflicting_variables = []
+                for constraint in self.constraints[variable]:
+                    for const_var in constraint.variables:
+                        if const_var != variable and const_var not in curr_conflicting_variables:
+                            curr_conflicting_variables.append(const_var)
+                variable_conflict_set[variable] = curr_conflicting_variables
+
+        # Backtracking search with no forward checking
         def backtracking_search_recursive(assignment_: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
             # Assignment is complete if every variable is assigned (our base case)
             if len(assignment_) == len(self.variables):
@@ -107,5 +118,48 @@ class CSP(Generic[V, D]):
                         return result_
             return None
 
-        result = backtracking_search_recursive()
+        # Backtracking with forward checking enabled
+        def backtracking_search_fc(domains, assignment: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
+            # Assignment is complete if every variable is assigned (our base case)
+            if len(assignment) == len(self.variables):
+                return assignment
+
+            # Get all variables in the CSP but not in the assignment
+            unassigned: List[V] = [v for v in self.variables if v not in assignment]
+
+            # Get the every possible domain value of the first unassigned variable
+            first: V = unassigned[0]
+            for value in domains[first]:
+                local_assignment = assignment.copy()
+                local_assignment[first] = value
+                # If we're still consistent, we recurse (continue)
+                if self.consistent(first, local_assignment):
+                    domains_copy = {k: v.copy() for (k, v) in domains.items()}
+                    # For each neighbor of the current variable:
+                    for neighbor in variable_conflict_set[first]:
+                        # For each value in the neighbor's domain:
+                        for value_ in domains_copy[neighbor]:
+                            local_assignment_copy = local_assignment.copy()
+                            local_assignment_copy[neighbor] = value_
+                            # If not consistent:
+                            if not self.consistent(neighbor, local_assignment_copy):
+                                # Remove value from neighbor's domain.
+                                domains_copy[neighbor].remove(value_)
+                            # If neighbor's domain is now empty:
+                            if len(domains_copy[neighbor]) <= 0:
+                                # Backtrack
+                                return None
+
+                    result_: Optional[Dict[V, D]] = backtracking_search_fc(domains=domains_copy,
+                                                                           assignment=local_assignment)
+                    # If we didn't find the result, we will end up backtracking
+                    if result_ is not None:
+                        return result_
+            return None
+
+        if config["forward_checking"]:
+            domains_initial = self.domains.copy()
+            result = backtracking_search_fc(domains=domains_initial)
+        else:
+            result = backtracking_search_recursive()
         return result
