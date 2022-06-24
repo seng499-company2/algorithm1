@@ -41,3 +41,4 @@ jobs:
         pip install .
         cd tests
         pytest
+
