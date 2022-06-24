@@ -1,5 +1,5 @@
 from src.coursescheduler.constraints import profs, Qualified_Course_Prof
-from coursescheduler import Qualified_Course_Prof
+# from coursescheduler import Qualified_Course_Prof
 
 
 def test_qualified_course_profs_pass():

@@ -1,7 +1,7 @@
 from typing import List, TypeVar
 
-from models import *
-from csp import Constraint
+# from models import *
+from .csp import Constraint
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
