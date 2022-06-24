@@ -56,7 +56,6 @@ profs = {
         "isPeng": False,
         "qualifiedCourses": ["csc110", "csc111", "seng265"],
         "teachingObligations": 1
-
     },
     "Tzanatakis": {
         "Name": "Tzanatakis",
