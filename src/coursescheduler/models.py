@@ -29,6 +29,7 @@ professors = {
         "facultyType": "string",
         "coursePreferences": "list of coursePreference objects",
         "teachingObligations": "int",
+        "qualifiedCourses": "list",
         "preferredTimes": "dictionary of DayTimes objects",
         "preferredCoursesPerSemester": "dictionary of fall, spring, and summer ints",
         "preferredNonTeachingSemester": "string",
@@ -38,4 +39,76 @@ professors = {
 
 timeslots = {
 #     TODO
+}
+
+# Note: data does not reflect the real world and is for Testing Constraints Only
+temp_courses = {
+    "csc110": {
+        "pengRequired": False,
+        "professor": "Bird",
+        "courseDay": ["monday", "tuesday", "wednesday"]
+    },
+    "csc111": {
+        "pengRequired": False,
+        "professor": "Bird"
+    },
+    "seng265": {
+        "pengRequired": False,
+        "professor": "Zastre"
+    },
+    "csc225": {
+        "pengRequired": False,
+        "professor": "Zastre"
+    },
+    "csc226": {
+        "pengRequired": False,
+        "professor": "Zastre"
+    },
+    "ece260": {
+        "pengRequired": True,
+        "professor": "Zastre"
+    },
+    "ece310": {
+        "pengRequired": True,
+        "professor": "Zastre"
+    },
+    "seng475": {
+        "pengRequired": True,
+        "professor": "Zastre"
+    }
+}
+
+# Note: data does not reflect the real world and is for Testing Constraints Only
+temp_profs = {
+    "Bird": {
+        "Name": "Bird",
+        "isPeng": False,
+        "qualifiedCourses": ["csc110", "csc111", "csc225", "csc226"],
+        "teachingObligations": 2,
+        "assigned_Courses": 3
+    },
+    "Zastre": {
+        "Name": "Zastre",
+        "isPeng": False,
+        "qualifiedCourses": ["csc110", "csc111", "seng265"],
+        "teachingObligations": 1
+    },
+    "Tzanatakis": {
+        "Name": "Tzanatakis",
+        "isPeng": False,
+        "qualifiedCourses": ["csc225", "csc226"],
+        "teachingObligations": 3
+    },
+    "Adams": {
+        "Name": "Adams",
+        "isPeng": True,
+        "qualifiedCourses": ["ece260", "seng475"],
+        "teachingObligations": 2
+    },
+    "Gebali": {
+        "Name": "Gebali",
+        "isPeng": True,
+        "qualifiedCourses": ["ece260", "ece310"],
+        "teachingObligations": 1
+    }
 }
