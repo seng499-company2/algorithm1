@@ -1,158 +1,164 @@
 from typing import List, TypeVar
 
-from .models import *
-from .csp import Constraint
+from datamodels import temp_profs, temp_courses, courses, professors
+from csp import Constraint
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
 
-courses = {
-    "csc110": {
-        "pengRequired": False,
-        "Professor": "Bird",
-        "courseDay": ["monday", "tuesday", "wednesday"]
-    },
-    "csc111": {
-        "pengRequired": False,
-        "Professor": "Bird"
-    },
-    "seng265": {
-        "pengRequired": False,
-        "Professor": "Zastre"
-    },
-    "csc225": {
-        "pengRequired": False,
-        "Professor": "Zastre"
-    },
-    "csc226": {
-        "pengRequired": False,
-        "Professor": "Zastre"
-    },
-    "ece260": {
-        "pengRequired": True,
-        "Professor": "Zastre"
-    },
-    "ece310": {
-        "pengRequired": True,
-        "Professor": "Zastre"
-    },
-    "seng475": {
-        "pengRequired": True,
-        "Professor": "Zastre"
-    }
-}
 
-# Note: data does not reflect the real world and is for testing only
-profs = {
-    "Bird": {
-        "Name": "Bird",
-        "isPeng": False,
-        "qualifiedCourses": ["csc110", "csc111", "csc225", "csc226"],
-        "teachingObligations": 2,
-        "assigned_Courses": 3
-    },
-    "Zastre": {
-        "Name": "Zastre",
-        "isPeng": False,
-        "qualifiedCourses": ["csc110", "csc111", "seng265"],
-        "teachingObligations": 1
-    },
-    "Tzanatakis": {
-        "Name": "Tzanatakis",
-        "isPeng": False,
-        "qualifiedCourses": ["csc225", "csc226"],
-        "teachingObligations": 3
-    },
-    "Adams": {
-        "Name": "Adams",
-        "isPeng": True,
-        "qualifiedCourses": ["ece260", "seng475"],
-        "teachingObligations": 2
-    },
-    "Gebali": {
-        "Name": "Gebali",
-        "isPeng": True,
-        "qualifiedCourses": ["ece260", "ece310"],
-        "teachingObligations": 1
-    }
-}
-
+# Hard constraint: instructors may only be assigned to courses for which they are qualified.
+# Note: this constraint currently isn't used.
+# Instead, we exclude any unqualified professors from the domain of each variable in CSP 1.
 class Qualified_Course_Prof(Constraint):
+    def __init__(self, course):
+        super().__init__([course])
 
-    def __init__(self, professor, courseName) -> None:
-        super().__init__(self)
-        self.professor = professor
-        self.courseName = courseName
-
-    def satisfied(self) -> bool:
-        if self.courseName in self.professor["qualifiedCourses"]:
+    def satisfied(self, assignment) -> bool:
+        course = self.variables[0]
+        if course not in assignment:
             return True
+
+        prof = assignment[course]
+        if course in temp_profs[prof]["qualifiedCoursePreferences"]:
+            return True
+
         return False
 
-class Requires_PENG(Constraint):
+class Course_Requires_PENG(Constraint):
+    def __init__(self, course):
+        super().__init__([course])
 
-    def __init__(self, professor, course) -> None:
-        super().__init__(self)
-        self.professor = professor
-        self.course = course
-
-    def satisfied(self) -> bool:
-        if self.course["pengRequired"]:
-            if self.professor["isPeng"]:
-                return True
-            else:
-                return False
-        else:
+    def satisfied(self, assignment) -> bool:
+        course = self.variables[0]
+        if course not in assignment:
             return True
 
-class Assigned_Teaching_Load(Constraint):
+        prof = assignment[course]
+        if temp_profs[prof]["isPeng"]:
+            return True
 
-    def __init__(self) -> None:
-        super().__init__(self)
-        self.profs = profs
-        self.courses = courses
+        return False
 
-    def satisfied(self) -> bool:
-        professor_courseload = {}
+class Professor_Teaching_Load(Constraint):
+    def __init__(self, courses) -> None:
+        super().__init__(courses)
 
-        for prof, values in profs.items():
-            professor_courseload[prof] = 0
+    def satisfied(self, assignment) -> bool:
+        teaching_loads_dict = {prof : 0 for prof in temp_profs}
 
-        for course, values in courses.items():
-            professor_courseload[values["Professor"]] += 1
+        for course in self.variables:
+            if course not in assignment:
+                continue
+            prof = assignment[course]
+            teaching_loads_dict[prof] += 1
 
-        for prof, value in professor_courseload.items():
-            if value > profs[prof]["teachingObligations"]:
+        for prof, teachingLoad in teaching_loads_dict.items():
+            if teachingLoad > temp_profs[prof]["teachingObligations"]:
                 return False
+
         return True
 
+# TODO: Create timeslots for the courses
+# TODO: Create the hard constraints for:
+#  overlapping courses
+#  no-double booked professor
 
-class All_Courses_Assigned_Professors(Constraint):
+# Hard constraint: the specified courses may not be assigned to overlapping timeslots.
+# class CourseTimeslotOverlapConstraint(Constraint):
+#     def __init__(self, courses) -> None:
+#         super().__init__(courses)
+#         self.courses_ = courses
+#
+#     def satisfied(self, assignment) -> bool:
+#         # Obtain all timeslots for the courses to which this constraint applies.
+#         timeslots: List[TimeSlot] = []
+#         for course in self.courses_:
+#             if course not in assignment:
+#                 continue
+#             for timeslot in assignment[course].timeslots_:
+#                 timeslots.append(timeslot)
+#
+#         # Check for conflicts.
+#         for i in range(len(timeslots)):
+#             for j in range(i + 1, len(timeslots)):
+#                 if (timeslots[i].day_ == timeslots[j].day_):
+#                     if (timeslots[i].start_ >= timeslots[j].start_ and timeslots[i].start_ <= timeslots[j].end_):
+#                         return False
+#                     if (timeslots[j].start_ >= timeslots[i].start_ and timeslots[j].start_ <= timeslots[i].end_):
+#                         return False
+#         return True
 
-    def __init__(self) -> None:
-        super().__init__(self)
-        self.profs = profs
-        self.courses = courses
 
-    def satisfied(self) -> bool:
-        for course, values in courses.items():
-            if values["Professor"] == '':
-                return False
-        return True
-
-
-def main():
-    test = Qualified_Course_Prof(profs["Bird"], "csc110")
-    print(test.satisfied())
-
-    test = Requires_PENG(profs["Bird"], courses["csc110"])
-    print(test.satisfied())
-
-    test = Assigned_Teaching_Load()
-    print(test.satisfied())
-
-    test = All_Courses_Assigned_Professors()
-    print(test.satisfied())
-
-if __name__ == "__main__":
-    main()
+# # Soft constraint: instructors should only be scheduled to teach when they are available.
+# # Creates a score indicating how much assigned teaching time falls outside of professor's preferred hours.
+# # If this score exceeds a threshold, then the constraint is violated.
+# class InstructorAvailabilityConstraint(Constraint[Course, TimeSlotConfiguration]):
+#     def __init__(self, courses: Course) -> None:
+#         super().__init__(courses)
+#         self.courses_ = courses
+#
+#     def satisfied(self, assignment: Dict[Course, TimeSlotConfiguration]) -> bool:
+#         score = 0
+#         for course in self.courses_:
+#             if course not in assignment:
+#                 continue
+#             for timeslot in assignment[course].timeslots_:
+#                 for preferred_time in course.instructor_.preferred_times_:
+#                     if (timeslot.day_ == preferred_time.day_):
+#                         if (timeslot.start_ < preferred_time.start_):
+#                             score -= (preferred_time.start_ - timeslot.start_) ** 2
+#                         if (preferred_time.end_ < timeslot.end_):
+#                             score -= (timeslot.end_ - preferred_time.end_) ** 2
+#         if (score < -400):
+#             return False
+#
+#         return True
+#
+#
+# class InstructorNoDoubleBookingConstraint(Constraint[Course, TimeSlotConfiguration]):
+#     def __init__(self, courses: List[Course]) -> None:
+#         super().__init__(courses)
+#         self.courses_: List[Course] = courses
+#
+#     def satisfied(self, assignment: Dict[Course, TimeSlotConfiguration]) -> bool:
+#         timeslots = []
+#         for course in self.courses_:
+#             if course not in assignment:
+#                 continue
+#             timeslots += assignment[course].timeslots_
+#
+#         for i in range(len(timeslots)):
+#             for j in range(i + 1, len(timeslots)):
+#                 if (timeslots[i].day_ == timeslots[j].day_):
+#                     if (timeslots[i].start_ >= timeslots[j].start_ and timeslots[i].start_ <= timeslots[j].end_):
+#                         return False
+#                     if (timeslots[j].start_ >= timeslots[i].start_ and timeslots[j].start_ <= timeslots[i].end_):
+#                         return False
+#
+#         return True
+#
+#
+# class InstructorCoursePreferenceConstraint(Constraint[Course, Instructor]):
+#     def __init__(self, courses: List[Course]) -> None:
+#         super().__init__(courses)
+#         self.courses_: List[Course] = courses
+#
+#     # Constraint on per-professor means of preference scores
+#     def satisfied(self, assignment: Dict[Course, Instructor]) -> bool:
+#         assigned_courses_dict = {instructor.name_: [] for instructor in instructors}
+#         for course in self.courses_:
+#             if course not in assignment:
+#                 continue
+#             assigned_courses_dict[assignment[course].name_].append(course)
+#
+#         for instructor in instructors:
+#             if (len(assigned_courses_dict[instructor.name_]) > 0):
+#                 sum = 0
+#                 for course in assigned_courses_dict[instructor.name_]:
+#                     sum += instructor.qualifications_[course.name_]
+#                 mean = sum / len(assigned_courses_dict[instructor.name_])
+#                 if mean < 120:
+#                     return False
+#         return True
+#
