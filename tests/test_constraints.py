@@ -3,7 +3,7 @@ from unittest import TestCase
 import pytest
 from src.coursescheduler.constraints import Qualified_Course_Prof, Requires_PENG, \
     All_Courses_Assigned_Professors, Assigned_Teaching_Load
-from src.coursescheduler.models import temp_profs, temp_courses
+from src.coursescheduler.datamodels import temp_profs, temp_courses
 
 
 class PyTestConstraints(TestCase):
