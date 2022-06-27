@@ -1,6 +1,6 @@
 # SENG 499 - Company 2 - Algorithm 1 
 
-This repository contains a package, [Course-Scheduler](https://pypi.org/project/Course-Scheduler/0.0.1/), for
+This repository contains a package, [Course-Scheduler](https://pypi.org/project/coursescheduler/), for
 that returns a course schedule for three terms of Software Engineering courses at UVic. The Course Scheduler uses the 
 Constraint Satisfaction Problem (CSP) Algorithm to determine the hard constraint of the schedule, and produces a schedule 
 that adheres to the constraints. The scheduler also takes into account soft constraints for professor preferences, 
@@ -13,13 +13,13 @@ Authored by the Company2-Algorithm1 sub-team.
 Install this package into your environment from PyPi using `pip`. 
 
 ```bash
-$ pip install Course-Scheduler==0.0.1
+$ pip install coursescheduler==0.0.1
 ```
 The most recent available version of the package is uploaded to the test PyPi index automatically.
 To ensure that you are working with the most recent release upgrade this module before integrating.
 
 ```bash
-$ python3 -m pip install --upgrade Course-Scheduler
+$ python3 -m pip install --upgrade coursescheduler
 ```
 
 ## Install from Local Archives
@@ -29,7 +29,7 @@ build and install the package as shown below.
 
 ```bash
 $ python3 -m build
-$ pip3 install Course_Scheduler-0.0.1.tar.gz
+$ pip3 install coursescheduler-0.0.1.tar.gz
 ```
 
 ## Usage
