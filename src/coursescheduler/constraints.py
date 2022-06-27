@@ -1,7 +1,7 @@
 from typing import List, TypeVar
 
-from datamodels import temp_profs, temp_courses, courses, professors
-from csp import Constraint
+from .datamodels import temp_profs, temp_courses, courses, professors
+from .csp import Constraint
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type

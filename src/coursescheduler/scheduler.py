@@ -1,8 +1,8 @@
 from typing import Generic, TypeVar, Dict, List, Optional
 
-from constraints import Qualified_Course_Prof, Course_Requires_PENG, Professor_Teaching_Load
-from datamodels import *
-from csp import CSP
+from src.coursescheduler.constraints import Qualified_Course_Prof, Course_Requires_PENG, Professor_Teaching_Load
+from src.coursescheduler.datamodels import *
+from src.coursescheduler.csp import CSP
 import sys
 
 # Initial plug & play algorithm
