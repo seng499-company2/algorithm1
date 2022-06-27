@@ -1,4 +1,5 @@
 # from datamodels import *
+
 # Experimental implementation of simple csp scheduling algorithm
 
 # From / based on: https://freecontent.manning.com/constraint-satisfaction-problems-in-python/
@@ -80,4 +81,5 @@ class CSP(Generic[V, D]):
                 # If we didn't find the result, we will end up backtracking
                 if result is not None:
                     return result
+
         return None
