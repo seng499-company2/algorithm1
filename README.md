@@ -13,7 +13,7 @@ Authored by the Company2-Algorithm1 sub-team.
 Install this package into your environment from PyPi using `pip`. 
 
 ```bash
-$ pip install coursescheduler==0.0.1
+$ pip install coursescheduler
 ```
 The most recent available version of the package is uploaded to the test PyPi index automatically.
 To ensure that you are working with the most recent release upgrade this module before integrating.
@@ -46,7 +46,7 @@ schedule = generate_schedule(historical_course_data, professors, schedule)
 ## Dev 
 
 To make and test changes to the project, navigate into the root level directory 
-`/path/to/algorithm1/`. After editing the projet files, in order for the changes to take
+`/path/to/algorithm1/`. After editing the project files, in order for the changes to take
 effect you must reinstall the local package by the following cmd:
 
 ```bash
