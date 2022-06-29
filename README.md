@@ -11,8 +11,8 @@ Install this package into your environment from PyPi using `pip`.
 ```bash
 $ pip install coursescheduler
 ```
-The most recent available version of the package is uploaded to the test PyPi index automatically.
-To ensure that you are working with the most recent release upgrade this module before integrating.
+The most recent available version of the package is uploaded to the PyPi index automatically as part of our CI/CD 
+pipeline. To ensure that you are working with the most recent release, upgrade this module before integrating.
 ```bash
 $ python3 -m pip install --upgrade coursescheduler
 ```
@@ -26,10 +26,10 @@ $ pip3 install coursescheduler-0.0.1.tar.gz
 ```
 
 ## Usage
-The algorithm 1 module may then be imported into and called from the backend subteam. In the example below
-`historical_course_data` `professors` and `schedule` are python dictionaries or
-JSON strings. A schedule object with capacities assigned is encoded as a JSON string and returned
-to caller.
+Once installed, the algorithm can be imported and called with `generate_schedule`, as shown below. `generate_schedule` 
+expects three parameters and returns a single output, all of which are Python dictionaries. 
+The API specification 
+can be found [here](https://docs.google.com/document/d/163L7pv6w5Z38rUrl2EwRJq-A9ZLllCIO9uYbUkdxi2s/edit?usp=sharing).
 ```python
 from coursescheduler import generate_schedule
 schedule = generate_schedule(historical_course_data, professors, schedule)
