@@ -1,13 +1,13 @@
 from typing import List, TypeVar
 
-from .datamodels import temp_profs, temp_courses
+from tests.datamodels_tester import temp_profs, temp_courses
 from .csp import Constraint
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
 
 
-class Verify_Qualified_Course_Prof(Constraint):
+class verify_qualified_course_prof(Constraint):
 
     def __init__(self, professor, courseName) -> None:
         super().__init__([temp_courses])
@@ -19,7 +19,7 @@ class Verify_Qualified_Course_Prof(Constraint):
             return True
         return False
 
-class Verify_Requires_PENG(Constraint):
+class verify_requires_peng(Constraint):
 
     def __init__(self, professor, course) -> None:
         super().__init__([temp_courses])
@@ -35,7 +35,7 @@ class Verify_Requires_PENG(Constraint):
         else:
             return True
 
-class Verify_Assigned_Teaching_Load(Constraint):
+class verify_assigned_teaching_load(Constraint):
 
     def __init__(self) -> None:
         super().__init__([temp_courses])
@@ -56,7 +56,7 @@ class Verify_Assigned_Teaching_Load(Constraint):
         return True
 
 
-class Verify_All_Courses_Assigned_Professors(Constraint):
+class verify_all_courses_assigned_professors(Constraint):
 
     def __init__(self) -> None:
         super().__init__([temp_courses])

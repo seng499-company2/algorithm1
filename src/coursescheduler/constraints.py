@@ -1,7 +1,8 @@
 from typing import List, TypeVar
 
-from datamodels import temp_profs, temp_courses, courses, professors
-from csp import Constraint
+from .datamodels import courses, professors
+from .csp import Constraint
+from tests.datamodels_tester import temp_profs, temp_courses
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
@@ -10,7 +11,7 @@ D = TypeVar('D')  # domain type
 # Hard constraint: instructors may only be assigned to courses for which they are qualified.
 # Note: this constraint currently isn't used.
 # Instead, we exclude any unqualified professors from the domain of each variable in CSP 1.
-class Qualified_Course_Prof(Constraint):
+class qualified_course_prof(Constraint):
     def __init__(self, course):
         super().__init__([course])
 
@@ -25,7 +26,7 @@ class Qualified_Course_Prof(Constraint):
 
         return False
 
-class Course_Requires_PENG(Constraint):
+class course_requires_peng(Constraint):
     def __init__(self, course):
         super().__init__([course])
 
@@ -40,7 +41,8 @@ class Course_Requires_PENG(Constraint):
 
         return False
 
-class Professor_Teaching_Load(Constraint):
+# Possibly edit to incLude a dictionary to continuously count the professor load
+class professor_teaching_load(Constraint):
     def __init__(self, courses) -> None:
         super().__init__(courses)
 
@@ -63,102 +65,3 @@ class Professor_Teaching_Load(Constraint):
 # TODO: Create the hard constraints for:
 #  overlapping courses
 #  no-double booked professor
-
-# Hard constraint: the specified courses may not be assigned to overlapping timeslots.
-# class CourseTimeslotOverlapConstraint(Constraint):
-#     def __init__(self, courses) -> None:
-#         super().__init__(courses)
-#         self.courses_ = courses
-#
-#     def satisfied(self, assignment) -> bool:
-#         # Obtain all timeslots for the courses to which this constraint applies.
-#         timeslots: List[TimeSlot] = []
-#         for course in self.courses_:
-#             if course not in assignment:
-#                 continue
-#             for timeslot in assignment[course].timeslots_:
-#                 timeslots.append(timeslot)
-#
-#         # Check for conflicts.
-#         for i in range(len(timeslots)):
-#             for j in range(i + 1, len(timeslots)):
-#                 if (timeslots[i].day_ == timeslots[j].day_):
-#                     if (timeslots[i].start_ >= timeslots[j].start_ and timeslots[i].start_ <= timeslots[j].end_):
-#                         return False
-#                     if (timeslots[j].start_ >= timeslots[i].start_ and timeslots[j].start_ <= timeslots[i].end_):
-#                         return False
-#         return True
-
-
-# # Soft constraint: instructors should only be scheduled to teach when they are available.
-# # Creates a score indicating how much assigned teaching time falls outside of professor's preferred hours.
-# # If this score exceeds a threshold, then the constraint is violated.
-# class InstructorAvailabilityConstraint(Constraint[Course, TimeSlotConfiguration]):
-#     def __init__(self, courses: Course) -> None:
-#         super().__init__(courses)
-#         self.courses_ = courses
-#
-#     def satisfied(self, assignment: Dict[Course, TimeSlotConfiguration]) -> bool:
-#         score = 0
-#         for course in self.courses_:
-#             if course not in assignment:
-#                 continue
-#             for timeslot in assignment[course].timeslots_:
-#                 for preferred_time in course.instructor_.preferred_times_:
-#                     if (timeslot.day_ == preferred_time.day_):
-#                         if (timeslot.start_ < preferred_time.start_):
-#                             score -= (preferred_time.start_ - timeslot.start_) ** 2
-#                         if (preferred_time.end_ < timeslot.end_):
-#                             score -= (timeslot.end_ - preferred_time.end_) ** 2
-#         if (score < -400):
-#             return False
-#
-#         return True
-#
-#
-# class InstructorNoDoubleBookingConstraint(Constraint[Course, TimeSlotConfiguration]):
-#     def __init__(self, courses: List[Course]) -> None:
-#         super().__init__(courses)
-#         self.courses_: List[Course] = courses
-#
-#     def satisfied(self, assignment: Dict[Course, TimeSlotConfiguration]) -> bool:
-#         timeslots = []
-#         for course in self.courses_:
-#             if course not in assignment:
-#                 continue
-#             timeslots += assignment[course].timeslots_
-#
-#         for i in range(len(timeslots)):
-#             for j in range(i + 1, len(timeslots)):
-#                 if (timeslots[i].day_ == timeslots[j].day_):
-#                     if (timeslots[i].start_ >= timeslots[j].start_ and timeslots[i].start_ <= timeslots[j].end_):
-#                         return False
-#                     if (timeslots[j].start_ >= timeslots[i].start_ and timeslots[j].start_ <= timeslots[i].end_):
-#                         return False
-#
-#         return True
-#
-#
-# class InstructorCoursePreferenceConstraint(Constraint[Course, Instructor]):
-#     def __init__(self, courses: List[Course]) -> None:
-#         super().__init__(courses)
-#         self.courses_: List[Course] = courses
-#
-#     # Constraint on per-professor means of preference scores
-#     def satisfied(self, assignment: Dict[Course, Instructor]) -> bool:
-#         assigned_courses_dict = {instructor.name_: [] for instructor in instructors}
-#         for course in self.courses_:
-#             if course not in assignment:
-#                 continue
-#             assigned_courses_dict[assignment[course].name_].append(course)
-#
-#         for instructor in instructors:
-#             if (len(assigned_courses_dict[instructor.name_]) > 0):
-#                 sum = 0
-#                 for course in assigned_courses_dict[instructor.name_]:
-#                     sum += instructor.qualifications_[course.name_]
-#                 mean = sum / len(assigned_courses_dict[instructor.name_])
-#                 if mean < 120:
-#                     return False
-#         return True
-#
