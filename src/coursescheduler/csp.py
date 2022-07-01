@@ -1,4 +1,6 @@
 from models import *
+import random
+import sys
 # Experimental implementation of simple csp scheduling algorithm
 
 # From / based on: https://freecontent.manning.com/constraint-satisfaction-problems-in-python/
@@ -22,6 +24,10 @@ class Constraint(Generic[V, D], ABC):
     # Must be overridden by subclasses
     @abstractmethod
     def satisfied(self, assignment: Dict[V, D]) -> bool:
+        return
+
+    @abstractmethod
+    def var_satisfied(self, var, assignment: Dict[V, D]) -> bool:
         return
 
 
@@ -61,6 +67,20 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
+    def var_consistent(self, variable: V, assignment: Dict[V, D]) -> bool:
+        for constraint in self.constraints[variable]:
+            if not constraint.var_satisfied(variable, assignment):
+                return False
+        return True
+
+    # Check entire assignment for consistency.
+    def total_consistent(self, assignment: Dict[V, D]):
+        inconsistent_set = []
+        for variable in self.variables:
+            if not self.var_consistent(variable, assignment):
+                inconsistent_set.append(variable)
+        return inconsistent_set
+
     def backtracking_search(self, config=None) -> Optional[Dict[V, D]]:
         if config is not None and config.get('mrv') is True and config.get('degree') is True:
             print("Cannot use MRV and Degree variable heuristics simultaneously. Please modify config.")
@@ -70,6 +90,7 @@ class CSP(Generic[V, D]):
         if config is not None and config.get('mrv'):
             def get_domain_size(var):
                 return len(self.domains[var])
+
             self.variables.sort(key=get_domain_size)
 
         # If using degree heuristic, sort variables in decreasing order of degree.
@@ -163,3 +184,45 @@ class CSP(Generic[V, D]):
         else:
             result = backtracking_search_recursive()
         return result
+
+    def min_conflicts_search(self, config=None) -> Optional[Dict[V, D]]:
+        # Obtains number of conflicts in an assignment.
+        def get_conflict_count(assignment):
+            total_count = 0
+            inconsistent_set_ = self.total_consistent(assignment)
+            for variable_ in inconsistent_set_:
+                for constraint in self.constraints[variable_]:
+                    if not constraint.var_satisfied(variable_, assignment):
+                        total_count += 1
+            return total_count
+
+        # current <- initial complete random assignment
+        current = {}
+        for variable in self.variables:
+            current[variable] = random.choice(self.domains[variable])
+
+        # Loop for a number of times modifying the assignment each time until a max threshold of steps is reached
+        for __ in range(config["max_steps"]):
+            # Obtain all variables currently involved in conflicts.
+            inconsistent_set = self.total_consistent(current)
+
+            # If no variables are involved in conflicts, then a solution has been found.
+            if len(inconsistent_set) <= 0:
+                return current
+
+            # Choose a variable at random.
+            var = random.choice(inconsistent_set)
+
+            # Find the assignment of a value to the variable which has the fewest number of conflicts on all
+            # variables in the assignment.
+            min_conflicts_value = None
+            min_conflicts_count = sys.maxsize
+            for value in self.domains[var]:
+                assignment_copy = current.copy()
+                assignment_copy[var] = value
+                conflict_count = get_conflict_count(assignment_copy)
+                if conflict_count < min_conflicts_count:
+                    min_conflicts_value = value
+                    min_conflicts_count = conflict_count
+            current[var] = min_conflicts_value
+        return None
