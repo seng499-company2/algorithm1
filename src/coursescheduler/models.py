@@ -1,7 +1,8 @@
-# This file contains a set of example data models to be used within the algorithm.
+# This file contains example data models to be used within the algorithm.
 # This file will eventually convert the input data into the structures below.
 
-# A dictionary of courses where the course codes are the keys and the values are the attributes of each course
+# A dictionary of courses where the course codes are the keys
+# and the values are the attributes of each course
 courses = {
     "course code1": {
         "pengRequired": "boolean",
@@ -21,7 +22,8 @@ courses = {
     },
 }
 
-# A dictionary of professors where the professor ids are the keys and the values are the attributes of each professor
+# A dictionary of professors where the professor ids are the keys
+# and the values are the attributes of each professor
 professors = {
     "id": {
         "name": "string",
@@ -37,5 +39,5 @@ professors = {
 }
 
 timeslots = {
-#     TODO
+    # TODO finish writing timeslots
 }
