@@ -10,7 +10,7 @@ class PyTestConstraints(TestCase):
 
     def test_qualified_course_profs_pass(self):
         test = verify_qualified_course_prof(temp_profs["Bird"], "csc110")
-        assert (test.satisfied()) == True
+        self.assertTrue(test.satisfied())
 
     def test_qualified_course_profs_fails(self):
         test = verify_qualified_course_prof(temp_profs["Bird"], "seng474")
@@ -32,8 +32,6 @@ class PyTestConstraints(TestCase):
     def test_assigned_teaching_load_passes(self):
         test = verify_assigned_teaching_load()
         self.assertTrue(test.satisfied())
-
-
 
     def test_all_courses_assigned_professors_fails(self):
         temp_courses["csc110"]["professor"] = ""
