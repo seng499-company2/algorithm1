@@ -19,7 +19,7 @@ $ python3 -m pip install --upgrade coursescheduler
 
 ## Install from Local Archives
 Clone this repo into your repository. Inside the algorithm 1 module directory,
-build and install the package as shown below.
+build and install the package as shown below. Note: you must replace `0.0.1` with the correct version.
 ```bash
 $ python3 -m build
 $ pip3 install coursescheduler-0.0.1.tar.gz
