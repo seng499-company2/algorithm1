@@ -1,1 +1,2 @@
-# from .scheduler import generate_schedule
+from .scheduler import generate_schedule
+
