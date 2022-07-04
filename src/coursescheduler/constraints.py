@@ -26,6 +26,7 @@ class qualified_course_prof(Constraint):
 
         return False
 
+
 class course_requires_peng(Constraint):
     def __init__(self, course):
         super().__init__([course])
@@ -41,13 +42,14 @@ class course_requires_peng(Constraint):
 
         return False
 
+
 # Possibly edit to incLude a dictionary to continuously count the professor load
 class professor_teaching_load(Constraint):
-    def __init__(self, courses) -> None:
-        super().__init__(courses)
+    def __init__(self, allcourses) -> None:
+        super().__init__(allcourses)
 
     def satisfied(self, assignment) -> bool:
-        teaching_loads_dict = {prof : 0 for prof in temp_profs}
+        teaching_loads_dict = {prof: 0 for prof in temp_profs}
 
         for course in self.variables:
             if course not in assignment:

@@ -19,6 +19,7 @@ class verify_qualified_course_prof(Constraint):
             return True
         return False
 
+
 class verify_requires_peng(Constraint):
 
     def __init__(self, professor, course) -> None:
@@ -34,6 +35,7 @@ class verify_requires_peng(Constraint):
                 return False
         else:
             return True
+
 
 class verify_assigned_teaching_load(Constraint):
 

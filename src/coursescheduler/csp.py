@@ -1,4 +1,4 @@
-from .datamodels import *
+from .datamodels import courses, professors
 # Experimental implementation of simple csp scheduling algorithm
 
 # Based on: https://freecontent.manning.com/constraint-satisfaction-problems-in-python/
