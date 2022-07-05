@@ -1,60 +1,36 @@
-# This file contains a set of example data models to be used within the algorithm.
-# This file will eventually convert the input data into the structures below.
+# This function transforms the input data into data which is optimal for use in the algorithm.
+def tranform_input(schedule_input, professors_input):
+    courses = {
+        "fall": {},
+        "spring": {},
+        "summer": {}
+    }
+    for semester, offering_list in schedule_input.items():
+        for offering in offering_list:
+            course = offering["course"]
+            sections = offering["sections"]
+            for index, section in enumerate(sections):
+                courses[semester][course["code"] + "_" + str(index)] = {
+                    # Appending number to handle multi-section courses
+                    "pengRequired": course["pengRequired"][semester],
+                    "yearRequired": course["yearRequired"],
+                    "semester": semester,
+                    "professor": section["professor"]["id"] if section["professor"] is not None else None,
+                    "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
+                    # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
+                }
 
-# A dictionary of courses where the course codes are the keys and the values are the attributes of each course
-courses = {
-    "course code1": {
-        "pengRequired": "boolean",
-        "yearRequired": "int",
-        "semester": "string",
-        "professor": "professor object",
-        "timeSlots": "list of timeSlot objects",
-        "academicYear": "int"
-    },
-    "course code2": {
-        "pengRequired": "boolean",
-        "yearRequired": "int",
-        "semester": "string",
-        "professor": "professor object",
-        "timeSlots": "list of timeSlot objects",
-        "academicYear": "int"
-    },
-}
-
-# A dictionary of professors where the professor ids are the keys and the values are the attributes of each professor
-professors = {
-    "id": {
-        "name": "string",
-        "isPeng": "boolean",
-        "facultyType": "string",
-        "qualifiedCoursePreferences": "list of coursePreference objects",
-        "teachingObligations": "int",
-        "preferredTimes": "dictionary of DayTimes objects",
-        "preferredCoursesPerSemester": "dictionary of fall, spring, and summer ints",
-        "preferredNonTeachingSemester": "string",
-        "preferredCourseDaySpreads": "a course day spread object"
-    },
-}
-# TWF (Tues, Wed, Fri) - 50 mins
-# MR (Mon, Thurs) - 80 mins
-# Any day - 180 mins
-# TODO: Create the timeslot dictionary
-timeslots = {
-}
-
-# timeslots = {
-#     days = TWF
-# }
-#
-# timeslot_configuration = {
-#     id = 1
-#     timeslots = [timeslot1, timeslot2, . . . ]
-# }
-#
-# timeslot = {
-#     day = "Mon"
-#     start = 830
-#     end = 920
-# }
-
-# time_conflicts = {id : [ids of conflicting configurations]}
+    professors = {}
+    for professor in professors_input:
+        professors[professor["id"]] = {
+            "name": professor["name"],
+            "isPeng": professor["isPeng"],
+            "facultyType": professor["facultyType"],
+            "qualifiedCoursePreferences": professor["coursePreferences"],
+            "teachingObligations": professor["teachingObligations"],
+            "preferredTimes": professor["preferredTimes"],
+            "preferredCoursesPerSemester": professor["preferredCoursesPerSemester"],
+            "preferredNonTeachingSemester": professor["preferredNonTeachingSemester"],
+            "preferredCourseDaySpreads": professor["preferredCourseDaySpreads"]
+        }
+    return courses, professors
