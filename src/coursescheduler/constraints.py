@@ -1,7 +1,8 @@
+import datetime
 from typing import List, TypeVar
 
-from .datamodels import courses, professors
-from .csp import Constraint
+from src.coursescheduler.datamodels import courses, professors, scheduled_times
+from src.coursescheduler.csp import Constraint
 from tests.datamodels_tester import temp_profs, temp_courses
 
 V = TypeVar('V')  # variable type
@@ -26,6 +27,7 @@ class qualified_course_prof(Constraint):
 
         return False
 
+
 class course_requires_peng(Constraint):
     def __init__(self, course):
         super().__init__([course])
@@ -41,13 +43,14 @@ class course_requires_peng(Constraint):
 
         return False
 
+
 # Possibly edit to incLude a dictionary to continuously count the professor load
 class professor_teaching_load(Constraint):
     def __init__(self, courses) -> None:
         super().__init__(courses)
 
     def satisfied(self, assignment) -> bool:
-        teaching_loads_dict = {prof : 0 for prof in temp_profs}
+        teaching_loads_dict = {prof: 0 for prof in temp_profs}
 
         for course in self.variables:
             if course not in assignment:
@@ -58,6 +61,31 @@ class professor_teaching_load(Constraint):
         for prof, teachingLoad in teaching_loads_dict.items():
             if teachingLoad > temp_profs[prof]["teachingObligations"]:
                 return False
+
+        return True
+
+
+# Possibly edit to incLude a dictionary to continuously count the professor load
+class course_timeslot_conflicts(Constraint):
+    def __init__(self, courses) -> None:
+        super().__init__(courses)
+
+    def satisfied(self, assignment) -> bool:
+        for course in self.variables:
+            if course not in assignment:
+                continue
+            other_courses = [x for x in assignment if x != course]
+            for compare_courses in other_courses:
+                if len(course["timeSlots"]) == len(compare_courses["timeSlots"]):
+                    if (course["timeSlots"][0]["timeRange"][0] >= compare_courses["timeSlots"][0]["timeRange"][0]) and \
+                            (course["timeSlots"][0]["timeRange"][0] <= compare_courses["timeSlots"][0]["timeRange"][1]):
+                        return False
+                    if (course["timeSlots"][0]["timeRange"][0] <= compare_courses["timeSlots"][0]["timeRange"][0]) and \
+                            (course["timeSlots"][0]["timeRange"][0] >= compare_courses["timeSlots"][0]["timeRange"][1]):
+                        return False
+                # elif len(course["timeSlots"]) == 1 or len(compare_courses["timeSlots"]) == 1:
+
+
 
         return True
 
