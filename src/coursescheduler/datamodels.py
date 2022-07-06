@@ -10,7 +10,7 @@ def tranform_input(schedule_input, professors_input):
             course = offering["course"]
             sections = offering["sections"]
             for index, section in enumerate(sections):
-                courses[semester][course["code"] + "_" + str(index)] = {
+                courses[semester][course["code"] + "_" + semester + "_" + str(index)] = {
                     # Appending number to handle multi-section courses
                     "pengRequired": course["pengRequired"][semester],
                     "yearRequired": course["yearRequired"],

@@ -1,7 +1,6 @@
 from typing import List, TypeVar
 
-from .datamodels import courses, professors
-from .csp import Constraint
+from csp import Constraint
 from tests.datamodels_tester import temp_profs, temp_courses
 
 V = TypeVar('V')  # variable type
@@ -26,6 +25,7 @@ class qualified_course_prof(Constraint):
 
         return False
 
+
 class course_requires_peng(Constraint):
     def __init__(self, course):
         super().__init__([course])
@@ -41,13 +41,15 @@ class course_requires_peng(Constraint):
 
         return False
 
+
 # Possibly edit to incLude a dictionary to continuously count the professor load
 class professor_teaching_load(Constraint):
-    def __init__(self, courses) -> None:
+    def __init__(self, courses, professors) -> None:
         super().__init__(courses)
+        self.professors = professors
 
     def satisfied(self, assignment) -> bool:
-        teaching_loads_dict = {prof : 0 for prof in temp_profs}
+        teaching_loads_dict = {prof: 0 for prof in self.professors}
 
         for course in self.variables:
             if course not in assignment:
@@ -56,7 +58,7 @@ class professor_teaching_load(Constraint):
             teaching_loads_dict[prof] += 1
 
         for prof, teachingLoad in teaching_loads_dict.items():
-            if teachingLoad > temp_profs[prof]["teachingObligations"]:
+            if teachingLoad > self.professors[prof]["teachingObligations"]:
                 return False
 
         return True
