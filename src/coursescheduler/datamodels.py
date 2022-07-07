@@ -13,15 +13,26 @@ def transform_input(schedule_input, professors_input):
             course = offering["course"]
             sections = offering["sections"]
             for index, section in enumerate(sections):
-                courses[semester][course["code"] + "_" + semester + "_" + str(index)] = {
-                    # Appending number to handle multi-section courses
-                    "pengRequired": course["pengRequired"][semester],
-                    "yearRequired": course["yearRequired"],
-                    "semester": semester,
-                    "professor": section["professor"]["id"] if section["professor"] is not None else None,
-                    "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
-                    # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
-                }
+                if section["professor"] is None and len(section["timeSlots"]) <= 0:
+                    courses[semester][course["code"] + "_" + semester] = {
+                        # Appending number to handle multi-section courses
+                        "pengRequired": course["pengRequired"][semester],
+                        "yearRequired": course["yearRequired"],
+                        "semester": semester,
+                        "professor": section["professor"]["id"] if section["professor"] is not None else None,
+                        "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
+                        # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
+                    }
+                else:
+                    courses[semester][course["code"] + "_" + semester + "_" + str(index)] = {
+                        # Appending number to handle multi-section courses
+                        "pengRequired": course["pengRequired"][semester],
+                        "yearRequired": course["yearRequired"],
+                        "semester": semester,
+                        "professor": section["professor"]["id"] if section["professor"] is not None else None,
+                        "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
+                        # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
+                    }
 
     professors = {}
     for professor in professors_input:
@@ -46,7 +57,10 @@ def transform_output(alg_output, schedule_input, professors):
             course = offering["course"]
             sections = offering["sections"]
             for index, section in enumerate(sections):
-                output_section_data = alg_output[semester][course["code"] + "_" + semester + "_" + str(index)]
+                if section["professor"] is None and len(section["timeSlots"]) <= 0:
+                    output_section_data = alg_output[semester][course["code"] + "_" + semester]
+                else:
+                    output_section_data = alg_output[semester][course["code"] + "_" + semester + "_" + str(index)]
 
                 # If the professor isn't assigned in the input then we fetch the output assignment and fill it in
                 if section["professor"]["id"] is None:
