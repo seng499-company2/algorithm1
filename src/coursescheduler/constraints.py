@@ -1,6 +1,6 @@
 from typing import List, TypeVar
 
-from csp import Constraint
+from .csp import Constraint
 
 # from tests.datamodels_tester import temp_profs, temp_courses
 # from coursescheduler.csp import Constraint

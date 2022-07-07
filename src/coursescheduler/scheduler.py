@@ -2,20 +2,20 @@ import json
 import os
 from pprint import pprint
 
-from constraints import professor_teaching_load, course_timeslot_conflicts
-from csp import CSP
-from datamodels import transform_input, timeslot_determination, transform_output
+from .constraints import professor_teaching_load, course_timeslot_conflicts
+from .csp import CSP
+from .datamodels import transform_input, timeslot_determination, transform_output
 
 
 # Initial plug & play algorithm
 def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
-        prof_file = open('temp_json_input/professor_object.json')
+        prof_file = open('coursescheduler/temp_json_input/professor_object.json')
         professors = json.load(prof_file)
         prof_file.close()
 
-        schedule_file = open('temp_json_input/schedule_object.json')
+        schedule_file = open('coursescheduler/temp_json_input/schedule_object.json')
         schedule = json.load(schedule_file)
         schedule_file.close()
 
