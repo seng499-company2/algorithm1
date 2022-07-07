@@ -7,7 +7,7 @@
                         "pengRequired": {
                               "fall": true,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -116,7 +116,7 @@
                         "title": "Continuous-Time Signals and Systems",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
+                              "spring": false,
                               "summer": false
                         },
                         "yearRequired": 2
@@ -205,7 +205,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": false,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -227,7 +227,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -271,7 +271,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": false,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -293,7 +293,7 @@
                         "pengRequired": {
                               "fall": true,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -314,8 +314,8 @@
                         "title": "Microprocessor-Based Systems",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
-                              "summer": null
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -336,8 +336,8 @@
                         "title": "Digital Logic and Computer Organization",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
-                              "summer": null
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -424,8 +424,8 @@
                         "title": "Software Architecture and Design",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
-                              "summer": null
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -446,8 +446,8 @@
                         "title": "Security Engineering",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
-                              "summer": null
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -467,9 +467,9 @@
                         "code": "ENGR110",
                         "title": "Design and Communication I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -489,9 +489,9 @@
                         "code": "ENGR130",
                         "title": "Introduction to Professional Practice",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -511,9 +511,9 @@
                         "code": "MATH100",
                         "title": "Calculus I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -533,9 +533,9 @@
                         "code": "MATH109",
                         "title": "Introduciton to Calculus",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -555,9 +555,9 @@
                         "code": "MATH110",
                         "title": "Matrix Algebra for Engineers",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -577,9 +577,9 @@
                         "code": "PHYS110",
                         "title": "Introductory Physics",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -599,9 +599,9 @@
                         "code": "MATH101",
                         "title": "Calculus II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -621,9 +621,9 @@
                         "code": "CHEM101",
                         "title": "Properties of Materials",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -643,9 +643,9 @@
                         "code": "MATH122",
                         "title": "Logic and Foundations",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -665,9 +665,9 @@
                         "code": "STAT260",
                         "title": "Introduction to Probability and Statistics I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -687,9 +687,9 @@
                         "code": "ECON180",
                         "title": "Introduction to Principles of Microeconomics and Financial Project Evaluation",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -713,7 +713,7 @@
                         "pengRequired": {
                               "fall": true,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -843,7 +843,7 @@
                         "code": "ECE310",
                         "title": "Digital Signal Processing I",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": false,
                               "summer": false
                         },
@@ -865,7 +865,7 @@
                         "code": "SENG275",
                         "title": "Software Testing",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": true,
                               "summer": true
                         },
@@ -911,7 +911,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": false,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -933,7 +933,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -977,7 +977,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": false,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -999,7 +999,7 @@
                         "pengRequired": {
                               "fall": true,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -1021,7 +1021,7 @@
                         "pengRequired": {
                               "fall": false,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 3
                   },
@@ -1107,9 +1107,9 @@
                         "code": "ECE455",
                         "title": "Real-Time Computer Systems Design Project",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": false,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 4
                   },
@@ -1129,9 +1129,9 @@
                         "code": "CSC460",
                         "title": "Design and Analysis of Real-time Systems",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": true,
-                              "summer": null
+                              "summer": false
                         },
                         "yearRequired": 4
                   },
@@ -1151,9 +1151,9 @@
                         "code": "SENG401",
                         "title": "Social and Professional Issues",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 4
                   },
@@ -1173,9 +1173,9 @@
                         "code": "ENGR130",
                         "title": "Introduction to Professional Practice",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1195,9 +1195,9 @@
                         "code": "MATH100",
                         "title": "Calculus I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1217,9 +1217,9 @@
                         "code": "MATH109",
                         "title": "Introduciton to Calculus",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1239,9 +1239,9 @@
                         "code": "PHYS110",
                         "title": "Introductory Physics",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1261,9 +1261,9 @@
                         "code": "ENGR120",
                         "title": "Design and Communication II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1283,9 +1283,9 @@
                         "code": "ENGR141",
                         "title": "Engineering Mechanics",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1305,9 +1305,9 @@
                         "code": "MATH101",
                         "title": "Calculus II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1327,9 +1327,9 @@
                         "code": "PHYS111",
                         "title": "Introductory Physics II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1349,9 +1349,9 @@
                         "code": "MATH122",
                         "title": "Logic and Foundations",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1371,9 +1371,9 @@
                         "code": "STAT260",
                         "title": "Introduction to Probability and Statistics I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1462,7 +1462,7 @@
                         "title": "Continuous-Time Signals and Systems",
                         "pengRequired": {
                               "fall": false,
-                              "spring": null,
+                              "spring": false,
                               "summer": false
                         },
                         "yearRequired": 2
@@ -1527,7 +1527,7 @@
                         "code": "ECE310",
                         "title": "Digital Signal Processing I",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": false,
                               "summer": false
                         },
@@ -1549,7 +1549,7 @@
                         "code": "SENG275",
                         "title": "Software Testing",
                         "pengRequired": {
-                              "fall": null,
+                              "fall": false,
                               "spring": true,
                               "summer": true
                         },
@@ -1681,8 +1681,8 @@
                         "code": "SENG426",
                         "title": "Software Quality Engineering",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
+                              "fall": false,
+                              "spring": false,
                               "summer": false
                         },
                         "yearRequired": 4
@@ -1703,8 +1703,8 @@
                         "code": "SENG440",
                         "title": "Embedded Systems",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
+                              "fall": false,
+                              "spring": false,
                               "summer": false
                         },
                         "yearRequired": 4
@@ -1725,8 +1725,8 @@
                         "code": "SENG499",
                         "title": "Design Project II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
+                              "fall": false,
+                              "spring": false,
                               "summer": false
                         },
                         "yearRequired": 4
@@ -1747,9 +1747,9 @@
                         "code": "MATH100",
                         "title": "Calculus I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1769,9 +1769,9 @@
                         "code": "MATH109",
                         "title": "Introduciton to Calculus",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1791,9 +1791,9 @@
                         "code": "ENGR141",
                         "title": "Engineering Mechanics",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1813,9 +1813,9 @@
                         "code": "MATH101",
                         "title": "Calculus II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1835,9 +1835,9 @@
                         "code": "PHYS111",
                         "title": "Introductory Physics II",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 1
                   },
@@ -1857,9 +1857,9 @@
                         "code": "CHEM101",
                         "title": "Properties of Materials",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1879,9 +1879,9 @@
                         "code": "MATH122",
                         "title": "Logic and Foundations",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1901,9 +1901,9 @@
                         "code": "STAT260",
                         "title": "Introduction to Probability and Statistics I",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1923,9 +1923,9 @@
                         "code": "ECON180",
                         "title": "Introduction to Principles of Microeconomics and Financial Project Evaluation",
                         "pengRequired": {
-                              "fall": null,
-                              "spring": null,
-                              "summer": null
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
