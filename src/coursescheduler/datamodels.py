@@ -82,11 +82,13 @@ timeslots = {
 def timeslot_determination():
     count = 0
     timeslots_dict = {}
+    timeslots_dict_twf = {}
+    timeslots_dict_mr = {}
 
     scheduled_start_time = datetime.datetime(100, 1, 1, 8, 30)
     twf_dict = scheduled_times(scheduled_start_time, 50)
-    for start_time, scheduled_end_time in twf_dict.items():
-        timeslots_dict[count] = [["TUESDAY", start_time, scheduled_end_time],
+    for start_time, scheduled_end_time in twf_dict.items(): # 830-320 330-920
+        timeslots_dict_twf[count] = [["TUESDAY", start_time, scheduled_end_time],
                                  ["WEDNESDAY", start_time, scheduled_end_time],
                                  ["FRIDAY", start_time, scheduled_end_time]]
         count += 1
@@ -95,9 +97,17 @@ def timeslot_determination():
     mr_dict = scheduled_times(scheduled_start_time, 80)
 
     for start_time, scheduled_end_time in mr_dict.items():
-        timeslots_dict[count] = [["MONDAY", start_time, scheduled_end_time],
+        timeslots_dict_mr[count] = [["MONDAY", start_time, scheduled_end_time],
                                  ["THURSDAY", start_time, scheduled_end_time]]
         count += 1
+
+    # In timeslots_dict, alternate between TWF and MR configurations.
+    # Then the search will naturally distribute classes between all days of the week,
+    # since timeslots are considered in the order they appear in the dictionary.
+    for i in range(len(timeslots_dict_twf) - 1):
+        timeslots_dict[i] = timeslots_dict_twf[i]
+        timeslots_dict[i + len(timeslots_dict_twf)] = timeslots_dict_mr[i + len(timeslots_dict_twf)]
+    timeslots_dict[len(timeslots_dict_twf) - 1] = timeslots_dict_twf[len(timeslots_dict_twf) - 1]
 
     scheduled_start_time = datetime.datetime(100, 1, 1, 13, 00)
     any_dict = scheduled_times(scheduled_start_time, 170)

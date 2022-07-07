@@ -151,8 +151,10 @@ def generate_schedule(historicalData, professors, schedule):
         print('Timetable:')
         timetable_list = []
 
+        pprint(professors)
+
         for course, timeslot_id in solution_csp_2.items():
-            print(course)
+            #print(course)
             semester = course.split("_")[1]
             timeslots = timeslot_configs[timeslot_id]
             timeslot_out = []
@@ -162,8 +164,21 @@ def generate_schedule(historicalData, professors, schedule):
                 end = str(timeslot[2].time())
                 timeslot_out.append((day, start, end))
 
-            timetable_list.append(f'{course} {all_courses_input[semester][course]["professor"]} {timeslot_out} ')
-        # timetable_list.sort()
+            pprint(all_courses_input[semester][course])
+
+
+            try:
+                # Sort by name
+                # timetable_list.append(f'{professors[all_courses_input[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
+                # sort by semester
+                timetable_list.append(f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[all_courses_input[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
+
+            except KeyError:
+                timetable_list.append(f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {all_courses_input[semester][course]["professor"]:<24} {timeslot_out} ')
+
+                timetable_list.append(f'{course:<24} {all_courses_input[semester][course]["professor"]:<24} {timeslot_out} ')
+            #timetable_list.append(f'{course:<24} {all_courses_input[semester][course]["professor"]} {timeslot_out} ')
+        timetable_list.sort()
         for x in timetable_list:
             print(x)
 
