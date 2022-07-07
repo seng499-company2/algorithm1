@@ -1,6 +1,9 @@
 from unittest import TestCase
 
 import pytest
+
+from src.coursescheduler.constraints import qualified_course_prof, course_requires_peng, professor_teaching_load, \
+    course_timeslot_conflicts
 from src.coursescheduler.verifyconstraints import verify_requires_peng, \
     verify_assigned_teaching_load, verify_all_courses_assigned_professors, verify_qualified_course_prof
 from tests.datamodels_tester import temp_profs, temp_courses
@@ -33,7 +36,21 @@ class PyTestConstraints(TestCase):
         test = verify_assigned_teaching_load()
         self.assertTrue(test.satisfied())
 
+    def test_qualified_course_prof(self):
+        test = qualified_course_prof(temp_courses)
+        self.assertTrue(test)
 
+    def test_course_requires_peng(self):
+        test = course_requires_peng(temp_courses)
+        self.assertTrue(test)
+
+    def test_professor_teaching_load(self):
+        test = professor_teaching_load(temp_courses)
+        self.assertTrue(test)
+
+    def test_course_timeslot_conflicts(self):
+        test = course_timeslot_conflicts(temp_courses)
+        self.assertTrue(test)
 
     def test_all_courses_assigned_professors_fails(self):
         temp_courses["csc110"]["professor"] = ""
