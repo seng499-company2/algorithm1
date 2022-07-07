@@ -11,11 +11,11 @@ from .datamodels import transform_input, timeslot_determination, transform_outpu
 def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
-        prof_file = open('coursescheduler/temp_json_input/professor_object.json')
+        prof_file = open( os.path.join(os.path.dirname(__file__),'temp_json_input/professor_object.json'))
         professors = json.load(prof_file)
         prof_file.close()
 
-        schedule_file = open('coursescheduler/temp_json_input/schedule_object.json')
+        schedule_file = open( os.path.join(os.path.dirname(__file__),'temp_json_input/schedule_object.json'))
         schedule = json.load(schedule_file)
         schedule_file.close()
 
