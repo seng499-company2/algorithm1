@@ -75,7 +75,6 @@ class course_timeslot_conflicts(Constraint):
         self.timeslot_configs = timeslot_configs
 
     def satisfied(self, assignment) -> bool:
-        #print("Enter timelsot config")
         for course in self.variables:
             if course not in assignment:
                 continue

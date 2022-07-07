@@ -2,7 +2,7 @@ import datetime
 
 
 # This function transforms the input data into data which is optimal for use in the algorithm.
-def tranform_input(schedule_input, professors_input):
+def transform_input(schedule_input, professors_input):
     courses = {
         "fall": {},
         "spring": {},
@@ -38,6 +38,40 @@ def tranform_input(schedule_input, professors_input):
         }
     return courses, professors
 
+# Fill in the schedule object with the output data from the algorithm
+def transform_output(alg_output, schedule_input, professors):
+    # Loop through the input object and fill in the missing data
+    for semester, offering_list in schedule_input.items():
+        for offering in offering_list:
+            course = offering["course"]
+            sections = offering["sections"]
+            for index, section in enumerate(sections):
+                output_section_data = alg_output[semester][course["code"] + "_" + semester + "_" + str(index)]
+
+                # If the professor isn't assigned in the input then we fetch the output assignment and fill it in
+                if section["professor"]["id"] is None:
+                    section["professor"]["id"] = output_section_data["professor"]
+
+                # If the professor isn't assigned in the input then we fetch the output assignment and fill it in
+                if section["professor"]["name"] is None:
+                    section["professor"]["name"] = professors[output_section_data["professor"]]["name"]
+
+                # If the timeslot isn't assigned in the input then we fetch the output assignment and fill it in
+                if len(section["timeslots"]) == 0:
+                    alg_output_timeslots = output_section_data["timeSlots"]
+
+                    output_timeslots = []
+                    for timeslot in alg_output_timeslots:
+                        output_timeslot = {
+                            "dayOfWeek": timeslot[0].upper(),
+                            "timeRange": (timeslot[1].strftime("%H:%M"), timeslot[2].strftime("%H:%M"))
+                        }
+                        output_timeslots.append(output_timeslot)
+
+                    section["timeslots"] = output_timeslots
+
+    # Return the filled in schedule object
+    return schedule_input
 
 timeslots_codes = {
     "TWF": {

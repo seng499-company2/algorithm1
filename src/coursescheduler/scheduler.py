@@ -1,17 +1,25 @@
 import json
-import time
+import os
 from pprint import pprint
 
 from constraints import professor_teaching_load, course_timeslot_conflicts
 from csp import CSP
-from datamodels import tranform_input, timeslot_determination
+from datamodels import transform_input, timeslot_determination, transform_output
 
 
 # Initial plug & play algorithm
-def generate_schedule(historicalData, professors, schedule):
-    # Temp load json files as input:
-    prof_file = open('temp_json_input/professor_object.json')
-    professors = json.load(prof_file)
+def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
+    if jsonDebug:
+        # Temp load json files as input:
+        prof_file = open('temp_json_input/professor_object.json')
+        professors = json.load(prof_file)
+        prof_file.close()
+
+        schedule_file = open('temp_json_input/schedule_object.json')
+        schedule = json.load(schedule_file)
+        schedule_file.close()
+
+    # Convert timeslot lists to tuples as per the specification if not already tuples
     for professor in professors:
         for semester, days in professor["preferredTimes"].items():
             for day, timeslots in days.items():
@@ -20,13 +28,8 @@ def generate_schedule(historicalData, professors, schedule):
                 else:
                     tuple_list = None
                 professor["preferredTimes"][semester][day] = tuple_list
-    prof_file.close()
 
-    schedule_file = open('temp_json_input/schedule_object.json')
-    schedule = json.load(schedule_file)
-    schedule_file.close()
-
-    courses, professors = tranform_input(schedule, professors)
+    courses, professors = transform_input(schedule, professors)
 
     non_static_courses = {
         "fall": {k: v for (k, v) in courses["fall"].items() if v["professor"] is None},
@@ -71,61 +74,42 @@ def generate_schedule(historicalData, professors, schedule):
         "max_steps": 50000
     }
 
-    # run search
-    start = time.time()
+    # run csp 1
     solution_csp_1 = csp_1.backtracking_search(config=config)
-    end = time.time()
-    print(f"Time taken is: {end - start}")
     if solution_csp_1 is None:
-        print("No solution found!")
-    else:
-        print("Done!")
-        print()
-        print('Timetable:')
-        timetable_list = []
-        for course, prof_id in solution_csp_1.items():
-            timetable_list.append(f'{professors[prof_id]["name"]:24} {course} ')
-        timetable_list.sort()
-        for x in timetable_list:
-            print(x)
+        return None
 
     # update the "courses" data structure with the professors assigned
-    all_courses_input = {
-        "fall": {k: v for (k, v) in courses["fall"].items()},
-        "spring": {k: v for (k, v) in courses["spring"].items()},
-        "summer": {k: v for (k, v) in courses["summer"].items()}
-    }
-    for semester, all_courses in all_courses_input.items():
+    for semester, all_courses in courses.items():
         for course, values in all_courses.items():
             if course in solution_csp_1.keys():
                 values["professor"] = solution_csp_1[course]
 
     # csp 2
     course_variables = []
-    course_variables.extend(list(all_courses_input["fall"].keys()))
-    course_variables.extend(list(all_courses_input["spring"].keys()))
-    course_variables.extend(list(all_courses_input["summer"].keys()))
+    course_variables.extend(list(courses["fall"].keys()))
+    course_variables.extend(list(courses["spring"].keys()))
+    course_variables.extend(list(courses["summer"].keys()))
 
     # Create data structure of all possible timeslot configurations
     timeslot_configs = timeslot_determination()
 
+    # Set the domains of each variable.
     timeslot_ids = timeslot_configs.keys()
     domains_csp_2 = {course: timeslot_ids for course in course_variables}
     csp_2 = CSP(course_variables, domains_csp_2)
 
-    csp_2 = add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, "fall")
-    csp_2 = add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, "spring")
-    csp_2 = add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, "summer")
+    # Add constraints: courses in the same academic year must not overlap.
+    csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "fall")
+    csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "spring")
+    csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "summer")
 
-    # For every professor, obtain the list of courses to which they are assigned.
+    # Add constraints: courses having the same professor must not overlap.
     all_profs = [k for k in professors.keys()]
-
-    # For each prof id
     for prof_id in all_profs:
-        # Get list of courses the professor is teaching
         for semester in ["fall", "spring", "summer"]:
-            professor_teaching_courses = [course for course in all_courses_input[semester].keys() if
-                                          all_courses_input[semester][course]["professor"] == prof_id]
+            professor_teaching_courses = [course for course in courses[semester].keys() if
+                                          courses[semester][course]["professor"] == prof_id]
             if professor_teaching_courses:
                 # For each list:
                 csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs))
@@ -139,58 +123,19 @@ def generate_schedule(historicalData, professors, schedule):
     }
 
     # run search
-    start = time.time()
     solution_csp_2 = csp_2.backtracking_search(config=config_csp_2)
-    end = time.time()
-    print(f"Time taken is: {end - start}")
     if solution_csp_2 is None:
-        print("No solution found!")
-    else:
-        print("Done!")
-        print()
-        print('Timetable:')
-        timetable_list = []
+        return None
 
-        pprint(professors)
+    # update the "courses" data structure with the timeslots assigned
+    for semester, all_courses in courses.items():
+        for course, values in all_courses.items():
+            if course in solution_csp_2.keys():
+                values["timeSlots"] = timeslot_configs[solution_csp_2[course]]
 
-        for course, timeslot_id in solution_csp_2.items():
-            #print(course)
-            semester = course.split("_")[1]
-            timeslots = timeslot_configs[timeslot_id]
-            timeslot_out = []
-            for timeslot in timeslots:
-                day = timeslot[0]
-                start = str(timeslot[1].time())
-                end = str(timeslot[2].time())
-                timeslot_out.append((day, start, end))
-
-            pprint(all_courses_input[semester][course])
-
-
-            try:
-                # Sort by name
-                # timetable_list.append(f'{professors[all_courses_input[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
-                # sort by semester
-                timetable_list.append(f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[all_courses_input[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
-
-            except KeyError:
-                timetable_list.append(f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {all_courses_input[semester][course]["professor"]:<24} {timeslot_out} ')
-
-                timetable_list.append(f'{course:<24} {all_courses_input[semester][course]["professor"]:<24} {timeslot_out} ')
-            #timetable_list.append(f'{course:<24} {all_courses_input[semester][course]["professor"]} {timeslot_out} ')
-        timetable_list.sort()
-        for x in timetable_list:
-            print(x)
-
-    # For each static course, reduce the domain to contain a single value,
-    # which is the timeslot configuration specified in the input.
-    # . . .
-
-    # format outputs
-
-    # return schedule
-
-    return "OK"
+    # format outputs and return generated schedule.
+    schedule = transform_output(courses, schedule, professors)
+    return schedule
 
 
 def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester):
@@ -214,4 +159,5 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 
 if __name__ == '__main__':
-    generate_schedule(None, None, None)
+    result = generate_schedule(None, None, None, True)
+    pprint(result)
