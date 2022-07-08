@@ -17,30 +17,8 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
-                              "timeslots": [
-                                    {
-                                          "dayOfWeek": "TUESDAY",
-                                          "timeRange": [
-                                                "10:00",
-                                                "11:20"
-                                          ]
-                                    },
-                                    {
-                                          "dayOfWeek": "WEDNESDAY",
-                                          "timeRange": [
-                                                "10:00",
-                                                "11:20"
-                                          ]
-                                    },
-                                    {
-                                          "dayOfWeek": "FRIDAY",
-                                          "timeRange": [
-                                                "10:00",
-                                                "11:20"
-                                          ]
-                                    }
-                              ]
+                              "capacity": 60,
+                              "timeslots": []
                         }
                   ]
             },
@@ -83,7 +61,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -105,7 +83,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -127,7 +105,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -149,7 +127,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -171,7 +149,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -193,7 +171,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -215,7 +193,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -237,7 +215,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -259,7 +237,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -281,7 +259,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -303,7 +281,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 100,
                               "timeslots": []
                         }
                   ]
@@ -347,7 +325,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -369,7 +347,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -391,7 +369,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 60,
                               "timeslots": []
                         }
                   ]
@@ -435,7 +413,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -479,8 +457,30 @@
                                     "id": 100,
                                     "name": "Static Prof 1"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -501,8 +501,23 @@
                                     "id": 101,
                                     "name": "Static Prof 2"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 140,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -523,8 +538,30 @@
                                     "id": 102,
                                     "name": "Static Prof 3"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -545,8 +582,23 @@
                                     "id": 103,
                                     "name": "Static Prof 4"
                               },
-                              "capacity": 80,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -567,8 +619,30 @@
                                     "id": 104,
                                     "name": "Static Prof 5"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 60,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -589,8 +663,23 @@
                                     "id": 105,
                                     "name": "Static Prof 6"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -611,8 +700,30 @@
                                     "id": 108,
                                     "name": "Static Prof 9"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -633,8 +744,30 @@
                                     "id": 110,
                                     "name": "Static Prof 11"
                               },
-                              "capacity": 60,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -655,8 +788,23 @@
                                     "id": 111,
                                     "name": "Static Prof 12"
                               },
-                              "capacity": 60,
-                              "timeslots": []
+                              "capacity": 140,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -677,8 +825,30 @@
                                     "id": 112,
                                     "name": "Static Prof 13"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -699,8 +869,23 @@
                                     "id": 113,
                                     "name": "Static Prof 14"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 100,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             }
@@ -723,7 +908,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -767,7 +952,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 60,
                               "timeslots": []
                         }
                   ]
@@ -789,7 +974,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -811,7 +996,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -833,7 +1018,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -855,7 +1040,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -877,7 +1062,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -899,7 +1084,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -921,7 +1106,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -943,7 +1128,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -965,7 +1150,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -1009,7 +1194,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 60,
                               "timeslots": []
                         }
                   ]
@@ -1031,7 +1216,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -1053,7 +1238,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -1075,7 +1260,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1097,7 +1282,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1119,7 +1304,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -1141,7 +1326,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 100,
                               "timeslots": []
                         }
                   ]
@@ -1163,7 +1348,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -1185,8 +1370,30 @@
                                     "id": 101,
                                     "name": "Static Prof 2"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 60,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1207,8 +1414,23 @@
                                     "id": 102,
                                     "name": "Static Prof 3"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 60,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1230,7 +1452,29 @@
                                     "name": "Static Prof 4"
                               },
                               "capacity": 60,
-                              "timeslots": []
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1251,8 +1495,23 @@
                                     "id": 105,
                                     "name": "Static Prof 6"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1273,8 +1532,30 @@
                                     "id": 106,
                                     "name": "Static Prof 7"
                               },
-                              "capacity": 80,
-                              "timeslots": []
+                              "capacity": 140,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1295,8 +1576,23 @@
                                     "id": 107,
                                     "name": "Static Prof 8"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1318,7 +1614,29 @@
                                     "name": "Static Prof 9"
                               },
                               "capacity": 140,
-                              "timeslots": []
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "11:30",
+                                                "12:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1339,8 +1657,23 @@
                                     "id": 109,
                                     "name": "Static Prof 10"
                               },
-                              "capacity": 80,
-                              "timeslots": []
+                              "capacity": 100,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "13:00",
+                                                "14:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "13:00",
+                                                "14:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1361,8 +1694,30 @@
                                     "id": 111,
                                     "name": "Static Prof 12"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1383,8 +1738,23 @@
                                     "id": 112,
                                     "name": "Static Prof 13"
                               },
-                              "capacity": 80,
-                              "timeslots": []
+                              "capacity": 140,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             }
@@ -1407,7 +1777,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1429,7 +1799,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -1451,7 +1821,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 60,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -1495,7 +1865,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -1517,7 +1887,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1539,7 +1909,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 100,
                               "timeslots": []
                         }
                   ]
@@ -1561,7 +1931,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 100,
+                              "capacity": 80,
                               "timeslots": []
                         }
                   ]
@@ -1583,7 +1953,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 60,
                               "timeslots": []
                         }
                   ]
@@ -1627,7 +1997,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1693,7 +2063,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 80,
+                              "capacity": 100,
                               "timeslots": []
                         }
                   ]
@@ -1715,7 +2085,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 120,
+                              "capacity": 140,
                               "timeslots": []
                         }
                   ]
@@ -1737,7 +2107,7 @@
                                     "id": null,
                                     "name": null
                               },
-                              "capacity": 140,
+                              "capacity": 120,
                               "timeslots": []
                         }
                   ]
@@ -1759,8 +2129,30 @@
                                     "id": 102,
                                     "name": "Static Prof 3"
                               },
-                              "capacity": 140,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1781,8 +2173,23 @@
                                     "id": 103,
                                     "name": "Static Prof 4"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 60,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1804,7 +2211,29 @@
                                     "name": "Static Prof 8"
                               },
                               "capacity": 80,
-                              "timeslots": []
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1825,8 +2254,23 @@
                                     "id": 108,
                                     "name": "Static Prof 9"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1847,8 +2291,30 @@
                                     "id": 109,
                                     "name": "Static Prof 10"
                               },
-                              "capacity": 100,
-                              "timeslots": []
+                              "capacity": 120,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "10:30",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1869,8 +2335,30 @@
                                     "id": 110,
                                     "name": "Static Prof 11"
                               },
-                              "capacity": 120,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1891,8 +2379,23 @@
                                     "id": 111,
                                     "name": "Static Prof 12"
                               },
-                              "capacity": 80,
-                              "timeslots": []
+                              "capacity": 60,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "8:30",
+                                                "9:50"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1914,7 +2417,29 @@
                                     "name": "Static Prof 13"
                               },
                               "capacity": 60,
-                              "timeslots": []
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "TUESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "WEDNESDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "FRIDAY",
+                                          "timeRange": [
+                                                "9:30",
+                                                "10:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             },
@@ -1935,8 +2460,23 @@
                                     "id": 113,
                                     "name": "Static Prof 14"
                               },
-                              "capacity": 60,
-                              "timeslots": []
+                              "capacity": 80,
+                              "timeslots": [
+                                    {
+                                          "dayOfWeek": "MONDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    },
+                                    {
+                                          "dayOfWeek": "THURSDAY",
+                                          "timeRange": [
+                                                "10:00",
+                                                "11:20"
+                                          ]
+                                    }
+                              ]
                         }
                   ]
             }

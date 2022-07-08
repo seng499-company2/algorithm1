@@ -1,5 +1,7 @@
 import json
 import os
+import datetime
+import time
 from pprint import pprint
 
 from .constraints import professor_teaching_load, course_timeslot_conflicts
@@ -96,6 +98,37 @@ def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
 
     # Set the domains of each variable.
     timeslot_ids = timeslot_configs.keys()
+    domains_csp_2 = {}
+    semesters = courses.keys()
+    for semester in semesters:
+        for course in courses[semester]:
+            timeslot_list = courses[semester][course]["timeSlots"]
+            if (timeslot_list != []):
+
+                # Convert timeslots from their format in the input,
+                # to the corresponding format as it would appear in timeslot_configs.
+                # timeslot_configs uses datetimes, the input uses strings.
+                static_course_timeslots = []
+                for timeslot_dict in timeslot_list:
+                    # Convert the dictionary to a list of form ["DAY", datetime(start), datetime(end)]
+                    start_time_string = timeslot_dict["timeRange"][0].split(':')
+                    end_time_string = timeslot_dict["timeRange"][1].split(':')
+                    start_datetime = datetime.datetime(100, 1, 1, int(start_time_string[0]), int(start_time_string[1]))
+                    end_datetime = datetime.datetime(100, 1, 1, int(end_time_string[0]), int(end_time_string[1]))
+                    timeslot = [
+                        timeslot_dict["dayOfWeek"],
+                        start_datetime,
+                        end_datetime
+                    ]
+                    static_course_timeslots.append(timeslot)
+                for key, timeslot in timeslot_configs.items():
+                    if timeslot == static_course_timeslots:
+                        domains_csp_2[course] = [key]
+            else:
+                domains_csp_2[course] = timeslot_ids
+
+
+
     domains_csp_2 = {course: timeslot_ids for course in course_variables}
     csp_2 = CSP(course_variables, domains_csp_2)
 
@@ -160,4 +193,4 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 if __name__ == '__main__':
     result = generate_schedule(None, None, None, True)
-    pprint(result)
+    # pprint(result)
