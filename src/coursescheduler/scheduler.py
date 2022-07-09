@@ -10,7 +10,7 @@ from .datamodels import transform_input, timeslot_determination, transform_outpu
 
 
 # Initial plug & play algorithm
-def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
+def generate_schedule(professors, schedule, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
         if professors is None:
@@ -192,5 +192,5 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 
 if __name__ == '__main__':
-    result = generate_schedule(None, None, None, True)
+    result = generate_schedule(None, None, True)
     # pprint(result)

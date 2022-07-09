@@ -14,6 +14,6 @@ def obj_to_json_file(object, output_name):
 
 
 if __name__ == "__main__":
-    result = generate_schedule(None, None, None, True)
+    result = generate_schedule(None, None, True)
     obj_to_json_file(result, "schedule_output")
     pprint(result)
