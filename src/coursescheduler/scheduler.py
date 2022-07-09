@@ -49,13 +49,18 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for course, course_data in offerings.items():
             original_course_id = course.split("_")[0]
             if course_data["pengRequired"]:
-                qualified_peng_profs = {k: v for (k, v) in peng_profs.items() if
-                                        v["qualifiedCoursePreferences"][original_course_id] != 0}
+                qualified_peng_profs = {k: v for (k, v) in peng_profs.items()
+                                        for course_preferences in v["qualifiedCoursePreferences"]
+                                        if course_preferences["courseCode"] == original_course_id and
+                                        course_preferences["enthusiasmScore"] != 0}
                 if len(qualified_peng_profs) > 0:
                     domains_csp_1[course] = qualified_peng_profs
             else:
-                qualified_profs = {k: v for (k, v) in professors.items() if
-                                   v["qualifiedCoursePreferences"][original_course_id] != 0}
+                qualified_profs = {k: v for (k, v) in professors.items()
+                                   for course_preferences in v["qualifiedCoursePreferences"]
+                                   if course_preferences["courseCode"] == original_course_id and
+                                   course_preferences["enthusiasmScore"] != 0}
+
                 if len(qualified_profs) > 0:
                     domains_csp_1[course] = qualified_profs
 
@@ -193,4 +198,4 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 if __name__ == '__main__':
     result = generate_schedule(None, None, True)
-    # pprint(result)
+    pprint(result)
