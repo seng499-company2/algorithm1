@@ -20,7 +20,7 @@ def transform_input(schedule_input, professors_input):
                         "yearRequired": course["yearRequired"],
                         "semester": semester,
                         "professor": section["professor"]["id"] if section["professor"] is not None else None,
-                        "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
+                        "timeSlots": section["timeSlots"] if section["timeSlots"] is not None else [],
                         # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
                     }
                 else:
@@ -30,7 +30,7 @@ def transform_input(schedule_input, professors_input):
                         "yearRequired": course["yearRequired"],
                         "semester": semester,
                         "professor": section["professor"]["id"] if section["professor"] is not None else None,
-                        "timeSlots": section["timeslots"] if section["timeslots"] is not None else [],
+                        "timeSlots": section["timeSlots"] if section["timeSlots"] is not None else [],
                         # "academicYear": course["academicYear"] # Unsure of redundancy with yearRequired
                     }
 
@@ -49,6 +49,7 @@ def transform_input(schedule_input, professors_input):
         }
     return courses, professors
 
+
 # Fill in the schedule object with the output data from the algorithm
 def transform_output(alg_output, schedule_input, professors):
     # Loop through the input object and fill in the missing data
@@ -62,6 +63,13 @@ def transform_output(alg_output, schedule_input, professors):
                 else:
                     output_section_data = alg_output[semester][course["code"] + "_" + semester + "_" + str(index)]
 
+                # If the input professor is None then we create an empty object to be filled in
+                if section["professor"] is None:
+                    section["professor"] = {
+                        "id": None,
+                        "name": None
+                    }
+
                 # If the professor isn't assigned in the input then we fetch the output assignment and fill it in
                 if section["professor"]["id"] is None:
                     section["professor"]["id"] = output_section_data["professor"]
@@ -71,7 +79,7 @@ def transform_output(alg_output, schedule_input, professors):
                     section["professor"]["name"] = professors[output_section_data["professor"]]["name"]
 
                 # If the timeslot isn't assigned in the input then we fetch the output assignment and fill it in
-                if len(section["timeslots"]) == 0:
+                if len(section["timeSlots"]) == 0:
                     alg_output_timeslots = output_section_data["timeSlots"]
 
                     output_timeslots = []
@@ -82,10 +90,11 @@ def transform_output(alg_output, schedule_input, professors):
                         }
                         output_timeslots.append(output_timeslot)
 
-                    section["timeslots"] = output_timeslots
+                    section["timeSlots"] = output_timeslots
 
     # Return the filled in schedule object
     return schedule_input
+
 
 timeslots_codes = {
     "TWF": {
@@ -135,10 +144,10 @@ def timeslot_determination():
 
     scheduled_start_time = datetime.datetime(100, 1, 1, 8, 30)
     twf_dict = scheduled_times(scheduled_start_time, 50)
-    for start_time, scheduled_end_time in twf_dict.items(): # 830-320 330-920
+    for start_time, scheduled_end_time in twf_dict.items():  # 830-320 330-920
         timeslots_dict_twf[count] = [["TUESDAY", start_time, scheduled_end_time],
-                                 ["WEDNESDAY", start_time, scheduled_end_time],
-                                 ["FRIDAY", start_time, scheduled_end_time]]
+                                     ["WEDNESDAY", start_time, scheduled_end_time],
+                                     ["FRIDAY", start_time, scheduled_end_time]]
         count += 1
 
     scheduled_start_time = datetime.datetime(100, 1, 1, 8, 30)
@@ -146,7 +155,7 @@ def timeslot_determination():
 
     for start_time, scheduled_end_time in mr_dict.items():
         timeslots_dict_mr[count] = [["MONDAY", start_time, scheduled_end_time],
-                                 ["THURSDAY", start_time, scheduled_end_time]]
+                                    ["THURSDAY", start_time, scheduled_end_time]]
         count += 1
 
     # In timeslots_dict, alternate between TWF and MR configurations.
@@ -189,6 +198,5 @@ def scheduled_times(start_time, class_length):
         timeslot_array.add((start_time, end_time))
 
     return timeslot_dict
-
 
 # TODO: add function to convert static course's timeslots to datetime for comparison

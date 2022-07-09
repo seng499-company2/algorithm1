@@ -13,13 +13,15 @@ from .datamodels import transform_input, timeslot_determination, transform_outpu
 def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
-        prof_file = open( os.path.join(os.path.dirname(__file__),'temp_json_input/professor_object.json'))
-        professors = json.load(prof_file)
-        prof_file.close()
+        if professors is None:
+            prof_file = open(os.path.join(os.path.dirname(__file__), 'temp_json_input/professor_object.json'))
+            professors = json.load(prof_file)
+            prof_file.close()
 
-        schedule_file = open( os.path.join(os.path.dirname(__file__),'temp_json_input/schedule_object.json'))
-        schedule = json.load(schedule_file)
-        schedule_file.close()
+        if schedule is None:
+            schedule_file = open(os.path.join(os.path.dirname(__file__), 'temp_json_input/schedule_object.json'))
+            schedule = json.load(schedule_file)
+            schedule_file.close()
 
     # Convert timeslot lists to tuples as per the specification if not already tuples
     for professor in professors:
@@ -126,8 +128,6 @@ def generate_schedule(historicalData, professors, schedule, jsonDebug=False):
                         domains_csp_2[course] = [key]
             else:
                 domains_csp_2[course] = timeslot_ids
-
-
 
     domains_csp_2 = {course: timeslot_ids for course in course_variables}
     csp_2 = CSP(course_variables, domains_csp_2)
