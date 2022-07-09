@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="coursescheduler",
-    version="0.0.3",
+    version="0.0.4",
     author="Corey Koelewyn, Spencer Davis, Shea Faigan, Nolan Van Hell, Kiana Pazdernik",
     author_email="Corey.Koelewyn@gmail.com, str.davis@gmail.com, stfaigan@gmail.com, nolanvh@live.ca, kianapaz021@gmail.com",
     description="A course scheduler for the software engineering program at UVic. Built for the SENG 499 Summer 2022 project.",
