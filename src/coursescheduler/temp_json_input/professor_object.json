@@ -1,9 +1,9 @@
 [
       {
-            "id": "1",
+            "id": 1,
             "name": "Celina Berg",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -199,7 +199,7 @@
                   "spring": 1,
                   "summer": 1
             },
-            "preferredNonTeachingSemester": "spring",
+            "preferredNonTeachingSemester": "SPRING",
             "preferredCourseDaySpreads": [
                   "TWF",
                   "T",
@@ -208,10 +208,10 @@
             ]
       },
       {
-            "id": "2",
+            "id": 2,
             "name": "Bill Bird",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -345,10 +345,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "3",
+            "id": 3,
             "name": "Sean Chester",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -482,10 +482,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "4",
+            "id": 4,
             "name": "Jason Corless",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -619,10 +619,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "5",
+            "id": 5,
             "name": "Daniela Damian",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -756,10 +756,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "6",
+            "id": 6,
             "name": "Neil Ernst",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -893,10 +893,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "7",
+            "id": 7,
             "name": "Anthony Estey",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -1030,10 +1030,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "8",
+            "id": 8,
             "name": "Sudhakar Ganti",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -1167,10 +1167,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "9",
+            "id": 9,
             "name": "Daniel German",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -1304,10 +1304,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "10",
+            "id": 10,
             "name": "Brandon Haworth",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -1441,10 +1441,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "11",
+            "id": 11,
             "name": "Hosna Jabbari",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -1578,10 +1578,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "12",
+            "id": 12,
             "name": "LillAnne Jackson",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -1715,10 +1715,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "13",
+            "id": 13,
             "name": "Bruce Kapron",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -1852,10 +1852,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "14",
+            "id": 14,
             "name": "Valerie King",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -1989,10 +1989,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "15",
+            "id": 15,
             "name": "Sajin Koroth",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -2126,10 +2126,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "16",
+            "id": 16,
             "name": "Rich Little",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -2263,10 +2263,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "17",
+            "id": 17,
             "name": "Nishant Mehta",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -2400,10 +2400,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "18",
+            "id": 18,
             "name": "Hausi Muller",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -2537,10 +2537,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "19",
+            "id": 19,
             "name": "Miguel Nacenta",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -2674,10 +2674,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "20",
+            "id": 20,
             "name": "Ibrahim Numanagi\u0107",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -2811,10 +2811,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "21",
+            "id": 21,
             "name": "Jianping Pan",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -2948,10 +2948,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "22",
+            "id": 22,
             "name": "Charles Perin",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -3085,10 +3085,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "23",
+            "id": 23,
             "name": "Teseo Schneider",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -3222,10 +3222,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "24",
+            "id": 24,
             "name": "Sowmya Somanath",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -3359,10 +3359,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "25",
+            "id": 25,
             "name": "Venkatesh Srinivasan",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -3496,10 +3496,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "26",
+            "id": 26,
             "name": "Ulrike Stege",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -3633,10 +3633,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "27",
+            "id": 27,
             "name": "Margaret-Anne Storey",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -3770,10 +3770,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "28",
+            "id": 28,
             "name": "Cecilia Summers",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -3907,10 +3907,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "29",
+            "id": 29,
             "name": "Alex Thomo",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -4044,10 +4044,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "30",
+            "id": 30,
             "name": "George Tzanetakis",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -4181,10 +4181,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "31",
+            "id": 31,
             "name": "Jens Weber",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -4318,10 +4318,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "32",
+            "id": 32,
             "name": "Kui Wu",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -4455,10 +4455,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "33",
+            "id": 33,
             "name": "Michael Zastre",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 4,
             "coursePreferences": [
                   {
@@ -4592,10 +4592,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "34",
+            "id": 34,
             "name": "Michael Adams",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -4729,10 +4729,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "35",
+            "id": 35,
             "name": "Panajotis Agathoklis",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -4866,10 +4866,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "36",
+            "id": 36,
             "name": "Riham AlTawy",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -5003,10 +5003,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "37",
+            "id": 37,
             "name": "Amirali Baniasadi",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -5140,10 +5140,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "38",
+            "id": 38,
             "name": "Jens Bornemann",
             "isPeng": false,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -5277,10 +5277,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "39",
+            "id": 39,
             "name": "Alexandra Branzan Albu",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -5414,10 +5414,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "40",
+            "id": 40,
             "name": "Lin Cai",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -5551,10 +5551,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "41",
+            "id": 41,
             "name": "David Capson",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -5688,10 +5688,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "42",
+            "id": 42,
             "name": "Ted Darcie",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -5825,10 +5825,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "43",
+            "id": 43,
             "name": "Nikitas Dimopoulos",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -5962,10 +5962,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "44",
+            "id": 44,
             "name": "Xiaodai Dong",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -6099,10 +6099,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "45",
+            "id": 45,
             "name": "Peter Driessen",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -6236,10 +6236,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "46",
+            "id": 46,
             "name": "Fayez Gebali",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -6373,10 +6373,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "47",
+            "id": 47,
             "name": "Reuven Gordon",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -6510,10 +6510,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "48",
+            "id": 48,
             "name": "Aaron Gulliver",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -6647,10 +6647,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "49",
+            "id": 49,
             "name": "Kin Fun Li",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -6784,10 +6784,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "50",
+            "id": 50,
             "name": "Tao Lu",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -6921,10 +6921,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "51",
+            "id": 51,
             "name": "Michael McGuire",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -7058,10 +7058,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "52",
+            "id": 52,
             "name": "Stephen Neville",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -7195,10 +7195,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "53",
+            "id": 53,
             "name": "Christo Papadopoulos",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -7332,10 +7332,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "54",
+            "id": 54,
             "name": "Dr. Navneet Popli",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -7469,10 +7469,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "55",
+            "id": 55,
             "name": "Daler Rakhmatov",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -7606,10 +7606,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "56",
+            "id": 56,
             "name": "Makhsud Saidaminov",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -7743,10 +7743,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "57",
+            "id": 57,
             "name": "Mihai Sima",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -7880,10 +7880,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "58",
+            "id": 58,
             "name": "Levi Smith",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 6,
             "coursePreferences": [
                   {
@@ -8017,10 +8017,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "59",
+            "id": 59,
             "name": "Poman So",
             "isPeng": false,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
@@ -8154,10 +8154,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "60",
+            "id": 60,
             "name": "Ilamparithi Thirumarai Chelvan",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 3,
             "coursePreferences": [
                   {
@@ -8291,10 +8291,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "61",
+            "id": 61,
             "name": "Issa Traore",
             "isPeng": true,
-            "facultyType": "research",
+            "facultyType": "RESEARCH",
             "teachingObligations": 1,
             "coursePreferences": [
                   {
@@ -8428,10 +8428,10 @@
             "preferredCourseDaySpreads": []
       },
       {
-            "id": "62",
+            "id": 62,
             "name": "Hong-Chuan Yang",
             "isPeng": true,
-            "facultyType": "teaching",
+            "facultyType": "TEACHING",
             "teachingObligations": 2,
             "coursePreferences": [
                   {
