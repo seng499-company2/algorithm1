@@ -26,12 +26,13 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     # Convert timeslot lists to tuples as per the specification if not already tuples
     for professor in professors:
         for semester, days in professor["preferredTimes"].items():
-            for day, timeslots in days.items():
-                if timeslots[0] is not None:
-                    tuple_list = [tuple(timeslot) for timeslot in timeslots]
-                else:
-                    tuple_list = None
-                professor["preferredTimes"][semester][day] = tuple_list
+            if days is not None:
+                for day, timeslots in days.items():
+                    if timeslots[0] is not None:
+                        tuple_list = [tuple(timeslot) for timeslot in timeslots]
+                    else:
+                        tuple_list = None
+                    professor["preferredTimes"][semester][day] = tuple_list
 
     courses, professors = transform_input(schedule, professors)
 
