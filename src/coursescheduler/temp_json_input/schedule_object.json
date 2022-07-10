@@ -194,30 +194,6 @@
             },
             {
                   "course": {
-                        "code": "ECE458",
-                        "title": "Communication Networks",
-                        "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
-                        },
-                        "yearRequired": 3
-                  },
-                  "sections": [
-                        {
-                              "professor": null,
-                              "capacity": 100,
-                              "timeSlots": []
-                        },
-                        {
-                              "professor": null,
-                              "capacity": 60,
-                              "timeSlots": []
-                        }
-                  ]
-            },
-            {
-                  "course": {
                         "code": "CSC361",
                         "title": "Computer Communications and Networks",
                         "pengRequired": {
@@ -1294,30 +1270,6 @@
                         {
                               "professor": null,
                               "capacity": 60,
-                              "timeSlots": []
-                        }
-                  ]
-            },
-            {
-                  "course": {
-                        "code": "ECE255",
-                        "title": "Introduction to Computer Architecture",
-                        "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
-                        },
-                        "yearRequired": 2
-                  },
-                  "sections": [
-                        {
-                              "professor": null,
-                              "capacity": 140,
-                              "timeSlots": []
-                        },
-                        {
-                              "professor": null,
-                              "capacity": 100,
                               "timeSlots": []
                         }
                   ]
@@ -2441,30 +2393,6 @@
                         {
                               "professor": null,
                               "capacity": 140,
-                              "timeSlots": []
-                        },
-                        {
-                              "professor": null,
-                              "capacity": 100,
-                              "timeSlots": []
-                        }
-                  ]
-            },
-            {
-                  "course": {
-                        "code": "ECE255",
-                        "title": "Introduction to Computer Architecture",
-                        "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
-                        },
-                        "yearRequired": 2
-                  },
-                  "sections": [
-                        {
-                              "professor": null,
-                              "capacity": 100,
                               "timeSlots": []
                         },
                         {
