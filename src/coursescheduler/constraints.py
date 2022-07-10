@@ -23,7 +23,7 @@ class qualified_course_prof(Constraint):
             return True
 
         prof = assignment[course]
-        if course in self.professors[prof]["qualifiedCoursePreferences"]:
+        if course in self.professors[prof]["qualifiedCoursePreferences"]["courseCode"]:
             return True
 
         return False

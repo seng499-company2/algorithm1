@@ -26,12 +26,13 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     # Convert timeslot lists to tuples as per the specification if not already tuples
     for professor in professors:
         for semester, days in professor["preferredTimes"].items():
-            for day, timeslots in days.items():
-                if timeslots[0] is not None:
-                    tuple_list = [tuple(timeslot) for timeslot in timeslots]
-                else:
-                    tuple_list = None
-                professor["preferredTimes"][semester][day] = tuple_list
+            if days is not None:
+                for day, timeslots in days.items():
+                    if len(timeslots) > 0:
+                        tuple_list = [tuple(timeslot) for timeslot in timeslots]
+                    else:
+                        tuple_list = None
+                    professor["preferredTimes"][semester][day] = tuple_list
 
     courses, professors = transform_input(schedule, professors)
 
@@ -49,13 +50,18 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for course, course_data in offerings.items():
             original_course_id = course.split("_")[0]
             if course_data["pengRequired"]:
-                qualified_peng_profs = {k: v for (k, v) in peng_profs.items() if
-                                        v["qualifiedCoursePreferences"][original_course_id] != 0}
+                qualified_peng_profs = {k: v for (k, v) in peng_profs.items()
+                                        for course_preferences in v["qualifiedCoursePreferences"]
+                                        if course_preferences["courseCode"] == original_course_id and
+                                        course_preferences["enthusiasmScore"] != 0}
                 if len(qualified_peng_profs) > 0:
                     domains_csp_1[course] = qualified_peng_profs
             else:
-                qualified_profs = {k: v for (k, v) in professors.items() if
-                                   v["qualifiedCoursePreferences"][original_course_id] != 0}
+                qualified_profs = {k: v for (k, v) in professors.items()
+                                   for course_preferences in v["qualifiedCoursePreferences"]
+                                   if course_preferences["courseCode"] == original_course_id and
+                                   course_preferences["enthusiasmScore"] != 0}
+
                 if len(qualified_profs) > 0:
                     domains_csp_1[course] = qualified_profs
 
@@ -193,4 +199,4 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 if __name__ == '__main__':
     result = generate_schedule(None, None, True)
-    # pprint(result)
+    pprint(result)
