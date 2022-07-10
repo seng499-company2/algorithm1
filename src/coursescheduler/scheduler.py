@@ -28,7 +28,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for semester, days in professor["preferredTimes"].items():
             if days is not None:
                 for day, timeslots in days.items():
-                    if timeslots[0] is not None:
+                    if len(timeslots) > 0:
                         tuple_list = [tuple(timeslot) for timeslot in timeslots]
                     else:
                         tuple_list = None
