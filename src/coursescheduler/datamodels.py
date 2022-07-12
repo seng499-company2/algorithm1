@@ -36,11 +36,12 @@ def transform_input(schedule_input, professors_input):
 
     professors = {}
     for professor in professors_input:
+        sorted_course_prefs = sorted(professor["coursePreferences"], key=lambda d: d['enthusiasmScore'], reverse=True)
         professors[professor["id"]] = {
             "name": professor["name"],
             "isPeng": professor["isPeng"],
             "facultyType": professor["facultyType"],
-            "qualifiedCoursePreferences": professor["coursePreferences"],
+            "qualifiedCoursePreferences": sorted_course_prefs,
             "teachingObligations": professor["teachingObligations"],
             "preferredTimes": professor["preferredTimes"],
             "preferredCoursesPerSemester": professor["preferredCoursesPerSemester"],
@@ -96,46 +97,7 @@ def transform_output(alg_output, schedule_input, professors):
     return schedule_input
 
 
-timeslots_codes = {
-    "TWF": {
-        "id": 1,
-        "days": ["Tuesday", "Wednesday", "Friday"],
-        "classLength": 50
-    },
-    "MR": {
-        "id": 2,
-        "days": ["Monday", "Thursday"],
-        "classLength": 80
-    },
-
-    "Any": {
-        "id": 3,
-        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "classLength": 170
-    }
-}
-
-# Conflict determination: IF list is same length, only need to compare 1 value
-# First check if the day overlaps, then check if time overlaps
-# MR and TWF will never need to be compared
-timeslots = {
-    1: [["TUESDAY", "830", "920"], ["WEDNESDAY", "830", "920"], ["FRIDAY", "830", "920"]],
-    2: [["TUESDAY", "900", "950"], ["WEDNESDAY", "900", "950"], ["FRIDAY", "900", "950"]],
-    3: [["MONDAY", "900", "1020"], ["THURSDAY", "900", "1020"]],
-    4: [["TUESDAY", "900", "1150"]]
-}
-
-
-# conflicts = {
-#     1: ABC,
-#     2: BC
-# }
-# set_1.isdisjoint(set_2)
-# domain = [1, 2, 3, 4, 5, . . . . . ]
-
-# time_conflicts = {(id1, id2) : bool does_conflict}
-
-
+# This function returns a dictionary containing a time slot ID and time slot configuration
 def timeslot_determination():
     count = 0
     timeslots_dict = {}
@@ -183,6 +145,7 @@ def timeslot_determination():
     return timeslots_dict
 
 
+# Helper function for timeslot_determination
 def scheduled_times(start_time, class_length):
     end_time = start_time + datetime.timedelta(minutes=class_length)
     timeslot_dict = {start_time: end_time}
@@ -198,5 +161,3 @@ def scheduled_times(start_time, class_length):
         timeslot_array.add((start_time, end_time))
 
     return timeslot_dict
-
-# TODO: add function to convert static course's timeslots to datetime for comparison

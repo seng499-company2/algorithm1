@@ -23,8 +23,10 @@ class qualified_course_prof(Constraint):
             return True
 
         prof = assignment[course]
-        if course in self.professors[prof]["qualifiedCoursePreferences"]["courseCode"]:
-            return True
+        for i in range(len(self.professors[prof]["qualifiedCoursePreferences"])):
+            if course in self.professors[prof]["qualifiedCoursePreferences"][i]["courseCode"] and \
+                    self.professors[prof]["qualifiedCoursePreferences"][i]["enthusiasmScore"] != 0:
+                return True
 
         return False
 
