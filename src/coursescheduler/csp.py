@@ -1,4 +1,3 @@
-from .datamodels import *
 # Experimental implementation of simple csp scheduling algorithm
 
 # From / based on: https://freecontent.manning.com/constraint-satisfaction-problems-in-python/
@@ -144,7 +143,7 @@ class CSP(Generic[V, D]):
                             # If not consistent:
                             if not self.consistent(neighbor, local_assignment_copy):
                                 # Remove value from neighbor's domain.
-                                domains_copy[neighbor].remove(value_)
+                                del domains_copy[neighbor][value_]
                             # If neighbor's domain is now empty:
                             if len(domains_copy[neighbor]) <= 0:
                                 # Backtrack

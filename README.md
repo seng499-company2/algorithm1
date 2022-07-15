@@ -27,12 +27,12 @@ $ pip3 install coursescheduler-0.0.1.tar.gz
 
 ## Usage
 Once installed, the algorithm can be imported and called with `generate_schedule`, as shown below. `generate_schedule` 
-expects three parameters and returns a single output, all of which are Python dictionaries. 
+expects two parameters and returns a single output, all of which are Python dictionaries. 
 The API specification 
 can be found [here](https://docs.google.com/document/d/163L7pv6w5Z38rUrl2EwRJq-A9ZLllCIO9uYbUkdxi2s/edit?usp=sharing).
 ```python
 from coursescheduler import generate_schedule
-schedule = generate_schedule(historical_course_data, professors, schedule)
+schedule = generate_schedule(professors, schedule)
 ```
 
 ## Dev
