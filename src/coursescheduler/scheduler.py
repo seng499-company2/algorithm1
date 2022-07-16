@@ -4,7 +4,7 @@ import datetime
 import time
 from pprint import pprint
 
-from .constraints import professor_teaching_load, course_timeslot_conflicts
+from .constraints import professor_teaching_load, course_timeslot_conflicts, csp_1_happiness_constraint
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
 
@@ -55,19 +55,38 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for course, course_data in offerings.items():
             original_course_id = course.split("_")[0]
             if course_data["pengRequired"]:
-                qualified_peng_profs = {k: v for (k, v) in peng_profs.items()
+                qualified_peng_profs = [k for (k, v) in peng_profs.items()
                                         for course_preferences in v["qualifiedCoursePreferences"]
                                         if course_preferences["courseCode"] == original_course_id and
-                                        course_preferences["enthusiasmScore"] != 0}
+                                        course_preferences["enthusiasmScore"] != 0]
                 if len(qualified_peng_profs) > 0:
+                    # Sort values (professors) in descending order of enthusiasm score for the variable (course).
+                    def get_enthusiasm_score(prof):
+                        enthusiasm_score_ = 0
+                        for enthusiasm_dict in professors[prof]["qualifiedCoursePreferences"]:
+                            if enthusiasm_dict["courseCode"] == original_course_id:
+                                enthusiasm_score_ = enthusiasm_dict["enthusiasmScore"]
+                        return enthusiasm_score_
+                    qualified_peng_profs.sort(reverse=True, key=get_enthusiasm_score)
+                    # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_peng_profs
             else:
-                qualified_profs = {k: v for (k, v) in professors.items()
+                qualified_profs = [k for (k, v) in professors.items()
                                    for course_preferences in v["qualifiedCoursePreferences"]
                                    if course_preferences["courseCode"] == original_course_id and
-                                   course_preferences["enthusiasmScore"] != 0}
+                                   course_preferences["enthusiasmScore"] != 0]
 
                 if len(qualified_profs) > 0:
+                    # Sort values (professors) in descending order of enthusiasm score for the variable (course).
+                    def get_enthusiasm_score(prof):
+                        enthusiasm_score_ = 0
+                        for enthusiasm_dict in professors[prof]["qualifiedCoursePreferences"]:
+                            if enthusiasm_dict["courseCode"] == original_course_id:
+                                enthusiasm_score_ = enthusiasm_dict["enthusiasmScore"]
+                        return enthusiasm_score_
+
+                    qualified_profs.sort(reverse=True, key=get_enthusiasm_score)
+                    # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_profs
 
     # initialize csp solvers
@@ -79,8 +98,11 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     try:
         csp_1 = CSP(course_variables, domains_csp_1)
 
-        # add constraints
+        # add hard constraints
         csp_1.add_constraint(professor_teaching_load(course_variables, professors))
+
+        # add soft constraints
+        csp_1.add_constraint(csp_1_happiness_constraint(course_variables, professors, 0.5))
 
         # set search config values
         config = {
@@ -110,6 +132,14 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for course, values in all_courses.items():
             if course in solution_csp_1.keys():
                 values["professor"] = solution_csp_1[course]
+
+    #Print CSP 1 results as (course, professor, enthusiasm score)
+    # for (course, professor_id) in solution_csp_1.items():
+    #     enthusiasm_score = 0
+    #     for course_preferences in professors[professor_id]["qualifiedCoursePreferences"]:
+    #         if course_preferences["courseCode"] == course.split("_")[0]:
+    #             enthusiasm_score += course_preferences["enthusiasmScore"]
+    #     print(course, professors[professor_id]["name"], enthusiasm_score)
 
     # csp 2
     course_variables = []

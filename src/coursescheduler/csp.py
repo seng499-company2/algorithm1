@@ -56,7 +56,7 @@ class CSP(Generic[V, D]):
     # for the given variable against it
     def consistent(self, variable: V, assignment: Dict[V, D]) -> bool:
         for constraint in self.constraints[variable]:
-            if not constraint.satisfied(assignment):
+            if not constraint.satisfied(variable, assignment):
                 return False
         return True
 

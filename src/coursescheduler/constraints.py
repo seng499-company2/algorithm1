@@ -17,7 +17,7 @@ class qualified_course_prof(Constraint):
         super().__init__([course])
         self.professors = professors
 
-    def satisfied(self, assignment) -> bool:
+    def satisfied(self, variable, assignment) -> bool:
         course = self.variables[0]
         if course not in assignment:
             return True
@@ -36,7 +36,7 @@ class course_requires_peng(Constraint):
         super().__init__([course])
         self.professors = professors
 
-    def satisfied(self, assignment) -> bool:
+    def satisfied(self, variable, assignment) -> bool:
         course = self.variables[0]
         if course not in assignment:
             return True
@@ -54,7 +54,7 @@ class professor_teaching_load(Constraint):
         super().__init__(courses)
         self.professors = professors
 
-    def satisfied(self, assignment) -> bool:
+    def satisfied(self, variable, assignment) -> bool:
         teaching_loads_dict = {prof: 0 for prof in self.professors}
 
         for course in self.variables:
@@ -76,7 +76,7 @@ class course_timeslot_conflicts(Constraint):
         super().__init__(courses)
         self.timeslot_configs = timeslot_configs
 
-    def satisfied(self, assignment) -> bool:
+    def satisfied(self, variable, assignment) -> bool:
         for course in self.variables:
             if course not in assignment:
                 continue
@@ -137,3 +137,73 @@ class course_timeslot_conflicts(Constraint):
 
         return False
 
+class csp_1_happiness_constraint(Constraint):
+
+    def __init__(self, courses, professors, happiness_threshold) -> None:
+        super().__init__(courses)
+        self.professors = professors
+        self.happiness_threshold = happiness_threshold
+
+    def satisfied(self, variable, assignment) -> bool:
+        # Get list of courses having the same professor as course currently under consideration.
+        prof_id = assignment[variable]
+        prof_courses = [course for course in assignment.keys() if (assignment[course] == prof_id)]
+
+        enthusiasm_sum = 0
+        num_courses_fall = 0
+        num_courses_spring = 0
+        num_courses_summer = 0
+        for course in prof_courses:
+            # Get sum of enthusiasm scores for professor assigned to course currently under consideration.
+            for course_preferences in self.professors[prof_id]["qualifiedCoursePreferences"]:
+                if course_preferences["courseCode"] == course.split("_")[0]:
+                    enthusiasm_sum += course_preferences["enthusiasmScore"]
+
+            # Record number of courses assigned to the professor for each semester.
+            if course.split("_")[1] == "fall":
+                num_courses_fall += 1
+            elif course.split("_")[1] == "spring":
+                num_courses_spring += 1
+            elif course.split("_")[1] == "summer":
+                num_courses_summer += 1
+
+        # Compute happiness regarding course preferences.
+        enthusiasm_mean = enthusiasm_sum / len(prof_courses)
+        happiness_course_preferences = (enthusiasm_mean - 20) / (195 - 20)
+
+        # Compute happiness regarding preferred courses per semester.
+        preferred_num_courses_fall = self.professors[prof_id]["preferredCoursesPerSemester"]["fall"]
+        preferred_num_courses_spring = self.professors[prof_id]["preferredCoursesPerSemester"]["spring"]
+        preferred_num_courses_summer = self.professors[prof_id]["preferredCoursesPerSemester"]["summer"]
+
+        happiness_preferred_courses_semester = 0
+        if num_courses_fall <= preferred_num_courses_fall:
+            happiness_preferred_courses_semester += 1
+        if num_courses_spring <= preferred_num_courses_spring:
+            happiness_preferred_courses_semester += 1
+        if num_courses_summer <= preferred_num_courses_summer:
+            happiness_preferred_courses_semester += 1
+
+        happiness_preferred_courses_semester = happiness_preferred_courses_semester / 3
+
+        # Compute happiness regarding preferred non-teaching semester.
+        pref_non_teaching_semester = 1
+        if self.professors[prof_id]["preferredNonTeachingSemester"] is not None:
+
+            preferred_non_teach_semester = self.professors[prof_id]["preferredNonTeachingSemester"].lower()
+            if preferred_non_teach_semester == "fall" and num_courses_fall == 0:
+                pref_non_teaching_semester += 1
+            elif preferred_non_teach_semester == "spring" and num_courses_fall == 0:
+                pref_non_teaching_semester += 1
+            elif preferred_non_teach_semester == "summer" and num_courses_fall == 0:
+                pref_non_teaching_semester += 1
+
+        happiness_pref_non_teaching_semester = pref_non_teaching_semester / 1
+
+        # Compute happiness score.
+        happiness = (happiness_course_preferences + happiness_preferred_courses_semester + \
+                    happiness_pref_non_teaching_semester) / 3
+
+        if happiness >= self.happiness_threshold:
+            return True
+        return False
