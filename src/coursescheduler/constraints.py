@@ -138,6 +138,7 @@ class course_timeslot_conflicts(Constraint):
 
         return False
 
+
 class csp_1_happiness_constraint(Constraint):
 
     def __init__(self, courses, professors, happiness_threshold) -> None:
@@ -203,14 +204,14 @@ class csp_1_happiness_constraint(Constraint):
 
         # Compute happiness score.
         happiness = (happiness_course_preferences + happiness_preferred_courses_semester + \
-                    happiness_pref_non_teaching_semester) / 3
+                     happiness_pref_non_teaching_semester) / 3
 
         if happiness >= self.happiness_threshold:
             return True
         return False
 
 
-# Possibly edit to incLude a dictionary to continuously count the professor load
+# Soft Constraint for CSP 1
 class course_preferences_constraint(SoftConstraint):
     def __init__(self, courses, professors) -> None:
         super().__init__(courses)
@@ -218,21 +219,88 @@ class course_preferences_constraint(SoftConstraint):
 
     def satisfaction_score(self, assignment) -> float:
         overall_enthusiasm_sum = 0
+        overall_course_prefs_per_semester_sum = 0
+        overall_pref_non_teach_semester_sum = 0
+
         # For each professor:
         profs = set(assignment.values())
         for prof_id in profs:
             # Get list of courses having the same professor as course currently under consideration.
             prof_courses = [course for course in assignment.keys() if (assignment[course] == prof_id)]
 
-            # Compute satisfaction regarding course preferences.
+            # Loop through prof's courses to compute satisfaction regarding the various soft constraints.
             prof_enthusiasm_sum = 0
+            num_courses_fall = 0
+            num_courses_spring = 0
+            num_courses_summer = 0
             for course in prof_courses:
                 # Get sum of enthusiasm scores for professor assigned to course currently under consideration.
                 for course_preferences in self.professors[prof_id]["qualifiedCoursePreferences"]:
                     if course_preferences["courseCode"] == course.split("_")[0]:
                         prof_enthusiasm_sum += course_preferences["enthusiasmScore"]
+
+                # Record number of courses assigned to the professor for each semester.
+                # Used to compute the statisfaction regarding courses per semester and non-teaching semesters
+                if course.split("_")[1] == "fall":
+                    num_courses_fall += 1
+                elif course.split("_")[1] == "spring":
+                    num_courses_spring += 1
+                elif course.split("_")[1] == "summer":
+                    num_courses_summer += 1
+            # Compute satisfaction regarding course preferences.
             prof_enthusiasm_mean = prof_enthusiasm_sum / len(prof_courses)
             prof_enthusiasm_mean_normalized = (prof_enthusiasm_mean - 20) / (195 - 20)
             overall_enthusiasm_sum += prof_enthusiasm_mean_normalized
-        return overall_enthusiasm_sum / len(profs)
-            #return (enthusiasm_mean - 20) / (195 - 20)
+
+            # Compute satisfaction regarding preferred number of courses per semester.
+            preferred_num_courses_fall = self.professors[prof_id]["preferredCoursesPerSemester"]["fall"]
+            preferred_num_courses_spring = self.professors[prof_id]["preferredCoursesPerSemester"]["spring"]
+            preferred_num_courses_summer = self.professors[prof_id]["preferredCoursesPerSemester"]["summer"]
+
+            # Getting the value of how many courses are being taught in the professors preferred course teachings
+            # per semester
+            total_courses_exceeding_pref_num_courses = 0
+            if num_courses_fall > preferred_num_courses_fall:
+                total_courses_exceeding_pref_num_courses += (num_courses_fall - preferred_num_courses_fall)
+            if num_courses_spring > preferred_num_courses_spring:
+                total_courses_exceeding_pref_num_courses += (num_courses_spring - preferred_num_courses_spring)
+            if num_courses_summer > preferred_num_courses_summer:
+                total_courses_exceeding_pref_num_courses += (num_courses_summer - preferred_num_courses_summer)
+
+            # Subtracting the overall exceeding preferred number of courses per semester
+            # To ensure the amount of exceeding courses are weighted higher the more courses a professor is teaching
+            happiness_preferred_courses_semester = (1 - (total_courses_exceeding_pref_num_courses /
+                                                         self.professors[prof_id]["teachingObligations"]))
+
+            overall_course_prefs_per_semester_sum += happiness_preferred_courses_semester
+
+            # Compute satisfaction regarding preferred non-teaching semester
+            # *** NOTE ***
+            # This soft constraint is not currently being included in the final satisfaction score.
+            # It is handled by the previous soft constraint (preferred num courses per semester).
+            # If a professor wishes not to teach in a particular semester,
+            # their preferred number of courses for that semester should be zero.
+            # Then the previous constraint will handle this.
+            # In the case that the professor is a research professor (making this a hard constraint),
+            # the constraint will be handled during value-pruning before the CSP runs.
+            pref_non_teaching_semester = 1
+            if self.professors[prof_id]["preferredNonTeachingSemester"] is not None:
+                preferred_non_teach_semester = self.professors[prof_id]["preferredNonTeachingSemester"]
+                if preferred_non_teach_semester == "FALL" and num_courses_fall != 0:
+                    pref_non_teaching_semester -= 1
+                elif preferred_non_teach_semester == "SPRING" and num_courses_spring != 0:
+                    pref_non_teaching_semester -= 1
+                elif preferred_non_teach_semester == "SUMMER" and num_courses_summer != 0:
+                    pref_non_teaching_semester -= 1
+
+            happiness_pref_non_teaching_semester = pref_non_teaching_semester
+            overall_pref_non_teach_semester_sum += happiness_pref_non_teaching_semester
+
+        overall_enthusiasm_mean = overall_enthusiasm_sum / len(profs)
+        overall_enthusiasm_mean_course_per_sem = overall_course_prefs_per_semester_sum / len(profs)
+        overall_enthusiasm_mean_non_teach_semester = overall_pref_non_teach_semester_sum / len(profs)
+
+        # return overall_enthusiasm_mean
+
+        return ((overall_enthusiasm_mean * 4) + overall_enthusiasm_mean_course_per_sem) / 5
+
