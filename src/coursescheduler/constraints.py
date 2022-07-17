@@ -1,6 +1,7 @@
 from typing import List, TypeVar
 
 from .csp import Constraint
+from .csp import SoftConstraint
 
 # from tests.datamodels_tester import temp_profs, temp_courses
 # from coursescheduler.csp import Constraint
@@ -207,3 +208,31 @@ class csp_1_happiness_constraint(Constraint):
         if happiness >= self.happiness_threshold:
             return True
         return False
+
+
+# Possibly edit to incLude a dictionary to continuously count the professor load
+class course_preferences_constraint(SoftConstraint):
+    def __init__(self, courses, professors) -> None:
+        super().__init__(courses)
+        self.professors = professors
+
+    def satisfaction_score(self, assignment) -> float:
+        overall_enthusiasm_sum = 0
+        # For each professor:
+        profs = set(assignment.values())
+        for prof_id in profs:
+            # Get list of courses having the same professor as course currently under consideration.
+            prof_courses = [course for course in assignment.keys() if (assignment[course] == prof_id)]
+
+            # Compute satisfaction regarding course preferences.
+            prof_enthusiasm_sum = 0
+            for course in prof_courses:
+                # Get sum of enthusiasm scores for professor assigned to course currently under consideration.
+                for course_preferences in self.professors[prof_id]["qualifiedCoursePreferences"]:
+                    if course_preferences["courseCode"] == course.split("_")[0]:
+                        prof_enthusiasm_sum += course_preferences["enthusiasmScore"]
+            prof_enthusiasm_mean = prof_enthusiasm_sum / len(prof_courses)
+            prof_enthusiasm_mean_normalized = (prof_enthusiasm_mean - 20) / (195 - 20)
+            overall_enthusiasm_sum += prof_enthusiasm_mean_normalized
+        return overall_enthusiasm_sum / len(profs)
+            #return (enthusiasm_mean - 20) / (195 - 20)

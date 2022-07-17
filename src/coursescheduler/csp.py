@@ -7,6 +7,8 @@
 
 from typing import Generic, TypeVar, Dict, List, Optional
 from abc import ABC, abstractmethod
+import random
+import sys
 
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
@@ -19,8 +21,21 @@ class Constraint(Generic[V, D], ABC):
         self.variables = variables
 
     # Must be overridden by subclasses
+    # Returns boolean indicating whether the constraint is satisfied.
     @abstractmethod
     def satisfied(self, assignment: Dict[V, D]) -> bool:
+        return
+
+
+class SoftConstraint(Generic[V, D], ABC):
+    # The variables that the constraint is between
+    def __init__(self, variables: List[V]) -> None:
+        self.variables = variables
+
+    # Must be overridden by subclasses
+    # Returns a value in range [0, 1] indicating the degree to which the constraint is satisfied.
+    @abstractmethod
+    def satisfaction_score(self, assignment: Dict[V, D]) -> float:
         return
 
 
@@ -40,8 +55,10 @@ class CSP(Generic[V, D]):
 
         # Constraints
         self.constraints: Dict[V, List[Constraint[V, D]]] = {}
+        self.soft_constraints: Dict[V, List[SoftConstraint[V, D]]] = {}
         for variable in self.variables:
             self.constraints[variable] = []
+            self.soft_constraints[variable] = []
             if variable not in self.domains:
                 raise LookupError("Every variable should have a domain assigned to it.")
 
@@ -51,6 +68,13 @@ class CSP(Generic[V, D]):
                 raise LookupError("Variable in constraint not in CSP")
             else:
                 self.constraints[variable].append(constraint)
+
+    def add_soft_constraint(self, soft_constraint: SoftConstraint[V, D]) -> None:
+        for variable in soft_constraint.variables:
+            if variable not in self.variables:
+                raise LookupError("Variable in constraint not in CSP")
+            else:
+                self.soft_constraints[variable].append(soft_constraint)
 
     # Check if the value assignment is consistent by checking all constraints
     # for the given variable against it
@@ -162,3 +186,42 @@ class CSP(Generic[V, D]):
         else:
             result = backtracking_search_recursive()
         return result
+
+    def optimize(self, initial_assignment, config=None) -> Optional[Dict[V, D]]:
+        # Determines quality of an assignment of a value to a variable.
+        # Higher quality assignments are those violating fewer soft constraints.
+        # Assignment violating any hard constraints have a quality score of 0 (the lowest possible score).
+        def compute_quality(variable_, assignment):
+            # Verify that no hard constraints are violated.
+            for constraint in self.constraints[variable_]:
+                if not constraint.satisfied(variable_, assignment):
+                    return 0
+            # Determine quality of the assignment.
+            quality_ = 0
+            for soft_constraint in self.soft_constraints[variable_]:
+                quality_ += soft_constraint.satisfaction_score(assignment)
+            return quality_
+
+        # Loop for a number of times modifying the assignment each time until a max threshold of steps is reached.
+        current = initial_assignment
+        for it in range(config["max_steps"]):
+            # Choose a variable at random.
+            var = random.choice(list(current.keys()))
+
+            # For the current variable, find the highest-quality value.
+            initial_quality = compute_quality(var, current)
+            best_value = None
+            best_quality = initial_quality
+            for value in self.domains[var]:
+                assignment_copy = current.copy()
+                assignment_copy[var] = value
+                quality = compute_quality(var, assignment_copy)
+                if quality > best_quality:
+                    best_value = value
+                    best_quality = quality
+
+            # If a value was found producing an assignment of higher quality, assign it to the variable.
+            if best_quality > initial_quality:
+                print("optimization found on iteration " + str(it))
+                current[var] = best_value
+        return current
