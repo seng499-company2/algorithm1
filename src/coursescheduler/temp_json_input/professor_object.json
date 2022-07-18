@@ -4615,7 +4615,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh"]
       },
       {
             "id": "34",

@@ -4,7 +4,7 @@ import datetime
 import time
 from pprint import pprint
 
-from .constraints import professor_teaching_load, course_timeslot_conflicts, csp_1_happiness_constraint, course_preferences_constraint
+from .constraints import professor_teaching_load, course_timeslot_conflicts, course_preferences_constraint, time_slot_constraint
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
 
@@ -90,20 +90,19 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                     domains_csp_1[course] = qualified_profs
 
     # initialize csp solvers
-    course_variables = []
-    course_variables.extend(list(non_static_courses["fall"].keys()))
-    course_variables.extend(list(non_static_courses["spring"].keys()))
-    course_variables.extend(list(non_static_courses["summer"].keys()))
+    course_variables_non_static = []
+    course_variables_non_static.extend(list(non_static_courses["fall"].keys()))
+    course_variables_non_static.extend(list(non_static_courses["spring"].keys()))
+    course_variables_non_static.extend(list(non_static_courses["summer"].keys()))
 
     try:
-        csp_1 = CSP(course_variables, domains_csp_1)
+        csp_1 = CSP(course_variables_non_static, domains_csp_1)
 
         # add hard constraints
-        csp_1.add_constraint(professor_teaching_load(course_variables, professors))
+        csp_1.add_constraint(professor_teaching_load(course_variables_non_static, professors))
 
         # add soft constraints
-        #csp_1.add_constraint(csp_1_happiness_constraint(course_variables, professors, 0.5))
-        csp_1.add_soft_constraint(course_preferences_constraint(course_variables, professors))
+        csp_1.add_soft_constraint(course_preferences_constraint(course_variables_non_static, professors))
 
         # set search config values
         config = {
@@ -143,31 +142,31 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                 values["professor"] = solution_csp_1[course]
 
     #Print CSP 1 results as (course, professor, enthusiasm score)
-    solution_csp_1_list = solution_csp_1.items()
-    for (course, professor_id) in solution_csp_1_list:
-        enthusiasm_score = 0
-        for course_preferences in professors[professor_id]["qualifiedCoursePreferences"]:
-            if course_preferences["courseCode"] == course.split("_")[0]:
-                enthusiasm_score += course_preferences["enthusiasmScore"]
-        print(course, professors[professor_id]["name"], enthusiasm_score)
+    # solution_csp_1_list = solution_csp_1.items()
+    # for (course, professor_id) in solution_csp_1_list:
+    #     enthusiasm_score = 0
+    #     for course_preferences in professors[professor_id]["qualifiedCoursePreferences"]:
+    #         if course_preferences["courseCode"] == course.split("_")[0]:
+    #             enthusiasm_score += course_preferences["enthusiasmScore"]
+    #     print(course, professors[professor_id]["name"], enthusiasm_score)
 
     # Print average enthusiasm scores for each professor in CSP 1 results.
-    solution_professors = set(solution_csp_1.values())
-    overall_enthusiasm_sum = 0
-    for prof in solution_professors:
-        prof_courses = [course for course in solution_csp_1.keys() if solution_csp_1[course] == prof]
-        enthusiasm_sum = 0
-        for course in prof_courses:
-            for course_preferences in professors[prof]["qualifiedCoursePreferences"]:
-                if course_preferences["courseCode"] == course.split("_")[0]:
-                    enthusiasm_sum += course_preferences["enthusiasmScore"]
-        mean_enthusiasm_score = enthusiasm_sum / len(prof_courses)
-        overall_enthusiasm_sum += mean_enthusiasm_score
-        print(professors[prof]["name"], mean_enthusiasm_score)
+    # solution_professors = set(solution_csp_1.values())
+    # overall_enthusiasm_sum = 0
+    # for prof in solution_professors:
+    #     prof_courses = [course for course in solution_csp_1.keys() if solution_csp_1[course] == prof]
+    #     enthusiasm_sum = 0
+    #     for course in prof_courses:
+    #         for course_preferences in professors[prof]["qualifiedCoursePreferences"]:
+    #             if course_preferences["courseCode"] == course.split("_")[0]:
+    #                 enthusiasm_sum += course_preferences["enthusiasmScore"]
+    #     mean_enthusiasm_score = enthusiasm_sum / len(prof_courses)
+    #     overall_enthusiasm_sum += mean_enthusiasm_score
+    #     print(professors[prof]["name"], mean_enthusiasm_score)
 
     # Print overall average enthusiasm score in CSP 1 results.
-    overall_mean_enthusiasm_score = overall_enthusiasm_sum / len(solution_professors)
-    print("Overall average enthusiasm: " + str(overall_mean_enthusiasm_score))
+    # overall_mean_enthusiasm_score = overall_enthusiasm_sum / len(solution_professors)
+    # print("Overall average enthusiasm: " + str(overall_mean_enthusiasm_score))
 
     # csp 2
     course_variables = []
@@ -229,6 +228,9 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                     # For each list:
                     csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs))
 
+        # Add soft constraints.
+        csp_2.add_soft_constraint(time_slot_constraint(course_variables_non_static, professors, timeslot_configs, solution_csp_1))
+
         # set search config values
         config_csp_2 = {
             "mrv": True,
@@ -237,20 +239,64 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             "max_steps": 50000
         }
 
+        # Set optimization config values
+        config_opt = {
+            "max_steps": 1000
+        }
+
         # run search
         start_time_csp_2 = time.time()
         solution_csp_2 = csp_2.backtracking_search(config=config_csp_2)
-        end_time_csp_2 = time.time()
+        #end_time_csp_2 = time.time()
         if solution_csp_2 is None:
             log_message("No solution found in CSP 2 (timeslots to courses)")
             return None, "No schedule found"
+        solution_csp_2 = csp_2.optimize(solution_csp_2, config=config_opt)
+        end_time_csp_2_opt = time.time()
 
     except Exception as e:
         log_message(str(e))
         return None, "No schedule found"
 
     log_message("Successfully solved CSP 2 (assigned all timeslots to courses)")
-    log_message("Runtime of CSP 2: " + str(end_time_csp_2 - start_time_csp_2) + " seconds")
+    log_message("Runtime of CSP 2: " + str(end_time_csp_2_opt - start_time_csp_2) + " seconds")
+
+    ################
+    # print()
+    # print('Timetable:')
+    # timetable_list = []
+    #
+    # #pprint(professors)
+    #
+    # for course, timeslot_id in solution_csp_2.items():
+    #     # print(course)
+    #     semester = course.split("_")[1]
+    #     timeslots = timeslot_configs[timeslot_id]
+    #     timeslot_out = []
+    #     for timeslot in timeslots:
+    #         day = timeslot[0]
+    #         start = str(timeslot[1].time())
+    #         end = str(timeslot[2].time())
+    #         timeslot_out.append((day, start, end))
+    #
+    #     #pprint(courses[semester][course])
+    #
+    #     try:
+    #         # Sort by name
+    #         # timetable_list.append(f'{professors[courses[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
+    #
+    #         # sort by semester
+    #         timetable_list.append(
+    #             f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
+    #
+    #     except KeyError:
+    #         timetable_list.append(
+    #             f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {courses[semester][course]["professor"]:<24} {timeslot_out} ')
+    #
+    # timetable_list.sort()
+    # for x in timetable_list:
+    #     print(x)
+    ################
 
     # update the "courses" data structure with the timeslots assigned
     for semester, all_courses in courses.items():

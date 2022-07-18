@@ -111,7 +111,7 @@ class course_timeslot_conflicts(Constraint):
                     for i in range(num_days_1):
                         for j in range(num_days_2):
 
-                            if self.check_if_conflicts(timeslot_config_1, timeslot_config_2[j]):
+                            if self.check_if_conflicts(timeslot_config_1[i], timeslot_config_2[j]):
                                 return False
         return True
 
@@ -139,85 +139,13 @@ class course_timeslot_conflicts(Constraint):
         return False
 
 
-class csp_1_happiness_constraint(Constraint):
-
-    def __init__(self, courses, professors, happiness_threshold) -> None:
-        super().__init__(courses)
-        self.professors = professors
-        self.happiness_threshold = happiness_threshold
-
-    def satisfied(self, variable, assignment) -> bool:
-        # Get list of courses having the same professor as course currently under consideration.
-        prof_id = assignment[variable]
-        prof_courses = [course for course in assignment.keys() if (assignment[course] == prof_id)]
-
-        enthusiasm_sum = 0
-        num_courses_fall = 0
-        num_courses_spring = 0
-        num_courses_summer = 0
-        for course in prof_courses:
-            # Get sum of enthusiasm scores for professor assigned to course currently under consideration.
-            for course_preferences in self.professors[prof_id]["qualifiedCoursePreferences"]:
-                if course_preferences["courseCode"] == course.split("_")[0]:
-                    enthusiasm_sum += course_preferences["enthusiasmScore"]
-
-            # Record number of courses assigned to the professor for each semester.
-            if course.split("_")[1] == "fall":
-                num_courses_fall += 1
-            elif course.split("_")[1] == "spring":
-                num_courses_spring += 1
-            elif course.split("_")[1] == "summer":
-                num_courses_summer += 1
-
-        # Compute happiness regarding course preferences.
-        enthusiasm_mean = enthusiasm_sum / len(prof_courses)
-        happiness_course_preferences = (enthusiasm_mean - 20) / (195 - 20)
-
-        # Compute happiness regarding preferred courses per semester.
-        preferred_num_courses_fall = self.professors[prof_id]["preferredCoursesPerSemester"]["fall"]
-        preferred_num_courses_spring = self.professors[prof_id]["preferredCoursesPerSemester"]["spring"]
-        preferred_num_courses_summer = self.professors[prof_id]["preferredCoursesPerSemester"]["summer"]
-
-        happiness_preferred_courses_semester = 0
-        if num_courses_fall <= preferred_num_courses_fall:
-            happiness_preferred_courses_semester += 1
-        if num_courses_spring <= preferred_num_courses_spring:
-            happiness_preferred_courses_semester += 1
-        if num_courses_summer <= preferred_num_courses_summer:
-            happiness_preferred_courses_semester += 1
-
-        happiness_preferred_courses_semester = happiness_preferred_courses_semester / 3
-
-        # Compute happiness regarding preferred non-teaching semester.
-        pref_non_teaching_semester = 1
-        if self.professors[prof_id]["preferredNonTeachingSemester"] is not None:
-
-            preferred_non_teach_semester = self.professors[prof_id]["preferredNonTeachingSemester"].lower()
-            if preferred_non_teach_semester == "fall" and num_courses_fall == 0:
-                pref_non_teaching_semester += 1
-            elif preferred_non_teach_semester == "spring" and num_courses_fall == 0:
-                pref_non_teaching_semester += 1
-            elif preferred_non_teach_semester == "summer" and num_courses_fall == 0:
-                pref_non_teaching_semester += 1
-
-        happiness_pref_non_teaching_semester = pref_non_teaching_semester / 1
-
-        # Compute happiness score.
-        happiness = (happiness_course_preferences + happiness_preferred_courses_semester + \
-                     happiness_pref_non_teaching_semester) / 3
-
-        if happiness >= self.happiness_threshold:
-            return True
-        return False
-
-
 # Soft Constraint for CSP 1
 class course_preferences_constraint(SoftConstraint):
     def __init__(self, courses, professors) -> None:
         super().__init__(courses)
         self.professors = professors
 
-    def satisfaction_score(self, assignment) -> float:
+    def satisfaction_score(self, assignment, variable=None) -> float:
         overall_enthusiasm_sum = 0
         overall_course_prefs_per_semester_sum = 0
         overall_pref_non_teach_semester_sum = 0
@@ -247,6 +175,7 @@ class course_preferences_constraint(SoftConstraint):
                     num_courses_spring += 1
                 elif course.split("_")[1] == "summer":
                     num_courses_summer += 1
+
             # Compute satisfaction regarding course preferences.
             prof_enthusiasm_mean = prof_enthusiasm_sum / len(prof_courses)
             prof_enthusiasm_mean_normalized = (prof_enthusiasm_mean - 20) / (195 - 20)
@@ -267,12 +196,13 @@ class course_preferences_constraint(SoftConstraint):
             if num_courses_summer > preferred_num_courses_summer:
                 total_courses_exceeding_pref_num_courses += (num_courses_summer - preferred_num_courses_summer)
 
-            # Subtracting the overall exceeding preferred number of courses per semester
-            # To ensure the amount of exceeding courses are weighted higher the more courses a professor is teaching
-            happiness_preferred_courses_semester = (1 - (total_courses_exceeding_pref_num_courses /
+            # Subtracting the overall number courses that exceed the number of courses per semester
+            # This weights the amount of courses exceeding the preferred number of courses per semester
+            # Such as 1 exceeding courses is weighted lower than 2 exceeding courses
+            enthusiasm_preferred_courses_per_semester = (1 - (total_courses_exceeding_pref_num_courses /
                                                          self.professors[prof_id]["teachingObligations"]))
 
-            overall_course_prefs_per_semester_sum += happiness_preferred_courses_semester
+            overall_course_prefs_per_semester_sum += enthusiasm_preferred_courses_per_semester
 
             # Compute satisfaction regarding preferred non-teaching semester
             # *** NOTE ***
@@ -293,14 +223,55 @@ class course_preferences_constraint(SoftConstraint):
                 elif preferred_non_teach_semester == "SUMMER" and num_courses_summer != 0:
                     pref_non_teaching_semester -= 1
 
-            happiness_pref_non_teaching_semester = pref_non_teaching_semester
-            overall_pref_non_teach_semester_sum += happiness_pref_non_teaching_semester
+            enthusiasm_pref_non_teaching_semester = pref_non_teaching_semester
+            overall_pref_non_teach_semester_sum += enthusiasm_pref_non_teaching_semester
 
+        # Compute aggregate satisfactions scores for each soft constraint.
         overall_enthusiasm_mean = overall_enthusiasm_sum / len(profs)
         overall_enthusiasm_mean_course_per_sem = overall_course_prefs_per_semester_sum / len(profs)
         overall_enthusiasm_mean_non_teach_semester = overall_pref_non_teach_semester_sum / len(profs)
 
-        # return overall_enthusiasm_mean
-
+        # Compute and return a single overall satisfaction score combining all soft constraints.
         return ((overall_enthusiasm_mean * 4) + overall_enthusiasm_mean_course_per_sem) / 5
+
+
+# Soft Constraint for CSP 2
+class time_slot_constraint(SoftConstraint):
+    def __init__(self, courses, professors, timeslot_configs, csp_1_result) -> None:
+        super().__init__(courses)
+        self.professors = professors
+        self.timeslot_configs = timeslot_configs
+        self.csp_1_result = csp_1_result
+
+    def satisfaction_score(self, assignment, variable) -> float:
+        if variable not in self.variables:
+            return 1
+        # Check for this professor have scheduled them outside-of their preferred hours
+
+        # temp dictionary of time codes used in time slots
+        time_codes = {"monday": "M", "tuesday": "T",
+                      "wednesday": "W", "thursday": "Th", "friday": "F"}
+
+        # Grab the professor's preferred course day spread as a list
+        prof_id = self.csp_1_result[variable]
+        preferred_course_day_spread_list = self.professors[prof_id]["preferredCourseDaySpreads"]
+
+        if not preferred_course_day_spread_list:
+            return 1
+
+        timeslot_config = self.timeslot_configs[assignment[variable]]
+
+        enthusiasm_score_for_preferred_days = 0
+        if len(timeslot_config) == 3 and "TWF" in preferred_course_day_spread_list:
+            enthusiasm_score_for_preferred_days += 1
+        elif len(timeslot_config) == 2 and "MTh" in preferred_course_day_spread_list:
+            enthusiasm_score_for_preferred_days += 1
+        elif len(timeslot_config) == 1:
+            if time_codes[timeslot_config[0][0].lower()] in preferred_course_day_spread_list:
+                enthusiasm_score_for_preferred_days += 1
+
+        return enthusiasm_score_for_preferred_days
+        # and have we scheduled them outside-of their preferred days
+        # return a single professor's satisfaction score
+
 

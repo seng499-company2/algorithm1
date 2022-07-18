@@ -35,7 +35,7 @@ class SoftConstraint(Generic[V, D], ABC):
     # Must be overridden by subclasses
     # Returns a value in range [0, 1] indicating the degree to which the constraint is satisfied.
     @abstractmethod
-    def satisfaction_score(self, assignment: Dict[V, D]) -> float:
+    def satisfaction_score(self, assignment: Dict[V, D], variable=None) -> float:
         return
 
 
@@ -199,7 +199,7 @@ class CSP(Generic[V, D]):
             # Determine quality of the assignment.
             quality_ = 0
             for soft_constraint in self.soft_constraints[variable_]:
-                quality_ += soft_constraint.satisfaction_score(assignment)
+                quality_ += soft_constraint.satisfaction_score(assignment, variable_)
             return quality_
 
         # Loop for a number of times modifying the assignment each time until a max threshold of steps is reached.
