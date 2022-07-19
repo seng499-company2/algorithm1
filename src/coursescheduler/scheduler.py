@@ -2,18 +2,34 @@ import json
 import os
 import datetime
 import time
-from pprint import pprint
 
+from pprint import pprint
+from threading import Thread, Event
 from .constraints import professor_teaching_load, course_timeslot_conflicts
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
+
+max_time_seconds = 5 * 60
+stop_event = Event()
 
 
 def log_message(message):
     print("[SCHEDULER] " + message)
 
-# Initial plug & play algorithm
+
 def generate_schedule(professors, schedule, jsonDebug=False):
+    main_alg_thread = Thread(target=generate_schedule_timer, args=(professors, schedule, jsonDebug))
+    main_alg_thread.start()
+    main_alg_thread.join(timeout=max_time_seconds)
+    if main_alg_thread.is_alive():
+        stop_event.set()
+        main_alg_thread.join()
+        return None, "Timeout"
+
+
+# Initial plug & play algorithm
+# TODO Add checks for stop_event to prevent the algorithm from running too long
+def generate_schedule_timer(professors, schedule, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
         if professors is None:
@@ -36,6 +52,10 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             schedule_file = open(os.path.join(os.path.dirname(__file__), 'temp_json_input/schedule_object.json'))
             schedule = json.load(schedule_file)
             schedule_file.close()
+
+    # TODO validate schedule object here
+
+    # TODO validate professor object here
 
     start_time = time.time()
 
@@ -69,6 +89,10 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
                 if len(qualified_profs) > 0:
                     domains_csp_1[course] = qualified_profs
+
+    # Error case: not enough qualified professors are available for all courses
+    if len(domains_csp_1) < len(non_static_courses):
+        return None, "Not enough qualified professors are available for input courses"
 
     # initialize csp solvers
     course_variables = []
