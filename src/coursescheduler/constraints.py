@@ -2,6 +2,7 @@ from typing import List, TypeVar
 
 from .csp import Constraint
 from .csp import SoftConstraint
+import datetime
 
 # from tests.datamodels_tester import temp_profs, temp_courses
 # from coursescheduler.csp import Constraint
@@ -49,7 +50,6 @@ class course_requires_peng(Constraint):
         return False
 
 
-# Possibly edit to incLude a dictionary to continuously count the professor load
 class professor_teaching_load(Constraint):
     def __init__(self, courses, professors) -> None:
         super().__init__(courses)
@@ -71,11 +71,11 @@ class professor_teaching_load(Constraint):
         return True
 
 
-# Possibly edit to incLude a dictionary to continuously count the professor load
 class course_timeslot_conflicts(Constraint):
-    def __init__(self, courses, timeslot_configs) -> None:
+    def __init__(self, courses, timeslot_configs, static_courses) -> None:
         super().__init__(courses)
         self.timeslot_configs = timeslot_configs
+        self.static_courses = static_courses
 
     def satisfied(self, variable, assignment) -> bool:
         for course in self.variables:
@@ -85,8 +85,8 @@ class course_timeslot_conflicts(Constraint):
             other_courses = [x for x in assignment if x != course and x in self.variables]
 
             for compare_course in other_courses:
-                # print("comparing courses {} to {}".format(course, compare_course))
-
+                if course in self.static_courses and compare_course in self.static_courses:
+                    continue
                 timeslot_config_1 = self.timeslot_configs[assignment[course]]
                 timeslot_config_2 = self.timeslot_configs[assignment[compare_course]]
                 num_days_1 = len(timeslot_config_1)
@@ -248,30 +248,73 @@ class time_slot_constraint(SoftConstraint):
             return 1
         # Check for this professor have scheduled them outside-of their preferred hours
 
-        # temp dictionary of time codes used in time slots
+        # Dictionary of time codes used in time slots preferences
         time_codes = {"monday": "M", "tuesday": "T",
                       "wednesday": "W", "thursday": "Th", "friday": "F"}
 
-        # Grab the professor's preferred course day spread as a list
+        # Grab the professor for the course currently under consideration.
         prof_id = self.csp_1_result[variable]
+
+        # Grab the professor's preferred course day spread (list).
         preferred_course_day_spread_list = self.professors[prof_id]["preferredCourseDaySpreads"]
 
-        if not preferred_course_day_spread_list:
-            return 1
-
+        # Grab the timeslot configuration currently assigned to the variable.
         timeslot_config = self.timeslot_configs[assignment[variable]]
 
-        enthusiasm_score_for_preferred_days = 0
-        if len(timeslot_config) == 3 and "TWF" in preferred_course_day_spread_list:
-            enthusiasm_score_for_preferred_days += 1
-        elif len(timeslot_config) == 2 and "MTh" in preferred_course_day_spread_list:
-            enthusiasm_score_for_preferred_days += 1
-        elif len(timeslot_config) == 1:
-            if time_codes[timeslot_config[0][0].lower()] in preferred_course_day_spread_list:
-                enthusiasm_score_for_preferred_days += 1
+        # Compute satisfaction regarding preferred course day spreads.
+        enthusiasm_score_for_preferred_days = 1
+        if preferred_course_day_spread_list:
+            enthusiasm_score_for_preferred_days = 0
 
-        return enthusiasm_score_for_preferred_days
-        # and have we scheduled them outside-of their preferred days
-        # return a single professor's satisfaction score
+            if len(timeslot_config) == 3 and "TWF" in preferred_course_day_spread_list:
+                enthusiasm_score_for_preferred_days += 1
+            elif len(timeslot_config) == 2 and "MTh" in preferred_course_day_spread_list:
+                enthusiasm_score_for_preferred_days += 1
+            elif len(timeslot_config) == 1:
+                if time_codes[timeslot_config[0][0].lower()] in preferred_course_day_spread_list:
+                    enthusiasm_score_for_preferred_days += 1
+
+        # CSP 2 Soft Constraint 2 for professor preferred teaching hour preferences.
+        semester = variable.split("_")[1]
+        prof_preferred_course_times_in_semester = self.professors[prof_id]["preferredTimes"][semester] # could be null
+
+        satisfaction_preferred_times = 1
+        if prof_preferred_course_times_in_semester:
+            # Get the days in the candidate timeslot.
+            days = []
+            # If the assigned timeslot config is a 3-day config:
+            if len(timeslot_config) == 3:
+                days = ["tuesday", "wednesday", "friday"]
+            elif len(timeslot_config) == 2:
+                days = ["monday", "thursday"]
+            else:
+                days = [timeslot_config[0][0].lower()]
+
+            # Compute satisfaction provided by this timeslot.
+            satisfaction_score_total = 0
+            for day in days:
+                satisfaction_score_day = 1
+                if prof_preferred_course_times_in_semester[day]:
+                    # Compute quality score for day by comparing the assigned time with the preferred range.
+                    pref_start_time_tuple = prof_preferred_course_times_in_semester[day][0][0].split(":")
+                    pref_end_time_tuple = prof_preferred_course_times_in_semester[day][0][1].split(":")
+                    preferred_start_time = datetime.datetime(100, 1, 1, int(pref_start_time_tuple[0]), int(pref_start_time_tuple[1]))
+                    preferred_end_time = datetime.datetime(100, 1, 1, int(pref_end_time_tuple[0]), int(pref_end_time_tuple[1]))
+                    start_time = timeslot_config[0][1]
+                    end_time = timeslot_config[0][2]
+                    start_diff = datetime.timedelta(seconds=0)
+                    end_diff = datetime.timedelta(seconds=0)
+                    if start_time < preferred_start_time:
+                        start_diff = preferred_start_time - start_time
+                    if end_time > preferred_end_time:
+                        end_diff = end_time - preferred_end_time
+                    worst_diff = max(start_diff.seconds, end_diff.seconds)
+                    if worst_diff > 0:
+                        satisfaction_score_day -= worst_diff / 45000
+                    satisfaction_score_total += satisfaction_score_day
+            satisfaction_preferred_times = satisfaction_score_total / len(days)
+
+        #return enthusiasm_score_for_preferred_days
+        return satisfaction_preferred_times
 
 

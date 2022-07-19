@@ -358,9 +358,102 @@
                   }
             ],
             "preferredTimes": {
-                  "fall": null,
-                  "spring": null,
-                  "summer": null
+                  "fall": {
+                        "monday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ]
+                  },
+                  "spring": {
+                        "monday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ]
+                  },
+                  "summer": {
+                        "monday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "14:30",
+                                    "20:30"
+                              ]
+                        ]
+                  }
             },
             "preferredCoursesPerSemester": {
                   "fall": 4,
@@ -368,7 +461,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "M"]
       },
       {
             "id": "3",
@@ -505,7 +598,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T"]
       },
       {
             "id": "4",
@@ -642,7 +735,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "W"]
       },
       {
             "id": "5",
@@ -769,9 +862,102 @@
                   }
             ],
             "preferredTimes": {
-                  "fall": null,
-                  "spring": null,
-                  "summer": null
+                  "fall": {
+                        "monday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ]
+                  },
+                  "spring": {
+                        "monday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ]
+                  },
+                  "summer": {
+                        "monday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "tuesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "wednesday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "thursday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ],
+                        "friday": [
+                              [
+                                    "12:30",
+                                    "18:30"
+                              ]
+                        ]
+                  }
             },
             "preferredCoursesPerSemester": {
                   "fall": 2,
@@ -779,7 +965,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "Th"]
       },
       {
             "id": "6",
@@ -916,7 +1102,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "F"]
       },
       {
             "id": "7",
@@ -1053,7 +1239,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "M"]
       },
       {
             "id": "8",
@@ -1190,7 +1376,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "T"]
       },
       {
             "id": "9",
@@ -1327,7 +1513,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "W"]
       },
       {
             "id": "10",
@@ -1464,7 +1650,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "W"]
       },
       {
             "id": "11",
@@ -1601,7 +1787,7 @@
                   "summer": 3
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "Th"]
       },
       {
             "id": "12",
@@ -1738,7 +1924,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "F"]
       },
       {
             "id": "13",
@@ -1875,7 +2061,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "M"]
       },
       {
             "id": "14",
@@ -2012,7 +2198,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "T"]
       },
       {
             "id": "15",
@@ -2149,7 +2335,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "W"]
       },
       {
             "id": "16",
@@ -2286,7 +2472,7 @@
                   "summer": 3
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "Th"]
       },
       {
             "id": "17",
@@ -2423,7 +2609,7 @@
                   "summer": 2
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "F"]
       },
       {
             "id": "18",
@@ -2560,7 +2746,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "M"]
       },
       {
             "id": "19",
@@ -2697,7 +2883,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T"]
       },
       {
             "id": "20",
@@ -2834,7 +3020,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "W"]
       },
       {
             "id": "21",
@@ -2971,7 +3157,7 @@
                   "summer": 4
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "F"]
       },
       {
             "id": "22",
@@ -3108,7 +3294,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "M"]
       },
       {
             "id": "23",
@@ -3245,7 +3431,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "M"]
       },
       {
             "id": "24",
@@ -3382,7 +3568,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "T"]
       },
       {
             "id": "25",
@@ -3519,7 +3705,7 @@
                   "summer": 2
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T"]
       },
       {
             "id": "26",
@@ -3656,7 +3842,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "W"]
       },
       {
             "id": "27",
@@ -3793,7 +3979,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "Th"]
       },
       {
             "id": "28",
@@ -3930,7 +4116,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "Th"]
       },
       {
             "id": "29",
@@ -4067,7 +4253,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "F"]
       },
       {
             "id": "30",
@@ -4204,7 +4390,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "TWF", "M", "T", "W", "Th", "F"]
       },
       {
             "id": "31",
@@ -4341,7 +4527,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "M"]
       },
       {
             "id": "32",
@@ -4478,7 +4664,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "T"]
       },
       {
             "id": "33",
@@ -4752,7 +4938,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "Th"]
       },
       {
             "id": "35",
@@ -4889,7 +5075,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "F"]
       },
       {
             "id": "36",
@@ -5026,7 +5212,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "TWF", "M", "T", "W", "Th", "F"]
       },
       {
             "id": "37",
@@ -5163,7 +5349,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "M"]
       },
       {
             "id": "38",
@@ -5300,7 +5486,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T"]
       },
       {
             "id": "39",
@@ -5437,7 +5623,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T"]
       },
       {
             "id": "40",
@@ -5574,7 +5760,7 @@
                   "summer": 2
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "W"]
       },
       {
             "id": "41",
@@ -5711,7 +5897,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "Th"]
       },
       {
             "id": "42",
@@ -5848,7 +6034,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "F"]
       },
       {
             "id": "43",
@@ -5985,7 +6171,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "TWF", "M", "T", "W", "Th", "F"]
       },
       {
             "id": "44",
@@ -6259,7 +6445,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "M"]
       },
       {
             "id": "46",
@@ -6396,7 +6582,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "T"]
       },
       {
             "id": "47",
@@ -6533,7 +6719,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "W"]
       },
       {
             "id": "48",
@@ -6670,7 +6856,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "Th"]
       },
       {
             "id": "49",
@@ -6807,7 +6993,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF", "F"]
       },
       {
             "id": "50",
@@ -7081,7 +7267,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       },
       {
             "id": "52",
@@ -7218,7 +7404,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh"]
       },
       {
             "id": "53",
@@ -7355,7 +7541,7 @@
                   "summer": 2
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       },
       {
             "id": "54",
@@ -7492,7 +7678,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh"]
       },
       {
             "id": "55",
@@ -7629,7 +7815,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       },
       {
             "id": "56",
@@ -7903,7 +8089,7 @@
                   "summer": 3
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh"]
       },
       {
             "id": "58",
@@ -8040,7 +8226,7 @@
                   "summer": 1
             },
             "preferredNonTeachingSemester": null,
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       },
       {
             "id": "59",
@@ -8177,7 +8363,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh"]
       },
       {
             "id": "60",
@@ -8314,7 +8500,7 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SPRING",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       },
       {
             "id": "61",
@@ -8451,7 +8637,7 @@
                   "summer": 3
             },
             "preferredNonTeachingSemester": "FALL",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["MTh", "T", "Th"]
       },
       {
             "id": "62",
@@ -8588,6 +8774,6 @@
                   "summer": 0
             },
             "preferredNonTeachingSemester": "SUMMER",
-            "preferredCourseDaySpreads": []
+            "preferredCourseDaySpreads": ["TWF"]
       }
 ]

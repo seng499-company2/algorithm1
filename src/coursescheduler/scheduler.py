@@ -95,6 +95,8 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     course_variables_non_static.extend(list(non_static_courses["spring"].keys()))
     course_variables_non_static.extend(list(non_static_courses["summer"].keys()))
 
+    #pprint(course_variables_non_static)
+
     try:
         csp_1 = CSP(course_variables_non_static, domains_csp_1)
 
@@ -114,7 +116,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
         # Set optimization config values
         config_opt = {
-            "max_steps": 1000
+            "max_steps": 500
         }
 
         # run csp 1
@@ -124,7 +126,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         if solution_csp_1 is None:
             log_message("No solution found in CSP 1 (professors to courses)")
             return None, "No schedule found"
-        solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
+        #solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
         end_time_csp_1_opt = time.time()
 
     except Exception as e:
@@ -174,6 +176,11 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     course_variables.extend(list(courses["spring"].keys()))
     course_variables.extend(list(courses["summer"].keys()))
 
+    static_courses = [course for course in course_variables if course not in course_variables_non_static]
+    #pprint(static_courses)
+
+    #pprint(course_variables)
+
     # Create data structure of all possible timeslot configurations
     timeslot_configs = timeslot_determination()
 
@@ -208,15 +215,19 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             else:
                 domains_csp_2[course] = timeslot_ids
 
-    domains_csp_2 = {course: timeslot_ids for course in course_variables}
+    #domains_csp_2 = {course: timeslot_ids for course in course_variables_non_static}
 
     try:
         csp_2 = CSP(course_variables, domains_csp_2)
 
+        static_courses_fall = [course for course in static_courses if "fall" in course]
+        static_courses_spring = [course for course in static_courses if "spring" in course]
+        static_courses_summer = [course for course in static_courses if "summer" in course]
+
         # Add constraints: courses in the same academic year must not overlap.
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "fall")
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "spring")
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "summer")
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "fall", static_courses_fall)
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "spring", static_courses_spring)
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "summer", static_courses_summer)
 
         # Add constraints: courses having the same professor must not overlap.
         all_profs = [k for k in professors.keys()]
@@ -226,7 +237,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                                               courses[semester][course]["professor"] == prof_id]
                 if professor_teaching_courses:
                     # For each list:
-                    csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs))
+                    csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs, []))
 
         # Add soft constraints.
         csp_2.add_soft_constraint(time_slot_constraint(course_variables_non_static, professors, timeslot_configs, solution_csp_1))
@@ -241,7 +252,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
         # Set optimization config values
         config_opt = {
-            "max_steps": 1000
+            "max_steps": 500
         }
 
         # run search
@@ -262,40 +273,40 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     log_message("Runtime of CSP 2: " + str(end_time_csp_2_opt - start_time_csp_2) + " seconds")
 
     ################
-    # print()
-    # print('Timetable:')
-    # timetable_list = []
-    #
-    # #pprint(professors)
-    #
-    # for course, timeslot_id in solution_csp_2.items():
-    #     # print(course)
-    #     semester = course.split("_")[1]
-    #     timeslots = timeslot_configs[timeslot_id]
-    #     timeslot_out = []
-    #     for timeslot in timeslots:
-    #         day = timeslot[0]
-    #         start = str(timeslot[1].time())
-    #         end = str(timeslot[2].time())
-    #         timeslot_out.append((day, start, end))
-    #
-    #     #pprint(courses[semester][course])
-    #
-    #     try:
-    #         # Sort by name
-    #         # timetable_list.append(f'{professors[courses[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
-    #
-    #         # sort by semester
-    #         timetable_list.append(
-    #             f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
-    #
-    #     except KeyError:
-    #         timetable_list.append(
-    #             f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {courses[semester][course]["professor"]:<24} {timeslot_out} ')
-    #
-    # timetable_list.sort()
-    # for x in timetable_list:
-    #     print(x)
+    print()
+    print('Timetable:')
+    timetable_list = []
+
+    #pprint(professors)
+
+    for course, timeslot_id in solution_csp_2.items():
+        # print(course)
+        semester = course.split("_")[1]
+        timeslots = timeslot_configs[timeslot_id]
+        timeslot_out = []
+        for timeslot in timeslots:
+            day = timeslot[0]
+            start = str(timeslot[1].time())
+            end = str(timeslot[2].time())
+            timeslot_out.append((day, start, end))
+
+        #pprint(courses[semester][course])
+
+        try:
+            # Sort by name
+            # timetable_list.append(f'{professors[courses[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
+
+            # sort by semester
+            timetable_list.append(
+                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
+
+        except KeyError:
+            timetable_list.append(
+                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {courses[semester][course]["professor"]:<24} {timeslot_out} ')
+
+    timetable_list.sort()
+    for x in timetable_list:
+        print(x)
     ################
 
     # update the "courses" data structure with the timeslots assigned
@@ -312,7 +323,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     return schedule, None
 
 
-def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester):
+def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester, static_courses):
     # Group courses by year.
     first_year_courses = [course for course in all_courses_input[semester].keys() if
                           all_courses_input[semester][course]["yearRequired"] == 1]
@@ -324,10 +335,10 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
                            all_courses_input[semester][course]["yearRequired"] == 4]
 
     # Add timeslot overlap constraints.
-    csp_2.add_constraint(course_timeslot_conflicts(first_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(second_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(third_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(fourth_year_courses, timeslot_configs))
+    csp_2.add_constraint(course_timeslot_conflicts(first_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(second_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(third_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(fourth_year_courses, timeslot_configs, static_courses))
 
     return csp_2
 
