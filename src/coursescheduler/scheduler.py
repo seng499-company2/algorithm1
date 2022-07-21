@@ -4,7 +4,8 @@ import datetime
 import time
 from pprint import pprint
 
-from .constraints import professor_teaching_load, course_timeslot_conflicts, course_preferences_constraint, time_slot_constraint
+from .constraints import professor_teaching_load, course_timeslot_conflicts, course_preferences_constraint, \
+    time_slot_constraint, research_professor_semester_off, professor_on_leave
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
 
@@ -68,6 +69,13 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                                 enthusiasm_score_ = enthusiasm_dict["enthusiasmScore"]
                         return enthusiasm_score_
                     qualified_peng_profs.sort(reverse=True, key=get_enthusiasm_score)
+
+                    # Remove the researching professors on their research semester
+                    for qualified_prof in qualified_peng_profs:
+                        if professors[qualified_prof]["facultyType"] == "RESEARCH":
+                            if professors[qualified_prof]["preferredNonTeachingSemester"] and semester == professors[qualified_prof]["preferredNonTeachingSemester"].lower():
+                                qualified_peng_profs.remove(qualified_prof)
+
                     # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_peng_profs
             else:
@@ -86,6 +94,13 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                         return enthusiasm_score_
 
                     qualified_profs.sort(reverse=True, key=get_enthusiasm_score)
+
+                    # Remove the researching professors on their research semester
+                    for qualified_prof in qualified_profs:
+                        if professors[qualified_prof]["facultyType"] == "RESEARCH":
+                            if professors[qualified_prof]["preferredNonTeachingSemester"] and semester == professors[qualified_prof]["preferredNonTeachingSemester"].lower():
+                                qualified_profs.remove(qualified_prof)
+
                     # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_profs
 
@@ -95,13 +110,13 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     course_variables_non_static.extend(list(non_static_courses["spring"].keys()))
     course_variables_non_static.extend(list(non_static_courses["summer"].keys()))
 
-    #pprint(course_variables_non_static)
 
     try:
         csp_1 = CSP(course_variables_non_static, domains_csp_1)
 
         # add hard constraints
         csp_1.add_constraint(professor_teaching_load(course_variables_non_static, professors))
+        csp_1.add_constraint(professor_on_leave(course_variables_non_static, professors))
 
         # add soft constraints
         csp_1.add_soft_constraint(course_preferences_constraint(course_variables_non_static, professors))
@@ -116,7 +131,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
         # Set optimization config values
         config_opt = {
-            "max_steps": 500
+            "max_steps": 1000
         }
 
         # run csp 1
@@ -126,7 +141,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         if solution_csp_1 is None:
             log_message("No solution found in CSP 1 (professors to courses)")
             return None, "No schedule found"
-        #solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
+        solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
         end_time_csp_1_opt = time.time()
 
     except Exception as e:
@@ -177,9 +192,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     course_variables.extend(list(courses["summer"].keys()))
 
     static_courses = [course for course in course_variables if course not in course_variables_non_static]
-    #pprint(static_courses)
-
-    #pprint(course_variables)
 
     # Create data structure of all possible timeslot configurations
     timeslot_configs = timeslot_determination()
@@ -215,7 +227,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             else:
                 domains_csp_2[course] = timeslot_ids
 
-    #domains_csp_2 = {course: timeslot_ids for course in course_variables_non_static}
 
     try:
         csp_2 = CSP(course_variables, domains_csp_2)
@@ -277,7 +288,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     print('Timetable:')
     timetable_list = []
 
-    #pprint(professors)
 
     for course, timeslot_id in solution_csp_2.items():
         # print(course)
@@ -290,7 +300,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             end = str(timeslot[2].time())
             timeslot_out.append((day, start, end))
 
-        #pprint(courses[semester][course])
 
         try:
             # Sort by name
@@ -298,7 +307,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
             # sort by semester
             timetable_list.append(
-                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<24} {timeslot_out} ')
+                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<10} {professors[courses[semester][course]["professor"]]["facultyType"]:<4} {timeslot_out} ')
 
         except KeyError:
             timetable_list.append(

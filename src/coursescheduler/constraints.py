@@ -33,6 +33,8 @@ class qualified_course_prof(Constraint):
         return False
 
 
+# Hard Constraint: Checks if the course requires a PENG
+# Currently not used as the CSP Domain is restricted directly in the Scheduler.py file
 class course_requires_peng(Constraint):
     def __init__(self, course, professors):
         super().__init__([course])
@@ -50,6 +52,7 @@ class course_requires_peng(Constraint):
         return False
 
 
+# Hard Constraint: Checks if the professor's assigned courses doesn't surpass their maximum teaching load
 class professor_teaching_load(Constraint):
     def __init__(self, courses, professors) -> None:
         super().__init__(courses)
@@ -71,6 +74,7 @@ class professor_teaching_load(Constraint):
         return True
 
 
+# Hard Constraint: Checks a given time slot and compares if it conflicts with a list of other time slots
 class course_timeslot_conflicts(Constraint):
     def __init__(self, courses, timeslot_configs, static_courses) -> None:
         super().__init__(courses)
@@ -124,19 +128,75 @@ class course_timeslot_conflicts(Constraint):
 
         # Checks if the start time of course 2 is in between the course 1 time
         if (course_start_time <= compare_course_start_time) and (course_end_time >= compare_course_start_time):
-            # print("Comparing: {} to {} VS {} to {}.".format(course_start_time.time(), course_end_time.time(),
-            #                                                 compare_course_start_time.time(),
-            #                                                 compare_course_end_time.time()))
             return True
 
         # Checks if the start time of course 1 is in between the course 2 time
         if (compare_course_start_time <= course_start_time) and (compare_course_end_time >= course_start_time):
-            # print("Comparing: {} to {} VS {} to {}.".format(course_start_time.time(), course_end_time.time(),
-            #                                                 compare_course_start_time.time(),
-            #                                                 compare_course_end_time.time()))
             return True
 
         return False
+
+
+# Hard Constraint: Checks if a research prof isn't assigned a course during their research semester
+# Currently not used as the CSP 1 domain restricts the research professors so they're not considered when scheduling
+# a course during their semester off
+class research_professor_semester_off(Constraint):
+    def __init__(self, courses, professors) -> None:
+        super().__init__(courses)
+        self.professors = professors
+
+    def satisfied(self, variable, assignment) -> bool:
+
+        for course in self.variables:
+            if course not in assignment:
+                continue
+            prof_id = assignment[course]
+            if self.professors[prof_id]["facultyType"] == "RESEARCH":
+                semester = course.split("_")[1]
+                if self.professors[prof_id]["preferredNonTeachingSemester"] and semester == self.professors[prof_id]["preferredNonTeachingSemester"].lower():
+                    return False
+
+        return True
+
+
+# Hard Constraint for any type of professor on leave.
+# Scenarios:
+# Teaching profs:
+# no leave - 6 courses - 3 semesters on Already considered
+# half leave - 3 courses - 2 semesters on (1 semester off Hard Constraint)
+# full leave - 2 courses - 1 semester on ( 2 semesters off Hard Constraint)
+#
+# Research prof:
+# no leave - 3 courses - 2 semesters on (1 semester off Hard Constraint) Already considered
+# half leave - 1 course - 1 semester on ( 2 semesters off Hard Constraint) Already considered
+# full leave - 0 courses - 0 semesters on ( 3 semesters off Hard Constraint) Already considered
+class professor_on_leave(Constraint):
+    def __init__(self, courses, professors) -> None:
+        super().__init__(courses)
+        self.professors = professors
+
+    def satisfied(self, variable, assignment) -> bool:
+        professor_courses = {prof: [] for prof in self.professors}
+
+        for course in self.variables:
+            if course not in assignment:
+                continue
+            prof_id = assignment[course]
+            professor_courses[prof_id] += [course]
+
+        for prof_id, courses in professor_courses.items():
+            if self.professors[prof_id]["facultyType"] == "TEACHING":
+                for course in courses:
+                    semester = course.split("_")[1]
+                    if self.professors[prof_id]["teachingObligations"] == 3:
+                        if self.professors[prof_id]["preferredTimes"][semester] is None:
+                            return False
+
+                    if self.professors[prof_id]["teachingObligations"] == 2:
+                        if self.professors[prof_id]["preferredTimes"][semester] is None:
+                            return False
+
+        return True
 
 
 # Soft Constraint for CSP 1
@@ -200,7 +260,7 @@ class course_preferences_constraint(SoftConstraint):
             # This weights the amount of courses exceeding the preferred number of courses per semester
             # Such as 1 exceeding courses is weighted lower than 2 exceeding courses
             enthusiasm_preferred_courses_per_semester = (1 - (total_courses_exceeding_pref_num_courses /
-                                                         self.professors[prof_id]["teachingObligations"]))
+                                                              self.professors[prof_id]["teachingObligations"]))
 
             overall_course_prefs_per_semester_sum += enthusiasm_preferred_courses_per_semester
 
@@ -262,6 +322,9 @@ class time_slot_constraint(SoftConstraint):
         timeslot_config = self.timeslot_configs[assignment[variable]]
 
         # Compute satisfaction regarding preferred course day spreads.
+        # *** NOTE ***
+        # This soft constraint is currently not considered as the preferred time slots tok higher precendence than
+        # the time slot configuration
         enthusiasm_score_for_preferred_days = 1
         if preferred_course_day_spread_list:
             enthusiasm_score_for_preferred_days = 0
@@ -294,27 +357,37 @@ class time_slot_constraint(SoftConstraint):
             satisfaction_score_total = 0
             for day in days:
                 satisfaction_score_day = 1
-                if prof_preferred_course_times_in_semester[day]:
-                    # Compute quality score for day by comparing the assigned time with the preferred range.
-                    pref_start_time_tuple = prof_preferred_course_times_in_semester[day][0][0].split(":")
-                    pref_end_time_tuple = prof_preferred_course_times_in_semester[day][0][1].split(":")
-                    preferred_start_time = datetime.datetime(100, 1, 1, int(pref_start_time_tuple[0]), int(pref_start_time_tuple[1]))
-                    preferred_end_time = datetime.datetime(100, 1, 1, int(pref_end_time_tuple[0]), int(pref_end_time_tuple[1]))
+
+                if prof_preferred_course_times_in_semester[day] is not None:
+                    # Compute quality score for day by comparing the assigned time with the preferred ranges.
                     start_time = timeslot_config[0][1]
                     end_time = timeslot_config[0][2]
-                    start_diff = datetime.timedelta(seconds=0)
-                    end_diff = datetime.timedelta(seconds=0)
-                    if start_time < preferred_start_time:
-                        start_diff = preferred_start_time - start_time
-                    if end_time > preferred_end_time:
-                        end_diff = end_time - preferred_end_time
-                    worst_diff = max(start_diff.seconds, end_diff.seconds)
-                    if worst_diff > 0:
-                        satisfaction_score_day -= worst_diff / 45000
-                    satisfaction_score_total += satisfaction_score_day
+                    worst_diffs = []
+                    for time_range in prof_preferred_course_times_in_semester[day]:
+                        # Get preferred start time.
+                        pref_start_time_tuple = time_range[0].split(":")
+                        preferred_start_time = datetime.datetime(100, 1, 1, int(pref_start_time_tuple[0]), int(pref_start_time_tuple[1]))
+                        # Get preferred end time.
+                        pref_end_time_tuple = time_range[1].split(":")
+                        preferred_end_time = datetime.datetime(100, 1, 1, int(pref_end_time_tuple[0]), int(pref_end_time_tuple[1]))
+                        # If assigned time begins before preferred start time, record the difference.
+                        start_diff = datetime.timedelta(seconds=0)
+                        if start_time < preferred_start_time:
+                            start_diff = preferred_start_time - start_time
+                        # If assigned time ends after preferred end time, record the difference.
+                        end_diff = datetime.timedelta(seconds=0)
+                        if end_time > preferred_end_time:
+                            end_diff = end_time - preferred_end_time
+                        # Determine which of the start time, end time is a worse violation of the preferred time.
+                        worst_diff = max(start_diff.seconds, end_diff.seconds)
+                        # Record the worst violation.
+                        worst_diffs.append(worst_diff)
+                    # Compute satisfaction score for the assigned timeslot relative to
+                    # the preferred time range to which the assigned timeslot is the closest.
+                    satisfaction_score_day -= min(worst_diffs) / 45000
+                satisfaction_score_total += satisfaction_score_day
             satisfaction_preferred_times = satisfaction_score_total / len(days)
 
-        #return enthusiasm_score_for_preferred_days
         return satisfaction_preferred_times
 
 
