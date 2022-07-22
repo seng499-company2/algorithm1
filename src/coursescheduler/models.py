@@ -1,5 +1,5 @@
 import re
-from schema import Schema, Or, And
+from schema import Schema, Or, And, Optional
 
 twentyFourHourTimeRegex = r'^((0?|1)[0-9]|2[0-3]):[0-5][0-9]$'
 
@@ -71,6 +71,7 @@ ProfessorSlim = Schema({
 
 CourseSection = Schema({
     "professor": Or(None, ProfessorSlim),
+    Optional("maxCapacity"): Or(None, int),
     "capacity": Or(None, int),
     "timeSlots": And([TimeSlot], lambda x: len(x) in [0, 1, 2, 3])  # And(list, validate_time_slots),
 })

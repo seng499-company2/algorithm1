@@ -14,13 +14,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -40,13 +38,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -66,13 +62,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -92,13 +86,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -118,13 +110,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -144,13 +134,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -170,13 +158,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -187,22 +173,20 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
+                              "fall": true,
+                              "spring": true,
+                              "summer": true
                         },
                         "yearRequired": 2
                   },
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -222,13 +206,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -248,13 +230,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -274,13 +254,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -300,13 +278,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -326,13 +302,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -352,13 +326,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -378,13 +350,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -404,13 +374,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -430,13 +398,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -456,13 +422,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -482,13 +446,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -511,7 +473,6 @@
                                     "id": "100",
                                     "name": "Static Prof 1"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -542,7 +503,6 @@
                                     "id": "100",
                                     "name": "Static Prof 1"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -587,7 +547,6 @@
                                     "id": "101",
                                     "name": "Static Prof 2"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -611,7 +570,6 @@
                                     "id": "101",
                                     "name": "Static Prof 2"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -649,7 +607,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -680,7 +637,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -725,7 +681,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -749,7 +704,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -787,7 +741,6 @@
                                     "id": "104",
                                     "name": "Static Prof 5"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -818,7 +771,6 @@
                                     "id": "104",
                                     "name": "Static Prof 5"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -863,7 +815,6 @@
                                     "id": "105",
                                     "name": "Static Prof 6"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -887,7 +838,6 @@
                                     "id": "105",
                                     "name": "Static Prof 6"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -925,7 +875,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -956,7 +905,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -1001,7 +949,6 @@
                                     "id": "110",
                                     "name": "Static Prof 11"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -1032,7 +979,6 @@
                                     "id": "110",
                                     "name": "Static Prof 11"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -1077,7 +1023,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -1101,7 +1046,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -1139,7 +1083,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -1170,7 +1113,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -1215,7 +1157,6 @@
                                     "id": "113",
                                     "name": "Static Prof 14"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -1239,7 +1180,6 @@
                                     "id": "113",
                                     "name": "Static Prof 14"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -1276,13 +1216,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -1302,13 +1240,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -1328,13 +1264,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -1354,13 +1288,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -1380,13 +1312,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -1406,13 +1336,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -1432,13 +1360,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -1449,22 +1375,20 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
+                              "fall": true,
+                              "spring": true,
+                              "summer": true
                         },
                         "yearRequired": 2
                   },
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -1484,13 +1408,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -1510,13 +1432,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -1536,13 +1456,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -1562,13 +1480,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -1588,13 +1504,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -1614,13 +1528,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -1640,13 +1552,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -1666,13 +1576,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -1692,13 +1600,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -1718,13 +1624,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -1744,13 +1648,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -1770,13 +1672,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -1799,7 +1699,6 @@
                                     "id": "101",
                                     "name": "Static Prof 2"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -1830,7 +1729,6 @@
                                     "id": "101",
                                     "name": "Static Prof 2"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -1875,7 +1773,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -1899,7 +1796,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -1937,7 +1833,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -1968,7 +1863,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2013,7 +1907,6 @@
                                     "id": "105",
                                     "name": "Static Prof 6"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -2037,7 +1930,6 @@
                                     "id": "105",
                                     "name": "Static Prof 6"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2075,7 +1967,6 @@
                                     "id": "106",
                                     "name": "Static Prof 7"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -2106,7 +1997,6 @@
                                     "id": "106",
                                     "name": "Static Prof 7"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2151,7 +2041,6 @@
                                     "id": "107",
                                     "name": "Static Prof 8"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -2175,7 +2064,6 @@
                                     "id": "107",
                                     "name": "Static Prof 8"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -2213,7 +2101,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2244,7 +2131,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2289,7 +2175,6 @@
                                     "id": "109",
                                     "name": "Static Prof 10"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -2313,7 +2198,6 @@
                                     "id": "109",
                                     "name": "Static Prof 10"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2351,7 +2235,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -2382,7 +2265,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -2427,7 +2309,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2451,7 +2332,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -2488,13 +2368,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -2514,13 +2392,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -2540,13 +2416,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -2566,13 +2440,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -2592,13 +2464,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -2618,13 +2488,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         }
@@ -2644,13 +2512,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -2661,22 +2527,20 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": false,
-                              "spring": false,
-                              "summer": false
+                              "fall": true,
+                              "spring": true,
+                              "summer": true
                         },
                         "yearRequired": 2
                   },
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -2696,13 +2560,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -2722,13 +2584,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -2748,13 +2608,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         }
@@ -2774,13 +2632,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -2800,13 +2656,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": []
                         }
@@ -2826,13 +2680,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": []
                         }
@@ -2852,13 +2704,11 @@
                   "sections": [
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": []
                         },
                         {
                               "professor": null,
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": []
                         }
@@ -2881,7 +2731,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -2912,7 +2761,6 @@
                                     "id": "102",
                                     "name": "Static Prof 3"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -2957,7 +2805,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -2981,7 +2828,6 @@
                                     "id": "103",
                                     "name": "Static Prof 4"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -3019,7 +2865,6 @@
                                     "id": "107",
                                     "name": "Static Prof 8"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -3050,7 +2895,6 @@
                                     "id": "107",
                                     "name": "Static Prof 8"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -3095,7 +2939,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -3119,7 +2962,6 @@
                                     "id": "108",
                                     "name": "Static Prof 9"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -3157,7 +2999,6 @@
                                     "id": "109",
                                     "name": "Static Prof 10"
                               },
-                              "maxCapacity": null,
                               "capacity": 60,
                               "timeSlots": [
                                     {
@@ -3188,7 +3029,6 @@
                                     "id": "109",
                                     "name": "Static Prof 10"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -3233,7 +3073,6 @@
                                     "id": "110",
                                     "name": "Static Prof 11"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -3264,7 +3103,6 @@
                                     "id": "110",
                                     "name": "Static Prof 11"
                               },
-                              "maxCapacity": null,
                               "capacity": 100,
                               "timeSlots": [
                                     {
@@ -3309,7 +3147,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -3333,7 +3170,6 @@
                                     "id": "111",
                                     "name": "Static Prof 12"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -3371,7 +3207,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
@@ -3402,7 +3237,6 @@
                                     "id": "112",
                                     "name": "Static Prof 13"
                               },
-                              "maxCapacity": null,
                               "capacity": 120,
                               "timeSlots": [
                                     {
@@ -3447,7 +3281,6 @@
                                     "id": "113",
                                     "name": "Static Prof 14"
                               },
-                              "maxCapacity": null,
                               "capacity": 140,
                               "timeSlots": [
                                     {
@@ -3471,7 +3304,6 @@
                                     "id": "113",
                                     "name": "Static Prof 14"
                               },
-                              "maxCapacity": null,
                               "capacity": 80,
                               "timeSlots": [
                                     {
