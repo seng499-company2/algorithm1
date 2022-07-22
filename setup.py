@@ -26,5 +26,7 @@ setuptools.setup(
     include_package_data=True,
 
     packages=setuptools.find_packages(where="src"),
+
+    install_requires=['schema==0.7.5'],
     python_requires=">=3.9",
 )

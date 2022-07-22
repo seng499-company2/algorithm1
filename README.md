@@ -34,6 +34,18 @@ can be found [here](https://docs.google.com/document/d/163L7pv6w5Z38rUrl2EwRJq-A
 from coursescheduler import generate_schedule
 schedule = generate_schedule(professors, schedule)
 ```
+A third parameter, `debug`
+
+There are also functions that will validate input data according to the spec:
+```python
+from coursescheduler import validate_professor, validate_professors, validate_schedule
+validate_professor(professor)    # One Professor dict
+validate_professors(professors)  # A list of Professor dicts
+validate_schedule(schedule)      # A Schedule dict
+```
+If the input is valid according to the spec, these functions will return `True`.
+If there is a spec violation, a `SchemaError` will be raised. A second parameter can be passed to all three validate functions called `print_output`, which is set to `True` by default.
+If `print_output` is `True` and the input is valid, a message will be printed to the console.
 
 ## Dev
 To make and test changes to the project, navigate into the root level directory 
