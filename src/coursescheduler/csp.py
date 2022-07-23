@@ -60,7 +60,7 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def backtracking_search(self, config=None) -> Optional[Dict[V, D]]:
+    def backtracking_search(self, config=None, stop_event=None, result_object=None) -> Optional[Dict[V, D]]:
         if config is not None and config.get('mrv') is True and config.get('degree') is True:
             print("Cannot use MRV and Degree variable heuristics simultaneously. Please modify config.")
             exit()
@@ -95,6 +95,13 @@ class CSP(Generic[V, D]):
                             curr_conflicting_variables.append(const_var)
                 variable_conflict_set[variable] = curr_conflicting_variables
 
+        # Error case: the backtracking search setup took too long.
+        if stop_event.isSet():
+            result_object["schedule"] = None
+            result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints or add " \
+                                       "more professor and timeslot availablility. "
+            return None
+
         # Backtracking search with no forward checking
         def backtracking_search_recursive(assignment_: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
             # Assignment is complete if every variable is assigned (our base case)
@@ -107,6 +114,12 @@ class CSP(Generic[V, D]):
             # Get the every possible domain value of the first unassigned variable
             first: V = unassigned[0]
             for value in self.domains[first]:
+                # Error case: the backtracking search could not find a solution in the given amount of time
+                if stop_event.isSet():
+                    result_object["schedule"] = None
+                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
+                                               "or add more professor and timeslot availablility. "
+                    return None
                 local_assignment = assignment_.copy()
                 local_assignment[first] = value
                 # If we're still consistent, we recurse (continue)
@@ -129,6 +142,12 @@ class CSP(Generic[V, D]):
             # Get the every possible domain value of the first unassigned variable
             first: V = unassigned[0]
             for value in domains[first]:
+                # Error case: the backtracking search could not find a solution in the given amount of time
+                if stop_event.isSet():
+                    result_object["schedule"] = None
+                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
+                                               "or add more professor and timeslot availablility. "
+                    return None
                 local_assignment = assignment.copy()
                 local_assignment[first] = value
                 # If we're still consistent, we recurse (continue)

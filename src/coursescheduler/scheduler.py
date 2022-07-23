@@ -9,6 +9,7 @@ from .constraints import professor_teaching_load, course_timeslot_conflicts
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
 
+# Set max runtime to five minutes
 max_time_seconds = 5 * 60
 stop_event = Event()
 
@@ -18,18 +19,25 @@ def log_message(message):
 
 
 def generate_schedule(professors, schedule, jsonDebug=False):
-    main_alg_thread = Thread(target=generate_schedule_timer, args=(professors, schedule, jsonDebug))
+    result_object = {
+        "schedule": None,
+        "message": None
+    }
+    main_alg_thread = Thread(target=generate_schedule_timer, args=(professors, schedule, result_object, jsonDebug))
     main_alg_thread.start()
     main_alg_thread.join(timeout=max_time_seconds)
     if main_alg_thread.is_alive():
         stop_event.set()
         main_alg_thread.join()
-        return None, "Timeout"
+
+    if result_object["schedule"] is None and result_object["message"] is None:
+        result_object["message"] = "No schedule could be generated."
+    return result_object["schedule"], result_object["message"]
 
 
 # Initial plug & play algorithm
 # TODO Add checks for stop_event to prevent the algorithm from running too long
-def generate_schedule_timer(professors, schedule, jsonDebug=False):
+def generate_schedule_timer(professors, schedule, result_object, jsonDebug=False):
     if jsonDebug:
         # Temp load json files as input:
         if professors is None:
@@ -39,6 +47,11 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
 
             # Convert timeslot lists to tuples as per the specification if not already tuples
             for professor in professors:
+                # Error case: converting timeslots lists to tuples timed out.
+                if stop_event.isSet():
+                    result_object["schedule"] = None
+                    result_object["message"] = "Error: Timeout due to large input size."
+                    return
                 for semester, days in professor["preferredTimes"].items():
                     if days is not None:
                         for day, timeslots in days.items():
@@ -73,6 +86,11 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
     domains_csp_1 = {}
     for semester, offerings in non_static_courses.items():
         for course, course_data in offerings.items():
+            # Error case: adding the domains to each variable timed out.
+            if stop_event.isSet():
+                result_object["schedule"] = None
+                result_object["message"] = "Error: Timeout due to large professor or course offering input size."
+                return
             original_course_id = course.split("_")[0]
             if course_data["pengRequired"]:
                 qualified_peng_profs = {k: v for (k, v) in peng_profs.items()
@@ -90,15 +108,27 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
                 if len(qualified_profs) > 0:
                     domains_csp_1[course] = qualified_profs
 
-    # Error case: not enough qualified professors are available for all courses
-    if len(domains_csp_1) < len(non_static_courses):
-        return None, "Not enough qualified professors are available for input courses"
-
     # initialize csp solvers
     course_variables = []
     course_variables.extend(list(non_static_courses["fall"].keys()))
     course_variables.extend(list(non_static_courses["spring"].keys()))
     course_variables.extend(list(non_static_courses["summer"].keys()))
+
+    # Error case: not enough qualified professors are available for all courses
+    if len(domains_csp_1) < len(course_variables):
+        number_of_unqualified = 0
+        list_of_domainless = []
+        for variable in course_variables:
+            if variable not in domains_csp_1:
+                number_of_unqualified += 1
+                list_of_domainless.append(variable)
+        result_object["schedule"] = None
+        if number_of_unqualified <= 1:
+            result_object["message"] = f"Error: No qualified professor for {list_of_domainless[0]}."
+        else:
+            result_object["message"] = f"Error: No qualified professor for {list_of_domainless[0]} and " \
+                                       f"{number_of_unqualified - 1} more courses. "
+        return
 
     try:
         csp_1 = CSP(course_variables, domains_csp_1)
@@ -114,17 +144,35 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
             "max_steps": 50000
         }
 
+        # Error case: setting up CSP 1 timed out.
+        if stop_event.isSet():
+            result_object["schedule"] = None
+            result_object["message"] = "Error: Timeout due to large professor or course offering input size."
+            return
+
         # run csp 1
         start_time_csp_1 = time.time()
-        solution_csp_1 = csp_1.backtracking_search(config=config)
+        solution_csp_1 = csp_1.backtracking_search(config=config, stop_event=stop_event, result_object=result_object)
         end_time_csp_1 = time.time()
+
+        # Error case: CSP 1 did not find a solution in the given time limit.
+        if solution_csp_1 is None and stop_event.isSet():
+            return
+
+        # Error case: CSP 1 did not find a solution.
         if solution_csp_1 is None:
             log_message("No solution found in CSP 1 (professors to courses)")
-            return None, "No schedule found"
+            result_object["schedule"] = None
+            result_object["message"] = "Error: No possible schedule found for the given constraints while assigning " \
+                                       "professors. "
+            return
 
     except Exception as e:
         log_message(str(e))
-        return None, "No schedule found"
+        # Error case: CSP 1 raised an exception.
+        result_object["schedule"] = None
+        result_object["message"] = "Error: No schedule found."
+        return
 
     log_message("Successfully solved CSP 1 (assigned all professors to courses)")
     log_message("Runtime of CSP 1: " + str(end_time_csp_1 - start_time_csp_1) + " seconds")
@@ -134,6 +182,13 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
         for course, values in all_courses.items():
             if course in solution_csp_1.keys():
                 values["professor"] = solution_csp_1[course]
+
+    # Error case: CSP 1 timed out at some point.
+    if stop_event.isSet():
+        result_object["schedule"] = None
+        result_object["message"] = "Error: Timeout during professor assignment (likely due to no feasible schedule " \
+                                   "existing given the constraints. "
+        return
 
     # csp 2
     course_variables = []
@@ -150,8 +205,14 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
     semesters = courses.keys()
     for semester in semesters:
         for course in courses[semester]:
+            # Error case: CSP 2 setting of domains timed out.
+            if stop_event.isSet():
+                result_object["schedule"] = None
+                result_object["message"] = "Error: Timeout due to large timeslot or course offering input size."
+                return
+
             timeslot_list = courses[semester][course]["timeSlots"]
-            if (timeslot_list != []):
+            if timeslot_list:
 
                 # Convert timeslots from their format in the input,
                 # to the corresponding format as it would appear in timeslot_configs.
@@ -203,17 +264,35 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
             "max_steps": 50000
         }
 
+        # Error case: setting up CSP 2 timed out.
+        if stop_event.isSet():
+            result_object["schedule"] = None
+            result_object["message"] = "Error: Timeout due to large timeslot or course offering input size."
+            return
+
         # run search
         start_time_csp_2 = time.time()
-        solution_csp_2 = csp_2.backtracking_search(config=config_csp_2)
+        solution_csp_2 = csp_2.backtracking_search(config=config_csp_2, stop_event=stop_event, result_object=result_object)
         end_time_csp_2 = time.time()
+
+        # Error case: CSP 2 did not find a solution in the given time limit.
+        if solution_csp_2 is None and stop_event.isSet():
+            return
+
+        # Error case: CSP 2 did not find a solution.
         if solution_csp_2 is None:
             log_message("No solution found in CSP 2 (timeslots to courses)")
-            return None, "No schedule found"
+            result_object["schedule"] = None
+            result_object["message"] = "Error: No possible schedule found for the given constraints while assigning " \
+                                       "timeslots. "
+            return
 
     except Exception as e:
         log_message(str(e))
-        return None, "No schedule found"
+        # Error case: CSP 2 raised an exception.
+        result_object["schedule"] = None
+        result_object["message"] = "Error: No schedule found."
+        return
 
     log_message("Successfully solved CSP 2 (assigned all timeslots to courses)")
     log_message("Runtime of CSP 2: " + str(end_time_csp_2 - start_time_csp_2) + " seconds")
@@ -224,12 +303,21 @@ def generate_schedule_timer(professors, schedule, jsonDebug=False):
             if course in solution_csp_2.keys():
                 values["timeSlots"] = timeslot_configs[solution_csp_2[course]]
 
+    # Error case: CSP 2 timed out at some point.
+    if stop_event.isSet():
+        result_object["schedule"] = None
+        result_object["message"] = "Error: Timeout during timeslot assignment (likely due to no feasible schedule " \
+                                   "existing given the constraints. "
+        return
+
     # format outputs and return generated schedule.
     schedule = transform_output(courses, schedule, professors)
     end_time = time.time()
     log_message("Schedule generated successfully")
     log_message("Total runtime: " + str(end_time - start_time) + " seconds")
-    return schedule, None
+    result_object["schedule"] = schedule
+    result_object["message"] = "Schedule generated successfully."
+    return
 
 
 def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester):
