@@ -4,18 +4,17 @@
 
 ################################################################
 # CSP solver framework:
-import time
 from typing import Generic, TypeVar, Dict, List, Optional
 from abc import ABC, abstractmethod
 import random
-import sys
 
 
 def log_message(message):
     print("[SCHEDULER] " + message)
 
-V = TypeVar('V')  # variable type
-D = TypeVar('D')  # domain type
+
+V = TypeVar("V")  # variable type
+D = TypeVar("D")  # domain type
 
 
 # Base class for all constraints
@@ -89,18 +88,20 @@ class CSP(Generic[V, D]):
         return True
 
     def backtracking_search(self, config=None, stop_event=None, result_object=None) -> Optional[Dict[V, D]]:
-        if config is not None and config.get('mrv') is True and config.get('degree') is True:
+        if config is not None and config.get("mrv") is True and config.get("degree") is True:
             print("Cannot use MRV and Degree variable heuristics simultaneously. Please modify config.")
             exit()
 
         # If using MRV heuristic, sort variables in increasing order of domain size.
-        if config is not None and config.get('mrv'):
+        if config is not None and config.get("mrv"):
+
             def get_domain_size(var):
                 return len(self.domains[var])
+
             self.variables.sort(key=get_domain_size)
 
         # If using degree heuristic, sort variables in decreasing order of degree.
-        if config is not None and config.get('degree'):
+        if config is not None and config.get("degree"):
             constraints_degrees = []
             for var in self.variables:
                 curr_constraints = self.constraints[var]
@@ -126,8 +127,10 @@ class CSP(Generic[V, D]):
         # Error case: the backtracking search setup took too long.
         if stop_event.isSet():
             result_object["schedule"] = None
-            result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints or add " \
-                                       "more professor and timeslot availability. "
+            result_object["message"] = (
+                "Error: Timeout during course scheduling. Please relax the constraints or add "
+                "more professor and timeslot availability. "
+            )
             return None
 
         # Backtracking search with no forward checking
@@ -145,8 +148,10 @@ class CSP(Generic[V, D]):
                 # Error case: the backtracking search could not find a solution in the given amount of time
                 if stop_event.isSet():
                     result_object["schedule"] = None
-                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
-                                               "or add more professor and timeslot availability. "
+                    result_object["message"] = (
+                        "Error: Timeout during course scheduling. Please relax the constraints "
+                        "or add more professor and timeslot availability. "
+                    )
                     return None
                 local_assignment = assignment_.copy()
                 local_assignment[first] = value
@@ -173,8 +178,10 @@ class CSP(Generic[V, D]):
                 # Error case: the backtracking search could not find a solution in the given amount of time
                 if stop_event.isSet():
                     result_object["schedule"] = None
-                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
-                                               "or add more professor and timeslot availability. "
+                    result_object["message"] = (
+                        "Error: Timeout during course scheduling. Please relax the constraints "
+                        "or add more professor and timeslot availability. "
+                    )
                     return None
                 local_assignment = assignment.copy()
                 local_assignment[first] = value
@@ -196,8 +203,9 @@ class CSP(Generic[V, D]):
                                 # Backtrack
                                 return None
 
-                    result_: Optional[Dict[V, D]] = backtracking_search_fc(domains=domains_copy,
-                                                                           assignment=local_assignment)
+                    result_: Optional[Dict[V, D]] = backtracking_search_fc(
+                        domains=domains_copy, assignment=local_assignment
+                    )
                     # If we didn't find the result, we will end up backtracking
                     if result_ is not None:
                         return result_
@@ -230,8 +238,10 @@ class CSP(Generic[V, D]):
         for it in range(config["max_steps"]):
             if stop_event.isSet():
                 result_object["schedule"] = None
-                result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
-                                           "or add more professor and timeslot availability. "
+                result_object["message"] = (
+                    "Error: Timeout during course scheduling. Please relax the constraints "
+                    "or add more professor and timeslot availability. "
+                )
                 return None
 
             # Choose a variable at random.

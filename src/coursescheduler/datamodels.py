@@ -3,11 +3,7 @@ import datetime
 
 # This function transforms the input data into data which is optimal for use in the algorithm.
 def transform_input(schedule_input, professors_input):
-    courses = {
-        "fall": {},
-        "spring": {},
-        "summer": {}
-    }
+    courses = {"fall": {}, "spring": {}, "summer": {}}
     for semester, offering_list in schedule_input.items():
         for offering in offering_list:
             course = offering["course"]
@@ -36,7 +32,7 @@ def transform_input(schedule_input, professors_input):
 
     professors = {}
     for professor in professors_input:
-        sorted_course_prefs = sorted(professor["coursePreferences"], key=lambda d: d['enthusiasmScore'], reverse=True)
+        sorted_course_prefs = sorted(professor["coursePreferences"], key=lambda d: d["enthusiasmScore"], reverse=True)
         professors[professor["id"]] = {
             "name": professor["name"],
             "isPeng": professor["isPeng"],
@@ -46,7 +42,7 @@ def transform_input(schedule_input, professors_input):
             "preferredTimes": professor["preferredTimes"],
             "preferredCoursesPerSemester": professor["preferredCoursesPerSemester"],
             "preferredNonTeachingSemester": professor["preferredNonTeachingSemester"],
-            "preferredCourseDaySpreads": professor["preferredCourseDaySpreads"]
+            "preferredCourseDaySpreads": professor["preferredCourseDaySpreads"],
         }
     return courses, professors
 
@@ -66,10 +62,7 @@ def transform_output(alg_output, schedule_input, professors):
 
                 # If the input professor is None then we create an empty object to be filled in
                 if section["professor"] is None:
-                    section["professor"] = {
-                        "id": None,
-                        "name": None
-                    }
+                    section["professor"] = {"id": None, "name": None}
 
                 # If the professor isn't assigned in the input then we fetch the output assignment and fill it in
                 if section["professor"]["id"] is None:
@@ -87,7 +80,7 @@ def transform_output(alg_output, schedule_input, professors):
                     for timeslot in alg_output_timeslots:
                         output_timeslot = {
                             "dayOfWeek": timeslot[0].upper(),
-                            "timeRange": (timeslot[1].strftime("%H:%M"), timeslot[2].strftime("%H:%M"))
+                            "timeRange": (timeslot[1].strftime("%H:%M"), timeslot[2].strftime("%H:%M")),
                         }
                         output_timeslots.append(output_timeslot)
 
@@ -107,17 +100,21 @@ def timeslot_determination():
     scheduled_start_time = datetime.datetime(100, 1, 1, 8, 30)
     twf_dict = scheduled_times(scheduled_start_time, 50)
     for start_time, scheduled_end_time in twf_dict.items():  # 830-320 330-920
-        timeslots_dict_twf[count] = [["TUESDAY", start_time, scheduled_end_time],
-                                     ["WEDNESDAY", start_time, scheduled_end_time],
-                                     ["FRIDAY", start_time, scheduled_end_time]]
+        timeslots_dict_twf[count] = [
+            ["TUESDAY", start_time, scheduled_end_time],
+            ["WEDNESDAY", start_time, scheduled_end_time],
+            ["FRIDAY", start_time, scheduled_end_time],
+        ]
         count += 1
 
     scheduled_start_time = datetime.datetime(100, 1, 1, 8, 30)
     mr_dict = scheduled_times(scheduled_start_time, 80)
 
     for start_time, scheduled_end_time in mr_dict.items():
-        timeslots_dict_mr[count] = [["MONDAY", start_time, scheduled_end_time],
-                                    ["THURSDAY", start_time, scheduled_end_time]]
+        timeslots_dict_mr[count] = [
+            ["MONDAY", start_time, scheduled_end_time],
+            ["THURSDAY", start_time, scheduled_end_time],
+        ]
         count += 1
 
     # In timeslots_dict, alternate between TWF and MR configurations.
