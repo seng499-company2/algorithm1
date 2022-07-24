@@ -211,7 +211,11 @@ def generate_schedule_timer(professors, schedule, result_object, jsonDebug=False
                                        "professors. "
             return
 
-        solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
+        solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt, stop_event=stop_event, result_object=result_object)
+        # Error case: CSP 1 did not find a solution in the given time limit.
+        if solution_csp_1 is None and stop_event.isSet():
+            return
+
         end_time_csp_1_opt = time.time()
 
     except Exception as e:
@@ -347,7 +351,11 @@ def generate_schedule_timer(professors, schedule, result_object, jsonDebug=False
                                        "timeslots. "
             return
 
-        solution_csp_2 = csp_2.optimize(solution_csp_2, config=config_opt)
+        solution_csp_2 = csp_2.optimize(solution_csp_2, config=config_opt, stop_event=stop_event, result_object=result_object)
+        # Error case: CSP 2 did not find a solution in the given time limit.
+        if solution_csp_2 is None and stop_event.isSet():
+            return
+
         end_time_csp_2_opt = time.time()
 
     except Exception as e:
@@ -405,4 +413,3 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
 
 if __name__ == '__main__':
     result, error = generate_schedule(None, None, True)
-    # pprint(result)
