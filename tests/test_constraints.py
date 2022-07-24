@@ -16,37 +16,39 @@ class PyTestConstraints(TestCase):
 
     def test_qualified_course_prof_fail(self):
         test = qualified_course_prof("SENG265", test_professors)
-        self.assertFalse(test.satisfied(test_assignment))
+        self.assertFalse(test.satisfied([], test_assignment))
 
     def test_qualified_course_prof_pass(self):
         test = qualified_course_prof("CSC111", test_professors)
-        self.assertTrue(test.satisfied(test_assignment))
+        self.assertTrue(test.satisfied([], test_assignment))
 
     def test_course_requires_peng_fail(self):
         test = course_requires_peng("SENG265", test_professors)
-        self.assertFalse(test.satisfied(test_assignment))
+        self.assertFalse(test.satisfied([], test_assignment))
 
     def test_course_requires_peng_pass(self):
         test = course_requires_peng("CSC111", test_professors)
-        self.assertTrue(test.satisfied(test_assignment))
+        self.assertTrue(test.satisfied([], test_assignment))
 
     def test_professor_teaching_load_fail(self):
         test = professor_teaching_load(["CSC111", "CSC115", "CSC225"], test_professors)
-        self.assertFalse(test.satisfied(test_assignment))
+        self.assertFalse(test.satisfied([], test_assignment))
 
     def test_professor_teaching_load_pass(self):
         test = professor_teaching_load(["SENG265"], test_professors)
-        self.assertTrue(test.satisfied(test_assignment))
+        self.assertTrue(test.satisfied([], test_assignment))
 
     def test_course_timeslot_conflicts_fail(self):
         timeslot_configs = timeslot_determination()
-        test = course_timeslot_conflicts(["CSC111", "CSC115"], timeslot_configs)
-        self.assertFalse(test.satisfied(test_time))
+        static_courses = []
+        test = course_timeslot_conflicts(["CSC111", "CSC115"], timeslot_configs, static_courses)
+        self.assertFalse(test.satisfied([], test_time))
 
     def test_course_timeslot_conflicts_pass(self):
         timeslot_configs = timeslot_determination()
-        test = course_timeslot_conflicts(["SENG265", "CSC225"], timeslot_configs)
-        self.assertTrue(test.satisfied(test_time))
+        static_courses = []
+        test = course_timeslot_conflicts(["SENG265", "CSC225"], timeslot_configs, static_courses)
+        self.assertTrue(test.satisfied([], test_time))
 
     @pytest.mark.skip
     def test_assigned_teaching_load_passes(self):

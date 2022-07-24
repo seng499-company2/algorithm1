@@ -173,9 +173,9 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": true,
-                              "spring": true,
-                              "summer": true
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -1375,9 +1375,9 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": true,
-                              "spring": true,
-                              "summer": true
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
@@ -2527,9 +2527,9 @@
                         "code": "SENG310",
                         "title": "Human Computer Interaction",
                         "pengRequired": {
-                              "fall": true,
-                              "spring": true,
-                              "summer": true
+                              "fall": false,
+                              "spring": false,
+                              "summer": false
                         },
                         "yearRequired": 2
                   },
