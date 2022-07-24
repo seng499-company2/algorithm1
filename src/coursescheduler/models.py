@@ -69,16 +69,17 @@ ProfessorSlim = Schema({
     "name": str,
 })
 
+# len(timeSlots): 0 if unscheduled, 1 if scheduled on M|T|W|Th|F, 2 if scheduled on MTh, or 3 if scheduled on TWF
 CourseSection = Schema({
     "professor": Or(None, ProfessorSlim),
     Optional("maxCapacity"): Or(None, int),
     "capacity": Or(None, int),
-    "timeSlots": And([TimeSlot], lambda x: len(x) in [0, 1, 2, 3])  # And(list, validate_time_slots),
+    "timeSlots": And([TimeSlot], lambda x: len(x) in [0, 1, 2, 3]),
 })
 
 CourseOffering = Schema({
     "course": Course,
-    "sections": And([CourseSection], lambda x: len(x) in [0, 1, 2]),  # And(list, validate_course_sections),
+    "sections": And([CourseSection]),
 })
 
 Schedule = Schema({
