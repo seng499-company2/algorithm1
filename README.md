@@ -53,13 +53,12 @@ schedule = generate_schedule(professors, None, True)  # Uses mock data for sched
 schedule = generate_schedule(None, schedule, True)  # Uses mock data for professors
 ```
 
-
 There are also functions that will validate input data according to the spec:
 ```python
-from coursescheduler import validate_professor, validate_professors, validate_schedule
-validate_professor(professor)    # One Professor dict
-validate_professors(professors)  # A list of Professor dicts
-validate_schedule(schedule)      # A Schedule dict
+from coursescheduler import validate_professor_structure, validate_professors_structure, validate_schedule_structure
+validate_professor_structure(professor)    # One Professor dict
+validate_professors_structure(professors)  # A list of Professor dicts
+validate_schedule_structure(schedule)      # A Schedule dict
 ```
 If the input is valid according to the spec, these functions will return `True`.
 If there is a spec violation, a `SchemaError` will be raised. A second parameter can be passed to all three validate functions called `print_output`, which is set to `True` by default.
