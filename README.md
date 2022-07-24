@@ -6,6 +6,10 @@ constraint satisfaction problem and an optimized backtracking search algorithm i
 This package was created for the Capstone SENG499 class: Company 2 Course Scheduler Project. 
 Authored by the Company2 Algorithm1 sub-team.
 
+## Status
+![Last Deploy](https://github.com/seng499-company2/algorithm1/actions/workflows/continuous_deployment/badge.svg?branch=main)  
+Note: if the last deploy failed, the package will not have been updated to the latest version.
+
 ## Prerequisites
 This package requires Python 3.9 or higher. In this README, it is assumed that `python` and `pip` will use Python 3.9. 
 To check your Python version, you can run the following command:
