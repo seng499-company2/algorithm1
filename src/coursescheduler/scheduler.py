@@ -4,7 +4,8 @@ import datetime
 import time
 from pprint import pprint
 
-from .constraints import professor_teaching_load, course_timeslot_conflicts
+from .constraints import professor_teaching_load, course_timeslot_conflicts, course_preferences_constraint, \
+    time_slot_constraint, research_professor_semester_off, professor_on_leave
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
 
@@ -55,32 +56,70 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         for course, course_data in offerings.items():
             original_course_id = course.split("_")[0]
             if course_data["pengRequired"]:
-                qualified_peng_profs = {k: v for (k, v) in peng_profs.items()
+                qualified_peng_profs = [k for (k, v) in peng_profs.items()
                                         for course_preferences in v["qualifiedCoursePreferences"]
                                         if course_preferences["courseCode"] == original_course_id and
-                                        course_preferences["enthusiasmScore"] != 0}
+                                        course_preferences["enthusiasmScore"] != 0]
                 if len(qualified_peng_profs) > 0:
+                    # Sort values (professors) in descending order of enthusiasm score for the variable (course).
+                    def get_enthusiasm_score(prof):
+                        enthusiasm_score_ = 0
+                        for enthusiasm_dict in professors[prof]["qualifiedCoursePreferences"]:
+                            if enthusiasm_dict["courseCode"] == original_course_id:
+                                enthusiasm_score_ = enthusiasm_dict["enthusiasmScore"]
+                        return enthusiasm_score_
+                    qualified_peng_profs.sort(reverse=True, key=get_enthusiasm_score)
+
+                    # Remove the researching professors on their research semester
+                    for qualified_prof in qualified_peng_profs:
+                        if professors[qualified_prof]["facultyType"] == "RESEARCH":
+                            if professors[qualified_prof]["preferredNonTeachingSemester"] and semester == professors[qualified_prof]["preferredNonTeachingSemester"].lower():
+                                qualified_peng_profs.remove(qualified_prof)
+
+                    # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_peng_profs
             else:
-                qualified_profs = {k: v for (k, v) in professors.items()
+                qualified_profs = [k for (k, v) in professors.items()
                                    for course_preferences in v["qualifiedCoursePreferences"]
                                    if course_preferences["courseCode"] == original_course_id and
-                                   course_preferences["enthusiasmScore"] != 0}
+                                   course_preferences["enthusiasmScore"] != 0]
 
                 if len(qualified_profs) > 0:
+                    # Sort values (professors) in descending order of enthusiasm score for the variable (course).
+                    def get_enthusiasm_score(prof):
+                        enthusiasm_score_ = 0
+                        for enthusiasm_dict in professors[prof]["qualifiedCoursePreferences"]:
+                            if enthusiasm_dict["courseCode"] == original_course_id:
+                                enthusiasm_score_ = enthusiasm_dict["enthusiasmScore"]
+                        return enthusiasm_score_
+
+                    qualified_profs.sort(reverse=True, key=get_enthusiasm_score)
+
+                    # Remove the researching professors on their research semester
+                    for qualified_prof in qualified_profs:
+                        if professors[qualified_prof]["facultyType"] == "RESEARCH":
+                            if professors[qualified_prof]["preferredNonTeachingSemester"] and semester == professors[qualified_prof]["preferredNonTeachingSemester"].lower():
+                                qualified_profs.remove(qualified_prof)
+
+                    # Assign the sorted professors as the domain for the course.
                     domains_csp_1[course] = qualified_profs
 
     # initialize csp solvers
-    course_variables = []
-    course_variables.extend(list(non_static_courses["fall"].keys()))
-    course_variables.extend(list(non_static_courses["spring"].keys()))
-    course_variables.extend(list(non_static_courses["summer"].keys()))
+    course_variables_non_static = []
+    course_variables_non_static.extend(list(non_static_courses["fall"].keys()))
+    course_variables_non_static.extend(list(non_static_courses["spring"].keys()))
+    course_variables_non_static.extend(list(non_static_courses["summer"].keys()))
+
 
     try:
-        csp_1 = CSP(course_variables, domains_csp_1)
+        csp_1 = CSP(course_variables_non_static, domains_csp_1)
 
-        # add constraints
-        csp_1.add_constraint(professor_teaching_load(course_variables, professors))
+        # add hard constraints
+        csp_1.add_constraint(professor_teaching_load(course_variables_non_static, professors))
+        csp_1.add_constraint(professor_on_leave(course_variables_non_static, professors))
+
+        # add soft constraints
+        csp_1.add_soft_constraint(course_preferences_constraint(course_variables_non_static, professors))
 
         # set search config values
         config = {
@@ -90,6 +129,11 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             "max_steps": 50000
         }
 
+        # Set optimization config values
+        config_opt = {
+            "max_steps": 1000
+        }
+
         # run csp 1
         start_time_csp_1 = time.time()
         solution_csp_1 = csp_1.backtracking_search(config=config)
@@ -97,13 +141,16 @@ def generate_schedule(professors, schedule, jsonDebug=False):
         if solution_csp_1 is None:
             log_message("No solution found in CSP 1 (professors to courses)")
             return None, "No schedule found"
+        solution_csp_1 = csp_1.optimize(solution_csp_1, config=config_opt)
+        end_time_csp_1_opt = time.time()
 
     except Exception as e:
         log_message(str(e))
         return None, "No schedule found"
 
     log_message("Successfully solved CSP 1 (assigned all professors to courses)")
-    log_message("Runtime of CSP 1: " + str(end_time_csp_1 - start_time_csp_1) + " seconds")
+    #log_message("Runtime of CSP 1: " + str(end_time_csp_1 - start_time_csp_1) + " seconds")
+    log_message("Runtime of CSP 1: " + str(end_time_csp_1_opt - start_time_csp_1) + " seconds")
 
     # update the "courses" data structure with the professors assigned
     for semester, all_courses in courses.items():
@@ -116,6 +163,8 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     course_variables.extend(list(courses["fall"].keys()))
     course_variables.extend(list(courses["spring"].keys()))
     course_variables.extend(list(courses["summer"].keys()))
+
+    static_courses = [course for course in course_variables if course not in course_variables_non_static]
 
     # Create data structure of all possible timeslot configurations
     timeslot_configs = timeslot_determination()
@@ -151,15 +200,18 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             else:
                 domains_csp_2[course] = timeslot_ids
 
-    domains_csp_2 = {course: timeslot_ids for course in course_variables}
 
     try:
         csp_2 = CSP(course_variables, domains_csp_2)
 
+        static_courses_fall = [course for course in static_courses if "fall" in course]
+        static_courses_spring = [course for course in static_courses if "spring" in course]
+        static_courses_summer = [course for course in static_courses if "summer" in course]
+
         # Add constraints: courses in the same academic year must not overlap.
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "fall")
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "spring")
-        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "summer")
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "fall", static_courses_fall)
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "spring", static_courses_spring)
+        csp_2 = add_year_timeslot_constraint(csp_2, courses, timeslot_configs, "summer", static_courses_summer)
 
         # Add constraints: courses having the same professor must not overlap.
         all_profs = [k for k in professors.keys()]
@@ -169,7 +221,10 @@ def generate_schedule(professors, schedule, jsonDebug=False):
                                               courses[semester][course]["professor"] == prof_id]
                 if professor_teaching_courses:
                     # For each list:
-                    csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs))
+                    csp_2.add_constraint(course_timeslot_conflicts(professor_teaching_courses, timeslot_configs, []))
+
+        # Add soft constraints.
+        csp_2.add_soft_constraint(time_slot_constraint(course_variables_non_static, professors, timeslot_configs, solution_csp_1))
 
         # set search config values
         config_csp_2 = {
@@ -179,20 +234,27 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             "max_steps": 50000
         }
 
+        # Set optimization config values
+        config_opt = {
+            "max_steps": 500
+        }
+
         # run search
         start_time_csp_2 = time.time()
         solution_csp_2 = csp_2.backtracking_search(config=config_csp_2)
-        end_time_csp_2 = time.time()
+        #end_time_csp_2 = time.time()
         if solution_csp_2 is None:
             log_message("No solution found in CSP 2 (timeslots to courses)")
             return None, "No schedule found"
+        solution_csp_2 = csp_2.optimize(solution_csp_2, config=config_opt)
+        end_time_csp_2_opt = time.time()
 
     except Exception as e:
         log_message(str(e))
         return None, "No schedule found"
 
     log_message("Successfully solved CSP 2 (assigned all timeslots to courses)")
-    log_message("Runtime of CSP 2: " + str(end_time_csp_2 - start_time_csp_2) + " seconds")
+    log_message("Runtime of CSP 2: " + str(end_time_csp_2_opt - start_time_csp_2) + " seconds")
 
     # update the "courses" data structure with the timeslots assigned
     for semester, all_courses in courses.items():
@@ -208,7 +270,7 @@ def generate_schedule(professors, schedule, jsonDebug=False):
     return schedule, None
 
 
-def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester):
+def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, semester, static_courses):
     # Group courses by year.
     first_year_courses = [course for course in all_courses_input[semester].keys() if
                           all_courses_input[semester][course]["yearRequired"] == 1]
@@ -220,10 +282,10 @@ def add_year_timeslot_constraint(csp_2, all_courses_input, timeslot_configs, sem
                            all_courses_input[semester][course]["yearRequired"] == 4]
 
     # Add timeslot overlap constraints.
-    csp_2.add_constraint(course_timeslot_conflicts(first_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(second_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(third_year_courses, timeslot_configs))
-    csp_2.add_constraint(course_timeslot_conflicts(fourth_year_courses, timeslot_configs))
+    csp_2.add_constraint(course_timeslot_conflicts(first_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(second_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(third_year_courses, timeslot_configs, static_courses))
+    csp_2.add_constraint(course_timeslot_conflicts(fourth_year_courses, timeslot_configs, static_courses))
 
     return csp_2
 
