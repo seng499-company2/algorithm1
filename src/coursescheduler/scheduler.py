@@ -387,7 +387,7 @@ def generate_schedule_timer(professors, schedule, result_object, jsonDebug=False
     log_message("Schedule generated successfully")
     log_message("Total runtime: " + str(end_time - start_time) + " seconds")
     result_object["schedule"] = schedule
-    result_object["message"] = "Schedule generated successfully."
+    result_object["message"] = None
     return
 
 
