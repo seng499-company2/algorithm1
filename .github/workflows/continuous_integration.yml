@@ -1,6 +1,6 @@
 # This workflow will install Python dependencies, run the Flake8 python linter (uses Pep8 standards)
 # and run tests with a variety of Python versions
-name: continuous_integrations
+name: Continuous Integration
 
 on:
   push:
