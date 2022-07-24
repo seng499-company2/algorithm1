@@ -4,7 +4,7 @@
 
 ################################################################
 # CSP solver framework:
-
+import time
 from typing import Generic, TypeVar, Dict, List, Optional
 from abc import ABC, abstractmethod
 import random
@@ -88,7 +88,7 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def backtracking_search(self, config=None) -> Optional[Dict[V, D]]:
+    def backtracking_search(self, config=None, stop_event=None, result_object=None) -> Optional[Dict[V, D]]:
         if config is not None and config.get('mrv') is True and config.get('degree') is True:
             print("Cannot use MRV and Degree variable heuristics simultaneously. Please modify config.")
             exit()
@@ -123,6 +123,13 @@ class CSP(Generic[V, D]):
                             curr_conflicting_variables.append(const_var)
                 variable_conflict_set[variable] = curr_conflicting_variables
 
+        # Error case: the backtracking search setup took too long.
+        if stop_event.isSet():
+            result_object["schedule"] = None
+            result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints or add " \
+                                       "more professor and timeslot availability. "
+            return None
+
         # Backtracking search with no forward checking
         def backtracking_search_recursive(assignment_: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
             # Assignment is complete if every variable is assigned (our base case)
@@ -135,6 +142,12 @@ class CSP(Generic[V, D]):
             # Get the every possible domain value of the first unassigned variable
             first: V = unassigned[0]
             for value in self.domains[first]:
+                # Error case: the backtracking search could not find a solution in the given amount of time
+                if stop_event.isSet():
+                    result_object["schedule"] = None
+                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
+                                               "or add more professor and timeslot availability. "
+                    return None
                 local_assignment = assignment_.copy()
                 local_assignment[first] = value
                 # If we're still consistent, we recurse (continue)
@@ -157,6 +170,12 @@ class CSP(Generic[V, D]):
             # Get the every possible domain value of the first unassigned variable
             first: V = unassigned[0]
             for value in domains[first]:
+                # Error case: the backtracking search could not find a solution in the given amount of time
+                if stop_event.isSet():
+                    result_object["schedule"] = None
+                    result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
+                                               "or add more professor and timeslot availability. "
+                    return None
                 local_assignment = assignment.copy()
                 local_assignment[first] = value
                 # If we're still consistent, we recurse (continue)
@@ -191,7 +210,7 @@ class CSP(Generic[V, D]):
             result = backtracking_search_recursive()
         return result
 
-    def optimize(self, initial_assignment, config=None) -> Optional[Dict[V, D]]:
+    def optimize(self, initial_assignment, config=None, stop_event=None, result_object=None) -> Optional[Dict[V, D]]:
         # Determines quality of an assignment of a value to a variable.
         # Higher quality assignments are those violating fewer soft constraints.
         # Assignment violating any hard constraints have a quality score of 0 (the lowest possible score).
@@ -209,6 +228,12 @@ class CSP(Generic[V, D]):
         # Loop for a number of times modifying the assignment each time until a max threshold of steps is reached.
         current = initial_assignment
         for it in range(config["max_steps"]):
+            if stop_event.isSet():
+                result_object["schedule"] = None
+                result_object["message"] = "Error: Timeout during course scheduling. Please relax the constraints " \
+                                           "or add more professor and timeslot availability. "
+                return None
+
             # Choose a variable at random.
             var = random.choice(list(current.keys()))
 
