@@ -388,6 +388,6 @@ class time_slot_constraint(SoftConstraint):
                 satisfaction_score_total += satisfaction_score_day
             satisfaction_preferred_times = satisfaction_score_total / len(days)
 
-        return satisfaction_preferred_times
+        return ((satisfaction_preferred_times * 2) + enthusiasm_score_for_preferred_days) / 3
 
 
