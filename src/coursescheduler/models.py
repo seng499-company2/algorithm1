@@ -88,23 +88,23 @@ Schedule = Schema({
 })
 
 
-def validate_schedule(schedule, print_output=True):
+def validate_schedule_structure(schedule, print_output=True):
     Schedule.validate(schedule)
     if print_output:
         print("Schedule adheres to specification")
     return True
 
 
-def validate_professor(professor, print_output=True):
+def validate_professor_structure(professor, print_output=True):
     Professor.validate(professor)
     if print_output:
         print("Professor adheres to specification")
     return True
 
 
-def validate_professors(professors, print_output=True):
+def validate_professors_structure(professors, print_output=True):
     for professor in professors:
-        validate_professor(professor, print_output=False)
+        validate_professor_structure(professor, print_output=False)
     if print_output:
         print("All professors adhere to specification")
     return True

@@ -5,12 +5,11 @@ import time
 
 from threading import Thread, Event
 
-from coursescheduler import validate_schedule, validate_professors
-
 from .constraints import professor_teaching_load, course_timeslot_conflicts, course_preferences_constraint, \
     time_slot_constraint, research_professor_semester_off, professor_on_leave
 from .csp import CSP
 from .datamodels import transform_input, timeslot_determination, transform_output
+from .models import validate_schedule_structure, validate_professors_structure
 
 # Set max runtime to five minutes
 max_time_seconds = 5 * 60
@@ -70,8 +69,8 @@ def generate_schedule_timer(professors, schedule, result_object, jsonDebug=False
             schedule_file.close()
 
     # These will throw if the input does not meet the spec
-    validate_schedule(schedule)
-    validate_professors(professors)
+    validate_schedule_structure(schedule)
+    validate_professors_structure(professors)
 
     start_time = time.time()
 
