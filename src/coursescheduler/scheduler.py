@@ -158,33 +158,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
             if course in solution_csp_1.keys():
                 values["professor"] = solution_csp_1[course]
 
-    #Print CSP 1 results as (course, professor, enthusiasm score)
-    # solution_csp_1_list = solution_csp_1.items()
-    # for (course, professor_id) in solution_csp_1_list:
-    #     enthusiasm_score = 0
-    #     for course_preferences in professors[professor_id]["qualifiedCoursePreferences"]:
-    #         if course_preferences["courseCode"] == course.split("_")[0]:
-    #             enthusiasm_score += course_preferences["enthusiasmScore"]
-    #     print(course, professors[professor_id]["name"], enthusiasm_score)
-
-    # Print average enthusiasm scores for each professor in CSP 1 results.
-    # solution_professors = set(solution_csp_1.values())
-    # overall_enthusiasm_sum = 0
-    # for prof in solution_professors:
-    #     prof_courses = [course for course in solution_csp_1.keys() if solution_csp_1[course] == prof]
-    #     enthusiasm_sum = 0
-    #     for course in prof_courses:
-    #         for course_preferences in professors[prof]["qualifiedCoursePreferences"]:
-    #             if course_preferences["courseCode"] == course.split("_")[0]:
-    #                 enthusiasm_sum += course_preferences["enthusiasmScore"]
-    #     mean_enthusiasm_score = enthusiasm_sum / len(prof_courses)
-    #     overall_enthusiasm_sum += mean_enthusiasm_score
-    #     print(professors[prof]["name"], mean_enthusiasm_score)
-
-    # Print overall average enthusiasm score in CSP 1 results.
-    # overall_mean_enthusiasm_score = overall_enthusiasm_sum / len(solution_professors)
-    # print("Overall average enthusiasm: " + str(overall_mean_enthusiasm_score))
-
     # csp 2
     course_variables = []
     course_variables.extend(list(courses["fall"].keys()))
@@ -282,41 +255,6 @@ def generate_schedule(professors, schedule, jsonDebug=False):
 
     log_message("Successfully solved CSP 2 (assigned all timeslots to courses)")
     log_message("Runtime of CSP 2: " + str(end_time_csp_2_opt - start_time_csp_2) + " seconds")
-
-    ################
-    print()
-    print('Timetable:')
-    timetable_list = []
-
-
-    for course, timeslot_id in solution_csp_2.items():
-        # print(course)
-        semester = course.split("_")[1]
-        timeslots = timeslot_configs[timeslot_id]
-        timeslot_out = []
-        for timeslot in timeslots:
-            day = timeslot[0]
-            start = str(timeslot[1].time())
-            end = str(timeslot[2].time())
-            timeslot_out.append((day, start, end))
-
-
-        try:
-            # Sort by name
-            # timetable_list.append(f'{professors[courses[semester][course]["professor"]]["name"]:<24} {course:<24}  {timeslot_out} ')
-
-            # sort by semester
-            timetable_list.append(
-                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {professors[courses[semester][course]["professor"]]["name"]:<10} {professors[courses[semester][course]["professor"]]["facultyType"]:<4} {timeslot_out} ')
-
-        except KeyError:
-            timetable_list.append(
-                f'{course.split("_")[1]:<8} {course.split("_")[0]:<8}  {courses[semester][course]["professor"]:<24} {timeslot_out} ')
-
-    timetable_list.sort()
-    for x in timetable_list:
-        print(x)
-    ################
 
     # update the "courses" data structure with the timeslots assigned
     for semester, all_courses in courses.items():

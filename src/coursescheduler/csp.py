@@ -10,6 +10,10 @@ from abc import ABC, abstractmethod
 import random
 import sys
 
+
+def log_message(message):
+    print("[SCHEDULER] " + message)
+
 V = TypeVar('V')  # variable type
 D = TypeVar('D')  # domain type
 
@@ -222,6 +226,6 @@ class CSP(Generic[V, D]):
 
             # If a value was found producing an assignment of higher quality, assign it to the variable.
             if best_quality > initial_quality:
-                print("optimization found on iteration " + str(it))
+                log_message("optimization found on iteration " + str(it))
                 current[var] = best_value
         return current
