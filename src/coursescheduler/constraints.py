@@ -384,7 +384,8 @@ class time_slot_constraint(SoftConstraint):
                         worst_diffs.append(worst_diff)
                     # Compute satisfaction score for the assigned timeslot relative to
                     # the preferred time range to which the assigned timeslot is the closest.
-                    satisfaction_score_day -= min(worst_diffs) / 45000
+                    if len(worst_diffs) > 0:
+                        satisfaction_score_day -= min(worst_diffs) / 45000
                 satisfaction_score_total += satisfaction_score_day
             satisfaction_preferred_times = satisfaction_score_total / len(days)
 
