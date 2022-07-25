@@ -1,14 +1,12 @@
-from typing import List, TypeVar
+from typing import TypeVar
 
 from .csp import Constraint
 from .csp import SoftConstraint
 import datetime
 
-# from tests.datamodels_tester import temp_profs, temp_courses
-# from coursescheduler.csp import Constraint
 
-V = TypeVar('V')  # variable type
-D = TypeVar('D')  # domain type
+V = TypeVar("V")  # variable type
+D = TypeVar("D")  # domain type
 
 
 # Hard constraint: instructors may only be assigned to courses for which they are qualified.
@@ -26,8 +24,10 @@ class qualified_course_prof(Constraint):
 
         prof = assignment[course]
         for i in range(len(self.professors[prof]["qualifiedCoursePreferences"])):
-            if course in self.professors[prof]["qualifiedCoursePreferences"][i]["courseCode"] and \
-                    self.professors[prof]["qualifiedCoursePreferences"][i]["enthusiasmScore"] != 0:
+            if (
+                course in self.professors[prof]["qualifiedCoursePreferences"][i]["courseCode"]
+                and self.professors[prof]["qualifiedCoursePreferences"][i]["enthusiasmScore"] != 0
+            ):
                 return True
 
         return False
@@ -153,7 +153,10 @@ class research_professor_semester_off(Constraint):
             prof_id = assignment[course]
             if self.professors[prof_id]["facultyType"] == "RESEARCH":
                 semester = course.split("_")[1]
-                if self.professors[prof_id]["preferredNonTeachingSemester"] and semester == self.professors[prof_id]["preferredNonTeachingSemester"].lower():
+                if (
+                    self.professors[prof_id]["preferredNonTeachingSemester"]
+                    and semester == self.professors[prof_id]["preferredNonTeachingSemester"].lower()
+                ):
                     return False
 
         return True
@@ -250,17 +253,18 @@ class course_preferences_constraint(SoftConstraint):
             # per semester
             total_courses_exceeding_pref_num_courses = 0
             if num_courses_fall > preferred_num_courses_fall:
-                total_courses_exceeding_pref_num_courses += (num_courses_fall - preferred_num_courses_fall)
+                total_courses_exceeding_pref_num_courses += num_courses_fall - preferred_num_courses_fall
             if num_courses_spring > preferred_num_courses_spring:
-                total_courses_exceeding_pref_num_courses += (num_courses_spring - preferred_num_courses_spring)
+                total_courses_exceeding_pref_num_courses += num_courses_spring - preferred_num_courses_spring
             if num_courses_summer > preferred_num_courses_summer:
-                total_courses_exceeding_pref_num_courses += (num_courses_summer - preferred_num_courses_summer)
+                total_courses_exceeding_pref_num_courses += num_courses_summer - preferred_num_courses_summer
 
             # Subtracting the overall number courses that exceed the number of courses per semester
             # This weights the amount of courses exceeding the preferred number of courses per semester
             # Such as 1 exceeding courses is weighted lower than 2 exceeding courses
-            enthusiasm_preferred_courses_per_semester = (1 - (total_courses_exceeding_pref_num_courses /
-                                                              self.professors[prof_id]["teachingObligations"]))
+            enthusiasm_preferred_courses_per_semester = 1 - (
+                total_courses_exceeding_pref_num_courses / self.professors[prof_id]["teachingObligations"]
+            )
 
             overall_course_prefs_per_semester_sum += enthusiasm_preferred_courses_per_semester
 
@@ -289,7 +293,7 @@ class course_preferences_constraint(SoftConstraint):
         # Compute aggregate satisfactions scores for each soft constraint.
         overall_enthusiasm_mean = overall_enthusiasm_sum / len(profs)
         overall_enthusiasm_mean_course_per_sem = overall_course_prefs_per_semester_sum / len(profs)
-        overall_enthusiasm_mean_non_teach_semester = overall_pref_non_teach_semester_sum / len(profs)
+        # overall_enthusiasm_mean_non_teach_semester = overall_pref_non_teach_semester_sum / len(profs)
 
         # Compute and return a single overall satisfaction score combining all soft constraints.
         return ((overall_enthusiasm_mean * 4) + overall_enthusiasm_mean_course_per_sem) / 5
@@ -309,8 +313,7 @@ class time_slot_constraint(SoftConstraint):
         # Check for this professor have scheduled them outside-of their preferred hours
 
         # Dictionary of time codes used in time slots preferences
-        time_codes = {"monday": "M", "tuesday": "T",
-                      "wednesday": "W", "thursday": "Th", "friday": "F"}
+        time_codes = {"monday": "M", "tuesday": "T", "wednesday": "W", "thursday": "Th", "friday": "F"}
 
         # Grab the professor for the course currently under consideration.
         prof_id = self.csp_1_result[variable]
@@ -339,7 +342,7 @@ class time_slot_constraint(SoftConstraint):
 
         # CSP 2 Soft Constraint 2 for professor preferred teaching hour preferences.
         semester = variable.split("_")[1]
-        prof_preferred_course_times_in_semester = self.professors[prof_id]["preferredTimes"][semester] # could be null
+        prof_preferred_course_times_in_semester = self.professors[prof_id]["preferredTimes"][semester]  # could be null
 
         satisfaction_preferred_times = 1
         if prof_preferred_course_times_in_semester:
@@ -366,10 +369,14 @@ class time_slot_constraint(SoftConstraint):
                     for time_range in prof_preferred_course_times_in_semester[day]:
                         # Get preferred start time.
                         pref_start_time_tuple = time_range[0].split(":")
-                        preferred_start_time = datetime.datetime(100, 1, 1, int(pref_start_time_tuple[0]), int(pref_start_time_tuple[1]))
+                        preferred_start_time = datetime.datetime(
+                            100, 1, 1, int(pref_start_time_tuple[0]), int(pref_start_time_tuple[1])
+                        )
                         # Get preferred end time.
                         pref_end_time_tuple = time_range[1].split(":")
-                        preferred_end_time = datetime.datetime(100, 1, 1, int(pref_end_time_tuple[0]), int(pref_end_time_tuple[1]))
+                        preferred_end_time = datetime.datetime(
+                            100, 1, 1, int(pref_end_time_tuple[0]), int(pref_end_time_tuple[1])
+                        )
                         # If assigned time begins before preferred start time, record the difference.
                         start_diff = datetime.timedelta(seconds=0)
                         if start_time < preferred_start_time:
@@ -390,5 +397,3 @@ class time_slot_constraint(SoftConstraint):
             satisfaction_preferred_times = satisfaction_score_total / len(days)
 
         return ((satisfaction_preferred_times * 2) + enthusiasm_score_for_preferred_days) / 3
-
-

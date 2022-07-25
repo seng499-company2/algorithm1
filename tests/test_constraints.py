@@ -1,19 +1,24 @@
-import json
-import os
 from unittest import TestCase
 
 import pytest
 
-from src.coursescheduler.constraints import qualified_course_prof, course_requires_peng, professor_teaching_load, \
-    course_timeslot_conflicts
+from src.coursescheduler.constraints import (
+    qualified_course_prof,
+    course_requires_peng,
+    professor_teaching_load,
+    course_timeslot_conflicts,
+)
 from src.coursescheduler.datamodels import timeslot_determination
-from src.coursescheduler.verifyconstraints import verify_requires_peng, \
-    verify_assigned_teaching_load, verify_all_courses_assigned_professors, verify_qualified_course_prof
-from tests.datamodels_tester import temp_profs, temp_courses, test_courses, test_professors, test_assignment, test_time
+from src.coursescheduler.verifyconstraints import (
+    verify_requires_peng,
+    verify_assigned_teaching_load,
+    verify_all_courses_assigned_professors,
+    verify_qualified_course_prof,
+)
+from tests.datamodels_tester import temp_profs, temp_courses, test_professors, test_assignment, test_time
 
 
 class PyTestConstraints(TestCase):
-
     def test_qualified_course_prof_fail(self):
         test = qualified_course_prof("SENG265", test_professors)
         self.assertFalse(test.satisfied([], test_assignment))

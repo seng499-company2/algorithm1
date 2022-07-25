@@ -95,5 +95,5 @@ $ pip install black
 ```
 To run _black_:
 ```bash
-$ python -m black [file or directory]
+$ python -m black --safe [file or directory]
 ```
